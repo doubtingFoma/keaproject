@@ -6,8 +6,8 @@ If you would like to get in sync with repo, get the updates or contribute, you n
 
   1. Download [Git Bash](https://git-scm.com/downloads).
   2. Open Git Bash, navigate to target folder (wherever you like) with `cd FOLDERNAME` for going in, `cd ..` for going out
-  3. Clone the repo by `git clone https://github.com/gaboratorium/keaproject.git`
-  4. Get updates every day by `git pull`
+  2. Clone the repo by `git clone https://github.com/gaboratorium/keaproject.git`
+  3. Get updates every day by `git pull`
 
 # Contribution
 Contributions are welcome. Contact me on Slack or at `gaboratorium@gmail.com` to ask for contributor access (to be able to push to `master`). 
