@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Page Title</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<style>
+
+		</style>
+
+		<script>
+			// I like this here:
+			"use strict";
+
+			//load the array with numbers
+			var aLetters = [];
+			for (var i = 1; i <= 5; i++) {
+				aLetters.push(i);
+			}
+
+			//just writing some nice logs
+			console.log(aLetters);
+			console.log("length: "+ aLetters.length);
+
+			//divider
+			console.log("-----------");
+
+			//remove elements from array (from array element, number of elements)
+			aLetters.splice(4-1, 1);
+			aLetters.splice(2-1, 1);
+
+			console.log(aLetters);
+			console.log("length: "+ aLetters.length);
+
+			//add new element in the beginning of the array
+			aLetters.unshift(0);
+
+			console.log(aLetters);
+			console.log("length: "+ aLetters.length);
+
+			console.log("-----------");
+
+			//because f*ck loops, just load them with copy paste....
+			var employees=[];
+			employees.push("A");
+			employees.push("B");
+			employees.push("C");
+			employees.push("B");
+			employees.push("D");
+
+			//replace every B with an X
+			for (var i = 0; i < employees.length; i++) {
+				if (employees[i]=="B"){
+					employees[i]="X";
+				}
+			}
+
+			console.log(employees);
+
+
+			console.log("-----------");
+
+			//simple (elbaszott) but working login simulation
+			var aUsers=["U1","P1","U2","P2","U3","P3",];
+			var sUser="U3";
+			var sPassword="P3";
+			var bLoggedIn=false;
+
+			//checking the right password for the login
+			for (var i = 0; i < aUsers.length; i++) {
+				if (aUsers[i]==sUser && aUsers[i+1]==sPassword) {
+					bLoggedIn=true;
+					break;
+				} else {
+					bLoggedIn=false;
+				}
+			}
+
+			if (bLoggedIn) {
+				console.log("Yeeey, logged in :)");
+			} else {
+				console.log("Not logged in.");
+			}
+
+			console.log("-----------");
+
+		</script>
+	</head>
+
+	<body>
+
+
+
+
+	</body>
+
+</html>

@@ -1,0 +1,105 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <title>TITLE</title>
+     <meta name="description" content="DESCRIPTION">
+    <style>
+      #lblTest{
+        background-color: rgb(223, 40, 93);
+        height: 500px;
+        width: 500px;
+        transition: all 200ms;
+      }
+    </style>
+
+     <!--[if lt IE 9]>
+       <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+     <![endif]-->
+ </head>
+
+ <body>
+   <!-- jquery external source  -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!-- Here are some random elements. They just exist... -->
+   <div id="testMe"></div>
+   <div id="startHere">DONOSO</div><br>
+   <button id="btnTest">CLICK ME</button><br><br>
+
+   <input id="first" type="text">
+   <input id="second" type="text">
+   <button id="btnCombine">Combine</button>
+   <div id="combinedtext"></div>
+    <br>
+   <button id="btnShowLoop">Show loop</button>
+   <div id="lblTest"></div>
+   <div id="lblTest2"></div>
+
+   <button id="btnChangeCSS">Change CSS</button>
+   <input type="text" id="TxtBoxWidth">
+
+    <!-- Scripts -->
+   <script type="text/javascript">
+
+     //write text using javascript
+     $("#testMe").text	("Das test");
+
+     /* PURE JS */
+     // document.getElementById("testMe").innerHTML = "Santiago";
+
+     /* JQUERY */
+     // $("#testMe").text("Santiago");
+     // $("#testMe").text("");
+     // get a value from an element
+     // var test = $("#testMe").text();
+
+     // WHEN YOU CLICK ON THE BUTTON
+     // SHOW DONOSO in the div with id testMe  #notegoist
+     $("#btnTest").click(function(){
+       $("#testMe").text("Donoso");
+     });
+
+
+    //Combine the two text boxes and write them in a single div
+     $("#btnCombine").click( function(){
+       var combined = $("#first").val() + " " +  $("#second").val();
+       $("#combinedtext").text(combined);
+     } );
+
+
+
+    //When you click on the button, this one creates 5 elements ( divs ) showing numbers
+
+     var sMessage="<div>HELLO</div>";
+     var sFinalResult="";
+     $("#btnShowLoop").click( function(){
+       //the fair enough (aka: the client will pay) method
+       //and the teacher method as well
+        for (var i = 0; i < 5; i++) {
+          $("#lblTest").append(sMessage);
+        }
+
+        //method 2, the nicer one
+        for (var i = 0; i < 5; i++) {
+          sFinalResult+="<div>"+i+"</div>";
+        }
+        $("#lblTest2").html(sFinalResult);
+     });
+
+    //Changing CSS from JQUERY
+    $("#btnChangeCSS").click(function(){
+      //$("#lblTest").css("width", $("#TxtBoxWidth").val());
+      //$("#lblTest").css("height", $("#TxtBoxWidth").val());
+
+      //JQUERY chaining
+      $("#lblTest").css("height", $("#TxtBoxWidth").val()).css("width", $("#TxtBoxWidth").val());
+    });
+
+
+   </script>
+
+ </body>
+
+ </html>
