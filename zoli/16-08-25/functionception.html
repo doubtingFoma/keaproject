@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>TITLE</title>
+    <meta name="description" content="DESCRIPTION">
+
+       <!--[if lt IE 9]>
+         <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+       <![endif]-->
+  </head>
+
+  <body>
+    <script>
+      //I like this here. This turns on strict mode which doesn't let you
+      //use undeclared variables. It is actually helpful because it prevents typos.
+      "use strict"
+
+
+      /*
+        the system has 5 functions, give it any logical name
+        you call the first function passing a number
+        the 1st function multiplies the number * 10 and
+        call the 2nd function ... multiplies that number * 10 ...
+        and calls the 3rd function ...
+        return that value
+        1 10 100 1000 10000 100000
+      */
+
+      function first(iNumber){
+        //multiply the input number by 10
+        iNumber = iNumber*10;
+        //create a new variable which will hold the return value of the second function. (jump to second)
+        var iTotal = second(iNumber);
+
+        //return the final value to the global iFinal variable
+        return iTotal;
+      }
+
+      function second(iNumber){
+        //multiply the input number by 10
+        iNumber = iNumber*10;
+        //create a new variable which will hold the return value of the third function. (jump to third)
+        var iTotal = third(iNumber);
+
+        //return the final value to the first function
+        return iTotal;
+      }
+
+      function third(iNumber){
+        //multiply the input number by 10
+        iNumber = iNumber*10;
+        //create a new variable which will hold the return value of the fourth function. (jump to fourth)
+        var iTotal = fourth(iNumber);
+
+        //return the final value to the second function
+        return iTotal;
+      }
+
+      function fourth(iNumber){
+        //multiply the input number by 10
+        iNumber = iNumber*10;
+        //create a new variable which will hold the return value of the fifth function. (jump to fifth)
+        var iTotal = fifth(iNumber);
+
+        //return the final value to the third function
+        return iTotal;
+      }
+
+      function fifth(iNumber){
+        //multiply the input number by 10
+        iNumber = iNumber*10;
+
+        //return the final value to the fourth function (yes, in this case iNumber holds the final value, no need to declare a new iTotal again)
+        return iNumber;
+      }
+
+
+
+      //we call the first function and place its return value to the iFinal variable
+      var iFinal = first(1);
+
+      console.log(iFinal);
+
+
+    </script>
+
+
+  </body>
+
+</html>
