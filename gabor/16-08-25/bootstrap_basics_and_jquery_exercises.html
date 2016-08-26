@@ -224,7 +224,7 @@
 				function addCurrency(newCurrency){
 					aCurrencies.push(newCurrency);
 					if (isCurrencyShown) {
-						var newCorrencyDom = "<li data-arrayIndex='"+aCurrencies.length+"'> " + newCurrency + "<i class='fa fa-trash-o fa-fw'></i></li>"; 
+						var newCorrencyDom = "<li data-arrayIndex='"+aCurrencies.length+"' id='currency"+aCurrencies.length+"'> " + newCurrency + "<i class='fa fa-trash-o fa-fw'></i></li>"; 
 						$("#currenciesBox").append(newCorrencyDom);
 					} else {
 						showCurrencies();
@@ -235,11 +235,10 @@
 				/* Task 4 - delete the items */
 				/* Clicking on the trash icon*/
 				$(document).on("click", ".fa-trash-o", function(){
-					$(this).parent().hide(); // layout works
+					$(this).parent().remove(); // layout works
 
-
+					// Removing currency from array
 					var iArrayIndex = $(this).attr('data-arrayIndex');
-					console.log("THE INDEX IS: " + iArrayIndex);
 					aCurrencies.splice( iArrayIndex, 1 );
 
 					// Rearranging the html attributes
