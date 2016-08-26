@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>JSON</title>
+    <meta name="description" content="DESCRIPTION">
+  </head>
+
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+      //I like this here. This turns on strict mode which doesn't let you
+      //use undeclared variables. It is actually helpful because it prevents typos.
+      "use strict"
+
+
+      //empty object
+      var jEmptyObj = {};
+
+      //object
+      //object properties / keys. they have to be separated by commas ( , ). NOT by semicolon (;)!!
+      //properties and values are separated  by colons (:) and NOT by equal signs (=)!!!!
+      var jPerson = { "name":"Santiago", "lastname":"Donoso", "hair-color":"black" };
+
+      /* Create an object that shows your name, last name, height, eyecolod */
+      //it can be written in multiple lines for better readability
+      var jMe = {
+        "name":"Zoltán",
+        "lastname":"Fraknói",
+        "height":180, //in centimeters
+        "eye-color":"no-idea"
+      };  //remember to close the object with semicolons, even if it's formatted like this!!
+
+      /* Create an object about your pet */
+      //I don't have a real pet :(
+      var jPet = {
+        "name" : "Bobby",
+        "type" : "dog",
+        "weight" : 10, //this is a number property
+        "age" : 2
+      };
+
+      //write the name/type/age property of the jPet object in the console
+      console.log(jPet.name);
+      console.log(jPet.type);
+      console.log(jPet.age + " years old");
+
+      /* Create a person with name and last name, show in the console
+      the name followed by a space, followed by the last name */
+      var jPerson2 = {
+        "name":"Daniel",
+        "lastname":"Danielson",
+      };
+      console.log(jPerson2.name + " " + jPerson2.lastname);
+
+      //Create a new key to an existing object.
+      //If the key has already been made before, it updates it, otherwise it creates the new key.
+      jPerson2.height = 175;
+      console.log(jPerson2.height);
+
+
+      //Create
+      var jTable = {
+        weight : 200,      //you don't need the double quotes for the property. It's optional!
+        "color":"brown",   //again, double quotes for the property type is optinal, but not a string value!
+        shape: "square"    //and again, the string value needs the double qoutes!
+      };
+      //Update the weight to 150
+      //console.log( //show the weight )
+      jTable.weight = 150;
+      console.log(jTable.weight);
+      /*
+       This is NOT a function, so
+       DON'T update it like this: jTable.weight(150);
+      */
+
+      /* Please create a nwe key/value, call it price, value 1000 */
+      jTable.price = 1000;
+      //log all the parameters of the object in one log
+      console.log(jTable);
+
+      //delete a property
+      delete jTable.price;
+      console.log(jTable);
+
+      //delete another property
+      delete jTable.color;
+      console.log(jTable);
+
+
+//----------------------CHALLANGE---------------------------------------------//
+      /*
+        Exercise: Create an object that is you.
+        - You have a name and a last name.
+        - You add your age to the object.
+        - Add 1 to your age. (use code...)
+        - Delete your last name.
+        Log after every part of the task!
+      */
+      var jMyself = {
+       name: "Zoltán",
+       lastname: "Fraknói",
+       type: "person" //not neccesary, but helps identify what kind of object it is, so always use it
+      };
+      console.log(jMyself);
+
+      jMyself.age = 20;
+      console.log(jMyself);
+
+      jMyself.age++;
+      console.log(jMyself);
+
+      delete jMyself.lastname;
+      console.log(jMyself);
+//----------------------------------------------------------------------------//
+    </script>
+  </body>
+
+</html>
