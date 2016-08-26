@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+       <meta charset="UTF-8">
+       <title>TITLE</title>
+       <meta name="description" content="DESCRIPTION">
+
+  </head>
+
+  <body>
+    <script>
+      //I like this here. This turns on strict mode which doesn't let you
+      //use undeclared variables. It is actually helpful because it prevents typos.
+      "use strict"
+
+
+//----------------------EXERCISE 1--------------------------------------------//
+      /*
+        Create a function that expects/takes 4 arguments/parameters
+        The job of this function is to show (console.log)
+
+        My name is X, my last name is X. I am X years old and I was borned
+        in 1980
+      */
+      function showFullName( sName, sLastName, sAge, sBirthdate ){
+        //I didn't make separate spaces, just inserted them before and after the hardcoded text just to reduce the length
+      	var Mytext = "My name is " + sName + ", my last name is " + sLastName + ". I am " + sAge + " years old and I was born in " + sBirthdate + ".";
+      	console.log(Mytext);
+      }
+      showFullName( "Zoltán", "Fraknói",  22, 1994);
+
+      console.log("------------------");
+
+//----------------------EXERCISE 2--------------------------------------------//
+      /*
+        Create a function that returns your full name
+        you pass to the function your name and your last name
+        function takes 2 arguments
+        function concatenates them and return to whoever is calling it
+        after the call, console.log
+      */
+
+      //we can use tha same variable names here (sLastName and sName), because
+      //they are local variables, nobody can see them outside the function.
+      function getName( sName, sLastName ){
+        var sFullName = sName + " " + sLastName;
+        return sFullName;
+      }
+
+      //we call the getName function, and pass them 2 values at the same time.
+      var sFullName = getName("Zoltán", "Fraknói");
+
+      console.log(sFullName);
+
+
+      console.log("------------------");
+
+//----------------------EXERCISE 3--------------------------------------------//
+      //I have no idea what the task is. so let's just solve it somehow...
+      //also, renamed the function names again, to not interfere with previous tasks
+
+      function getName2(){
+      	var sName = "Santiago";  //not neccesary to create a new variable here
+      	return sName;
+      }
+
+      function getLastName2(){
+      	return "Donoso";         //not neccesary to create a new variable here
+      }
+
+      function getFullName2(){
+        //get the first name
+        var sFirstname = getName2();
+        //get the second name
+        var sLastName = getLastName2();
+        //merge the two names into one full name
+        var sFullName = sFirstname + " " + sLastName;
+        return sFullName;
+      }
+
+      var sFinalFullName = getFullName2();
+      console.log(sFinalFullName);
+
+
+
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,87 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+  <head>
+       <meta charset="UTF-8">
+       <title>Functions Intro</title>
+       <meta name="description" content="DESCRIPTION">
+   </head>
+   <body>
+
+     <script>
+       //I like this here. This turns on strict mode which doesn't let you
+       //use undeclared variables. It is actually helpful because it prevents typos.
+       "use strict"
+
+//----------------------EXERCISE 1--------------------------------------------//
+// Function showA should call function showB
+
+      //I changed the order of the functions, because sometimes
+      //(not in javascript) you can only call a function which
+      //is somewhere above where you call it. It's not neccesary
+      //in javascript, but I like it this way.
+       function showB(){
+         console.log("Function B");
+       }
+
+       function showA (){
+         console.log("Fucntion A");
+         //we call function "B"
+         showB();
+       }
+
+       //We call function "A", so that it can run
+       showA();
+
+
+      //This is just to separate our logs
+      console.log("------------------");
+
+
+//----------------------EXERCISE 2--------------------------------------------//
+//Create code that shows 3 times AB
+
+
+//ShowA function renamed to ShowA2 (to not call the previous function)
+//My soulution (it does the same as the "official" one, but it's another approach)
+       function showB2(){
+         console.log("B");
+       }
+
+       function showA2 (){
+         console.log("A");
+         showB2();
+       }
+      //a simple for loop calls function "A2" 3 times, which calls function B
+      //every time
+      for (var i = 0; i < 3; i++) {
+        showA2();
+      }
+      console.log("------------------");
+
+//Teacher's soulution:
+//ShowA function renamed to ShowA3 (to not call the previous functions)
+
+      //create a variable which stores the number of calls left
+      var iTimesToRun = 3;
+
+      function showA3(){
+      	if( iTimesToRun > 0 ){
+          //decrease the valuse of iTimesToRun by 1 (iTimesToRun = iTimesToRun-1)
+          iTimesToRun--;
+      		console.log("A");
+      		showB3();
+      	}
+      }
+
+      function showB3(){
+      	console.log("B");
+      	showA3();
+      }
+
+      showA3();
+
+     </script>
+   </body>
+
+ </html>

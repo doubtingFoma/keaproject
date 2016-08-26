@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bootstrap Exercise</title>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<!-- This task was optional: change Brand name (title in the navbar) value from text input -->
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-default">
+		<!-- Brand name -->
+		<div class="navbar-header">
+			<a class="navbar-brand" id="title" href="#">Brand</a>
+		</div>
+
+		<!-- Controls -->
+		<div class="navbar-form navbar-left">
+			<div class="form-group">
+				<form id="nameChanger" action="">
+			    	<input type="text" id="inputText" class="form-control" placeholder="New brand name...">
+			    	<input type="submit" class="form-control" value="Go">
+		    	</form>
+		  	</div>
+	  	</div>
+	</nav>
+
+	<script>
+		// Grab DOM elems
+		var form = $("#nameChanger");
+		var inputText = $("#inputText");
+		var title = $("#title");
+
+		form.submit(function( event ) {
+			// Getting and setting
+			var newTitle = inputText.val();
+			title.text(newTitle);
+
+			// Prevent action="" (so the refresh does not reload)
+			event.preventDefault();
+		});
+	</script>
+
+</body>
+</html>

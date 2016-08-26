@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Functions</title>
+</head>
+<body>
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	<script>
+		/* Functions */
+		/* Everything you can do in a system that is an action / verb */
+		/* Login, Logout, jump, eat, pay, doSomething */
+		/* Code hat you can reuse */
+
+		function doSomething(){
+			console.log("Hi");
+		}
+
+		doSomething();
+
+		/* Task 1: Create 3 functions that you can call, run them */
+		/* Stock exchange system related */
+
+		function convertFromTo(fromCurrency, toCurrency){
+			console.log("You are converting from: ", fromCurrency);
+			console.log("You are converting to: ", toCurrency);
+			/* ... */
+		}
+
+		function buyShare(userId, shareId){
+			/* ... */
+			console.log("User acquiring: ", userId);
+			console.log("Acquired share: ", shareId);
+		}
+
+		function updateBalance(userId, newBalance){
+			console.log("User:", userId);
+			console.log("New balance:", newBalance);
+		}
+
+		convertFromTo("HUF", "DKK");
+		buyShare("141414", "891234");
+		updateBalance("141414", "20000");
+
+		/* Task 2: call a function "showA" which calls a function "showB" */
+
+		function showA1(){
+			console.log("a");
+			showB1();
+		}
+
+		function showB1(){
+			console.log("b");
+		}
+
+		showA1();
+
+		/*Task 2b: showB should showC*/
+
+		function showA2(){
+			console.log("a");
+			showB2();
+		}
+
+		function showB2(){
+			console.log("b");
+			showC2();
+		}
+
+		function showC2(){
+			console.log("c");
+		}
+
+		showA2();
+
+		/* Task 3: display 3 times A and B without for loop - Gabor */
+
+		console.log("Run functions without loop - Gabor:");
+
+		function showA3(i){
+			console.log("A");
+			showB3(i);
+		}
+
+		function showB3(i){
+			console.log("B");
+			i--;
+			if (i>0) {
+				showA3(i);
+			}
+		}
+
+		showA3(3);
+
+		/* Task 3: display 3 times A and B without for loop - Santiago */
+
+		console.log("Run functions without loop - Santiago:");
+
+		var iTimesToRun = 3;
+
+		function showA3S() {
+			if (iTimesToRun > 0) {
+				iTimesToRun--;
+				console.log("A");
+				showB3S();
+			}
+		}
+
+		function showB3S() {
+			console.log("B");
+			showA3S();
+		}
+
+		showA3S();
+
+		/* Task 4:  Concetanating parameters */
+
+		function showFullName(sName, sLastName){
+			var sFullName = sName + " " + sLastName;
+			console.log(sFullName);
+		}
+
+		showFullName("Donoso", "Santiago");
+
+		/* Task 5: Create a function  that expects/takes 4 arguments/parameters */
+		/* Output should be: My name is X, my last name is X. I am X years old, and I was born in year X */
+
+		// Santiago's note: introduceItself is not fotunate naming for a function, should be: showMyInfo
+		// Gabor's note: I prefer avoiding too generic variable and function names ¯\_(ツ)_/¯ 
+
+		function introduceItself(sFirstName, sLastName, iAge, iYear){
+			console.log("My name is " + sFirstName + ", my last name is " + sLastName + ". I am " + iAge + " years old and I was born in " + iYear);
+		}
+
+		introduceItself("Gabor", "Pinter", 24, 1992);
+
+		/* Task 6: return values */
+
+		function getName() {
+			return "Santiago";
+		}
+
+		var sName = getName();
+		console.log(sName);
+
+		/* Task 7: Create a function that returns your full name */
+		/* You pass to the function your name and your last name */
+		/* Function concatenates them and return to whoever is calling it */
+
+		function getFullName(sFirstName, sLastName) {
+			return sFirstName + " " + sLastName;
+		}
+
+		var sFullName2 = getFullName("Santiago", "Donoso");
+		console.log(sFullName2); // Santiago Donoso
+
+		/* Task 6: login system with return values*/
+
+		function login(sEmail, sPassword){
+			// fake the data
+			var sCorrentEmail = "email@gmail.com";
+			var sCorrectPassword = "123";
+
+			if (sCorrentEmail == sEmail && sCorrectPassword == sPassword) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		// Pretend I get data from text boxes
+		var sEmail = "email@gmail.com";
+		var sPassword = "123";
+		var sLoginStatus = login(sEmail, sPassword);
+
+		if (sLoginStatus == true) {
+			console.log("Login succesful");
+		} else {
+			console.log("Login failed");
+		}
+
+		/* Task 7: create a system with 5 separate functions, give them any logical names */
+		/* The 1st function multiplies the number *10 */
+		/* The 2st function multiplies the number *10 ... and so on... */
+
+		function multiplieBy10_1(i) { 
+			i*=10;
+			multiplieBy10_2(i);
+		}
+
+		function multiplieBy10_2(i) { 
+			i*=10;
+			multiplieBy10_3(i);
+		}
+
+		function multiplieBy10_3(i) { 
+			i*=10;
+			multiplieBy10_4(i);
+		}
+
+		function multiplieBy10_4(i) { 
+			i*=10;
+			multiplieBy10_5(i);
+		}
+
+		function multiplieBy10_5(i) { 
+			//  i*=10;
+			console.log(i);
+		}
+
+		multiplieBy10_1(5);
+
+		/* Task 7: Another solution */
+
+		function one(i) { 
+			i *= 10;
+			console.log("One: i:", i);
+			i = two(i)
+			return i;
+		}
+
+		function two(i) { 
+			i *= 10;
+			console.log("Two: i:", i);
+			i = three(i)
+			return i;
+		}
+
+		function three(i) { 
+			i *= 10;
+			console.log("Three: i:", i);
+			i = four(i)
+			return i;
+		}
+
+		function four(i) { 
+			i *= 10;
+			console.log("Four: i:", i);
+			i = five(i)
+			return i;
+		}
+
+		function five(i) {
+			i *= 10;
+			console.log("Five: i:", i);
+			return i;
+		}
+
+		one(5);
+
+		/* Task 8: Create a function calling two other functions returning first and lastnames. Then concatenate them, and display */
+
+		function getName8(){
+			var sName = "Gabriella";
+			// do I need to return here?
+
+			// yes
+			return sName;
+		}
+
+		function getLastName8(){
+			var sLastName = "Fibonacci";
+			// do I need to return here?
+
+			// yes
+			return sLastName;
+		}
+
+		function getFullName8(){
+			// task: what to put here?
+			// How do I get the name?
+			// How do I I get the lastname?
+			// How do I concatenate?
+			// Do I need to return here?
+
+			var sFirstName = getName8();
+			var sLastName = getLastName8();
+			var sFullName = sFirstName + " " + sLastName;
+
+			return sFullName;
+		}
+
+		var sFinalFullName = getFullName8();
+		console.log(sFinalFullName);
+
+	</script>
+</body>
+</html>
