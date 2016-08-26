@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Company List</title>
+    <meta name="description" content="DESCRIPTION">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <style>
+      body{
+        margin: 1em;
+      }
+      #h2{
+        margin: 1em;
+      }
+      #lblCompanies, #lblSearchResult{
+        font-size: 1.2em;
+        margin-left: 2em;
+
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <input id="txtCompanyName" type="text" placeholder="Company name">
+    <input id="txtCompanyStockValue" type="text" placeholder="Stock Value">
+    <button id="btnAddCompany">Add company</button>
+
+
+    <button id="btnShowHideCompany" type="button"></button>
+
+
+    <input id="txtSearch" type="text" placeholder="You can search here. Trust me.">
+    <button id="btnSearch">Search</button>
+
+    <h2>Company list</h2>
+    <div id="lblCompanies">
+  	</div>
+
+    <h2>Search results</h2>
+    <div id="lblSearchResult">
+    </div>
+
+    <script>
+      //I like this here. This turns on strict mode which doesn't let you
+      //use undeclared variables. It is actually helpful because it prevents typos.
+      "use strict"
+
+/*
+      //get current time in milliseconds from January 1. 1970. (yes, in milliseconds)
+      var id = new Date().getTime();
+      console.log(id);
+      var jPerson = {
+        id: new Date().getTime(),
+        name: "a"
+      }
+      console.log("--------------");
+*/
+
+      var aCompanies=[];
+      var bCompanyShown = 0;
+      //Constants for the show/hide button (to change the text quickly)
+      var HIDE_COMPANIES = "Hide Companies";
+      var SHOW_COMPANIES = "Show Companies";
+
+      $("#btnShowHideCompany").text( SHOW_COMPANIES );
+
+      //---------Functions------------------------------------------------------
+
+      //EXERCISE - CREATE A TEXT BOX TO CONTAIN THE VALUE PER STOCK OF THE COMPANY
+      function addCompany(){
+        // console.log("x");
+  			var iCompanyId = new Date().getTime();      //get current time in milliseconds from January 1. 1970.
+  			var sCompanyName = $("#txtCompanyName").val();
+        var nStockValue = $("#txtCompanyStockValue").val();
+
+        //converting string to float type
+        nStockValue = parseFloat(nStockValue);
+
+  			var jCompany = {
+          iCompanyId: iCompanyId,
+          sCompanyName: sCompanyName,
+          stockvalue: nStockValue
+        };
+  			aCompanies.push(jCompany);
+  			console.log(aCompanies);
+
+        //Show the newly created array element if the rest is visible
+        if (bCompanyShown == 0) {
+          showHideCompanies();
+        } else {
+          $("#lblCompanies").append("<div>"+ aCompanies[aCompanies.length-1].sCompanyName + " " + aCompanies[aCompanies.length-1].stockvalue + "<i data-arrayIndex='" + aCompanies[aCompanies.length-1].iCompanyId + "' class='fa fa-trash-o fa-fw'></i></div>");
+        }
+
+      }
+
+      function showHideCompanies(){
+        $("#lblCompanies").empty();
+        if (bCompanyShown == 0){
+          bCompanyShown = 1;
+          for(var i = 0; i < aCompanies.length; i++){
+						$("#lblCompanies").append("<div>"+ aCompanies[i].sCompanyName + " " + aCompanies[i].stockvalue + "<i data-arrayIndex='" + aCompanies[i].iCompanyId + "' class='fa fa-trash-o fa-fw'></i></div>");
+					}
+					$("#lblCompanies").show();
+					$("#btnShowHideCompany").text( HIDE_COMPANIES );
+        } else {
+					bCompanyShown = 0;
+          $("#lblCompanies").hide();
+          $("#btnShowHideCompany").text( SHOW_COMPANIES );
+				}
+      }
+
+/*
+      //Simple search function
+      //replaced by the advanced one, because this one sucks
+      function searchCompany(sSearchPhrase){
+        $("#lblSearchResult").empty();
+        for (var i = 0; i < aCompanies.length; i++) {
+          if (aCompanies[i].sCompanyName.toLowerCase() == sSearchPhrase) {
+            $("#lblSearchResult").append("<div>"+ aCompanies[i].sCompanyName +"</div>");
+          }
+        }
+      }
+ */
+
+      //advanced search function
+      function advSearchCompany(sSearchPhrase){
+        //delete all current elements of the DOM
+        $("#lblSearchResult").empty();
+        //cycle through all the elements of the array
+        for (var i = 0; i < aCompanies.length; i++) {
+          //create a variable that holds the fully lower case version of the company name (to make search results better)
+          var sSearchIn = aCompanies[i].sCompanyName.toLowerCase();
+          // string.search() function returns with an index value if it finds something (if not, it's -1)
+          var iResult = sSearchIn.search(sSearchPhrase);
+          if ( iResult >= 0){
+            //write the found company name in the DOM
+            $("#lblSearchResult").append("<div>"+ aCompanies[i].sCompanyName +"</div>");
+          }
+        }
+      }
+
+      //------------------------------------------------------------------------
+
+//BASED ON THE CODE ABOVE, CREATE A SYSTEM THAT SHOWS/HIDES THE COMPANIES ( NAME AND STOCK VALUE )
+
+      //removing the deleted element from the DOM
+      $(document).on("click", ".fa-trash-o", function(){
+        //remove the element from the DOM
+        $(this).parent().remove();
+        //finding the deleted item's ID and delete it from the array
+        var iArrayIndex = $(this).attr('data-arrayIndex');
+        for (var i = 0; i < aCompanies.length; i++) {
+          if (aCompanies[i].iCompanyId == iArrayIndex) {
+            aCompanies.splice(i, 1);
+          }
+        }
+      });
+
+
+      $(document).on("click", "#btnAddCompany", function(){
+      			addCompany();
+      });
+
+      $(document).on("click", "#btnShowHideCompany", function(){
+      			showHideCompanies();
+      });
+
+      $(document).on("click", "#btnSearch", function(){
+            advSearchCompany($("#txtSearch").val());
+      });
+
+
+
+//---------- Additional Stuff-------------------------------------------------//
+
+      //I wrote these small codes to make life easier and reduce the amount of clicking on the buttons
+
+      //hitting enter while focused on company name text box hits the "add company" button
+      $("#txtCompanyName").keyup(function(event){
+          if(event.keyCode == 13){
+              addCompany();
+          }
+      });
+
+      //hitting enter while focused on company stock value text box hits the "add company" button
+      $("#txtCompanyStockValue").keyup(function(event){
+          if(event.keyCode == 13){
+              addCompany();
+          }
+      });
+
+      //hitting enter while focused on search box actually searches.
+      $("#txtSearch").keyup(function(event){
+          if(event.keyCode == 13){
+              advSearchCompany($("#txtSearch").val());
+          }
+      });
+//----------------------------------------------------------------------------//
+
+
+    </script>
+
+  </body>
+
+</html>

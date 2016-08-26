@@ -137,7 +137,7 @@
 				}else{
 					$("#btnShowHideCurrencies").text("SHOW CURRENCIES");
 					bShown = 0;
-					$("#lblCurrencies").hide();
+          $("#lblCurrencies").hide();
 				}
 
 			}
@@ -194,6 +194,27 @@
 
 			}
 
+      function reMatchArrayIndex(){
+        var i = 0;
+        console.log(aCurrencies);
+        $("#lblCurrencies").children().each(function(){
+          $(this).children("i").each(function(){
+            console.log(aCurrencies);
+            $(this).attr("data-arrayindex", i);
+            console.log(aCurrencies);
+          });
+          i=i+1;
+        });
+      }
+
+      function deleteCurrency(thisObj){
+					var iArrayIndex = thisObj.attr('data-arrayIndex');
+					console.log("THE INDEX IS: " + iArrayIndex);
+					aCurrencies.splice( iArrayIndex, 1 );
+					thisObj.parent().remove();
+					reMatchArrayIndex();
+			}
+
 			/* EVENTS CAN ONLY BE APPLIED TO ALREADY LOADED ELEMENTS NOT TO
 					DYNAMIC ELEMENTS
 			*/
@@ -201,8 +222,17 @@
 			// 	console.log("x");
 			// });
 
+
+      /**********************************************************************/
+      /**********************************************************************/
+      /**********************************************************************/
+      /* EVENTS */
+      // EVENTS should only call functions
+
 			$(document).on("click", ".fa-trash-o", function(){
-        //$(this).parent().hide(); // layout doesn't work....
+        deleteCurrency($(this));
+
+/*  //this is not relevant anymore, check delete currency function, but I'll leave this here anyway
 
         $(this).parent().remove();
         //deleting the element based on data-arrayIndex parameter
@@ -210,7 +240,7 @@
         // console.log("THE INDEX IS: " + iArrayIndex);
         aCurrencies.splice( iArrayIndex, 1 );
 
-//---------------
+        //---------------
         //this is a fair enough part. It's not power efficient, but for now, it works.
         //basically I delete every item in the list and regenerate them based on the array.
         //please avoid this in the future, but for now, with a short list, it's working.
@@ -222,23 +252,10 @@
           //repopulate #lblCurrencies with the data from the aCurrencies array
           $("#lblCurrencies").append("<div>"+aCurrencies[i]+"<i data-arrayIndex='" + i + "' class='fa fa-trash-o fa-fw'></i></div>");
         }
-//----------------
-
-
-   /*   //reorganizing the index attributes
-        for (var i = aCurrencies.length - 1; i >= 0; i--) {
-          $("#lblCurrencies"+i).attr("data-arrayIndex", i);
-          console.log($("#lblCurrencies"+i));
-        }
-   */
+        //----------------
+*/
 			});
 
-
-      /**********************************************************************/
-			/**********************************************************************/
-			/**********************************************************************/
-			/* EVENTS */
-			// EVENTS should only call functions
 			$("#btnUserLogin").click( function(){
 				login();
 			});
