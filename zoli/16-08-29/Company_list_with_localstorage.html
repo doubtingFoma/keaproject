@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Companies with local storage</title>
+    <meta name="description" content="DESCRIPTION">
+    <style>
+      span{
+        background-color: yellow;
+      }
+    </style>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Font awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  </head>
+
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <input id="txtCompanyName" type="text" placeholder="Company name">
+    <input id="txtCompanyStockValue" type="text" placeholder="Stock Value">
+    <button id="btnAddCompany">Add company</button>
+
+<!--
+    <h2>Company list</h2>
+    <div id="lblCompanies">
+  	</div>
+-->
+    <br>
+
+    <input id="txtSearch" type="text" placeholder="Awesome Search">
+
+
+
+
+		<div class="bs-example" data-example-id="hoverable-table">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Company Name</th>
+						<th>Stock Price</th>
+					</tr>
+				</thead>
+
+
+				<tbody id="lblCompanies">
+				</tbody>
+			</table>
+		</div>
+
+    <h2>Search results</h2>
+    <div id="lblSearchResult">
+    </div>
+
+
+    <script>
+      //I like this here. This turns on strict mode which doesn't let you
+      //use undeclared variables. It is actually helpful because it prevents typos.
+      "use strict"
+
+//----------------------------EXERCISE----------------------------------------//
+      //Create objects with companies in it (just like last time).
+      //Store the objects in an array, and store the array in the local storage,
+      //then read it back from the local storage as an array and write it to the DOM
+
+
+      //this is an array which contains the companies
+      var aCompanies = [];
+
+      //this is the array which contains the local storage data which we read
+      //also, the content of this will appear in the DOM
+      var aNewCompanies = [];
+
+//--------------------------------Functions-----------------------------------//
+      //Adding a company to the list
+      function addCompanyOld(){
+        // console.log("x");
+  			var iCompanyId = new Date().getTime();      //get current time in milliseconds from January 1. 1970.
+  			var sCompanyName = $("#txtCompanyName").val();
+        var nStockValue = $("#txtCompanyStockValue").val();
+
+        //converting string to float type
+        nStockValue = parseFloat(nStockValue);
+
+  			var jCompany = {
+          iCompanyId: iCompanyId,
+          sCompanyName: sCompanyName,
+          stockvalue: nStockValue
+        };
+
+  			aCompanies.push(jCompany);
+  			console.log(aCompanies);
+
+        //convert the companies array into string
+        var sCompanies = JSON.stringify(aCompanies);
+        localStorage.Companies = sCompanies;
+
+        aNewCompanies = JSON.parse(localStorage.Companies)
+        //Show the newly created array element (using aNewCompanies)
+        $("#lblCompanies").append("<div>"+ aNewCompanies[aNewCompanies.length-1].sCompanyName + " " + aNewCompanies[aNewCompanies.length-1].stockvalue + "<i data-arrayIndex='" + aNewCompanies[aNewCompanies.length-1].iCompanyId + "' class='fa fa-trash-o fa-fw'></i></div>");
+
+      }
+
+
+      //new add company function that adds companies to the table
+      function addCompany() {
+        var iCompanyId = new Date().getTime();      //get current time in milliseconds from January 1. 1970.
+  			var sCompanyName = $("#txtCompanyName").val();
+        var nStockValue = $("#txtCompanyStockValue").val();
+
+        //converting string to float type
+        nStockValue = parseFloat(nStockValue);
+
+  			var jCompany = {
+          iCompanyId: iCompanyId,
+          sCompanyName: sCompanyName,
+          stockvalue: nStockValue
+        };
+
+  			aCompanies.push(jCompany);
+  			console.log(aCompanies);
+
+        //convert the companies array into string
+        var sCompanies = JSON.stringify(aCompanies);
+        localStorage.Companies = sCompanies;
+
+        aNewCompanies = JSON.parse(localStorage.Companies);
+
+        $("#lblCompanies").append('<tr><th scope="row">' + iCompanyId + '</th><td>' + sCompanyName + '</td><td>' + nStockValue + '</td></tr>');
+      }
+
+
+
+      //search and highlight the found string
+      function advSearchCompany(sSearchPhrase){
+        if (sSearchPhrase.length > 0) {
+
+          //delete all current elements of the DOM
+          $("#lblSearchResult").empty();
+          //cycle through all the elements of the array
+          for (var i = 0; i < aCompanies.length; i++) {
+            //create a variable that holds the fully lower case version of the company name (to make search results better)
+            var sSearchIn = aCompanies[i].sCompanyName.toLowerCase();
+            // string.search() function returns with an index value if it finds something (if not, it's -1)
+            var iResult = sSearchIn.search(sSearchPhrase);
+
+            if ( iResult >= 0){
+              //the output of the search result, stored in a variable
+              var sWriteOut = "";
+              //write the letters before the search result
+              for (var j = 0; j < iResult; j++) {
+                sWriteOut = sWriteOut + aCompanies[i].sCompanyName[j];
+              }
+              //create a span to highlight the search result characters
+              sWriteOut = sWriteOut + "<span>";
+              //here are the highlighted characters
+              for (var j = iResult; j < iResult+sSearchPhrase.length; j++) {
+                sWriteOut = sWriteOut + aCompanies[i].sCompanyName[j];
+              }
+              //close the span tag
+              sWriteOut = sWriteOut + "</span>";
+              //write the rest of the result
+              for (var j = iResult+sSearchPhrase.length; j < aCompanies[i].sCompanyName.length; j++) {
+                sWriteOut = sWriteOut + aCompanies[i].sCompanyName[j];
+              }
+
+              //write the found company name in the DOM
+              $("#lblSearchResult").append("<div>"+ sWriteOut +"</div>");
+            }
+          }
+
+        } else {
+          //if there's no search term, then just delete everything
+          $("#lblSearchResult").empty();
+        }
+      }
+
+//----------------------------------------------------------------------------//
+
+        /*  PAGE LAUNCH  */
+
+      //we read back the data from the local storage at the launch of the page
+      aCompanies = JSON.parse(localStorage.Companies);
+      aNewCompanies = JSON.parse(localStorage.Companies);
+
+      for (var i = 0; i < aNewCompanies.length; i++) {
+//        $("#lblCompanies").append("<div>"+ aNewCompanies[i].sCompanyName + " " + aNewCompanies[i].stockvalue + "<i data-arrayIndex='" + aNewCompanies[i].iCompanyId + "' class='fa fa-trash-o fa-fw'></i></div>");
+          $("#lblCompanies").append('<tr><th scope="row">' + aNewCompanies[i].iCompanyId + '</th><td>' + aNewCompanies[i].sCompanyName + '</td><td>' + aNewCompanies[i].stockvalue + '</td></tr>');
+      }
+
+
+//-------------------EVENTS---------------------------------------------------//
+
+      //On click add company button
+      $(document).on("click", "#btnAddCompany", function(){
+      			addCompany();
+      });
+
+      //Search in the company table
+      $(document).on("input", "#txtSearch", function(){
+        var sSearchFor = $(this).val();
+        sSearchFor = sSearchFor.toLowerCase();
+
+        $( "#lblCompanies").children("tr").children("td:nth-of-type(1)").each(function(){
+
+					var sCompareTo = $(this).text();
+          sCompareTo = sCompareTo.toLowerCase();
+
+          var iResult = sCompareTo.search(sSearchFor);
+
+					if(iResult>=0 && sSearchFor.length>0){
+						$(this).parent().css("background-color","yellow");
+					}else{
+						$(this).parent().css("background-color","white");
+					}
+				});
+      });
+
+
+
+      //Delete elements
+      $(document).on("click", ".fa-trash-o", function(){
+        //remove the element from the DOM
+        $(this).parent().remove();
+        //finding the deleted item's ID and delete it from the array
+        var iArrayIndex = $(this).attr('data-arrayIndex');
+        for (var i = 0; i < aCompanies.length; i++) {
+          if (aCompanies[i].iCompanyId == iArrayIndex) {
+            aCompanies.splice(i, 1);
+          }
+        }
+        //update local storage
+        //convert the companies array into string
+        var sCompanies = JSON.stringify(aCompanies);
+        localStorage.Companies = sCompanies;
+        aNewCompanies = JSON.parse(localStorage.Companies)
+      });
+
+
+    </script>
+
+  </body>
+
+</html>

@@ -10,7 +10,7 @@ If you would like to get in sync with repo, get the updates or contribute, you n
   4. Get updates every day by `git pull`
 
 ## Contribution
-Contributions are welcome. Contact me on Slack or at `gaboratorium@gmail.com` to ask for contributor access (to be able to push to `master`). 
+Contributions are welcome. Contact me on Slack or at `gaboratorium@gmail.com` to ask for contributor access (to be able to push to `master`).
 In case of collaboration please:
 
 - **Create a folder with your name**, work in your own folder
@@ -26,6 +26,7 @@ In case of collaboration please:
  - [Calendar for assignment and exam dates](https://docs.google.com/spreadsheets/d/1m3lTxiW8433h5L_g9lljzWvtmq4-WX2qlkkREfrFIsY/edit#gid=0)
  - [Hand-in requirements and options](https://docs.google.com/spreadsheets/d/1D8OHzxcbDc_Reom1hbl5pxeK6pxjodrXVPPaBf6U43c/edit)
  - [Exam project requirements](https://docs.google.com/document/d/11s2seqE7-sMjOlLTH6CrvpR1EgmdbYKgYRNr5ufKgEE/edit)
+ - [1st Mandatory assignment requirements](https://docs.google.com/document/d/1juLrh62X-OzMA8Cu8ttIebpwneKRjIA6lsgCum0JT6A/pub)
 
 ### Social
 
