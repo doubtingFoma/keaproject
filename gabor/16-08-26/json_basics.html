@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Json Basics</title>
+</head>
+<body>
+	 <!-- jQuery  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Bootstrap js -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script>
+		// Task 1: create an empty object
+		var emptyObj1 = {};
+
+		console.log("Empty object: " + emptyObj1);
+
+		// Task 2: create an object with properties
+		var person2 = {
+			firstName: "Gabor",
+			lastName: "Pinter",
+			age: 24,
+			height: 175
+		};
+
+		// Task 3: Output the project properties
+		console.log("Person 2:");
+		console.log(person2.firstName);
+		console.log(person2.lastName);
+		console.log(person2.age);
+		console.log(person2.height);
+
+		// Task 4: Create a person with a first and lastname and output them
+		var person4 = {
+			firstName: "Santiago",
+			lastName: "Donoso"
+		};
+
+		console.log("Person 4 name: " + person4.firstName + " " + person4.lastName);
+
+		// Task 5: Create a new key to an existing object
+		person4.height = 180;
+
+		// Task 6: Create an object.
+		// Update a property
+		// Create a new key/value pair
+		// Delete a property
+		// Delete another property
+
+		var person6 = {
+			firstName: "Gabor",
+			lastName: "Pincer"
+		}
+
+		console.log("Person 6:", person6);
+		person6.lastName = "Pinter";
+		console.log("New person 6: ", person6);
+
+		person6.height = 175;
+		console.log(person6);
+
+		delete person6.height;
+		console.log(person6);
+
+		delete person6.lastName;
+		console.log(person6);
+
+		// Task 7: Increment a property
+
+		var person7 = {
+			name: "Gabor",
+			age: 23
+		}
+
+		console.log(person7.age);
+		person7.age++;
+		console.log(person7.age);
+
+		// Task 8: Assign an array as a property to a project.
+		// Output the first element
+		// Output all the elements
+		var bank8 = {
+			name: "International Bank",
+			customers: [
+				"John",
+				"Eva",
+				"Zoltan",
+				"Santiago",
+				"Gabor"
+			]
+		}
+
+		console.log("First customer: ", bank8.customers[0]);
+
+		for (var i = bank8.customers.length - 1; i >= 0; i--) {
+			console.log(i + ". customer: " + bank8.customers[i]);
+		}
+
+		// Task 9: Arrays and objects
+		// Create a family structure:
+
+		var myFamily = {
+			parents: [
+				{gender: "male", name: "A"},
+				{gender: "female", name: "B"}
+			],
+			siblings: [
+				{gender: "female", name: "A"},
+				{gender: "male", name: "A"}
+			],
+			pets: [
+				{type: "dog", name: "A"},
+				{type: "cat", name: "B"},
+			]
+		}
+
+		console.log(myFamily);
+		
+		var newSibling = {
+			type: "male",
+			name: "C"
+		}
+
+		myFamily.siblings.push(newSibling);
+		console.log(myFamily);
+	</script>
+</body>
+</html>

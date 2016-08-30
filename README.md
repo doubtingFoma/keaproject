@@ -9,6 +9,8 @@ If you would like to get in sync with repo, get the updates or contribute, you n
   3. Clone the repo by `git clone https://github.com/gaboratorium/keaproject.git`
   4. Get updates every day by `git pull`
 
+  It is recommended that you clone the repository in your `xampp/htdocs` folder, so you can easily run all the applications in your `localhost`.
+
 ## Contribution
 Contributions are welcome. Contact me on Slack or at `gaboratorium@gmail.com` to ask for contributor access (to be able to push to `master`).
 In case of collaboration please:
