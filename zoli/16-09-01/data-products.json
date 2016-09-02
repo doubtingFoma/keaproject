@@ -1,0 +1,5 @@
+[
+	{"name":"Google", "price":20, "icon":"https://www.wired.com/wp-content/uploads/2015/09/google-logo.jpg"},
+	{"name":"Microsoft", "price":30, "icon":"http://gfx.syscheck.melasweb.com/vendors/Microsoft.icon.png"},
+	{"name":"Tesla", "price":40, "icon":"https://www.tesla.com/sites/all/themes/custom/tesla_theme/assets/img/icons/apple-touch-icon-152x152.png?2"}
+]

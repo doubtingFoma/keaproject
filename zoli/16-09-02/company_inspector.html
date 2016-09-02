@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>TITLE</title>
+    <meta name="description" content="DESCRIPTION">
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Font awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>
+    <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <input id="txtName" type="text" value="" placeholder="Company Name">
+    <input id="txtPrice" type="text" value="" placeholder="Price">
+    <button id="btnSaveCompany">Save Company</button>
+    <div id="lblMessage"></div>
+    <br><br>
+    <input id="txtSearch" type="text" value="" placeholder="Please search...">
+    <button id="btnSearchCompany">Search Company</button>
+
+    <div id="lblSearchResult"></div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+
+
+      $("#btnSaveCompany").click(function(){
+        //get the name, and the price from the input fields
+        var sNameFromTextBox = $("#txtName").val();
+        var sPriceFromTextBox = $("#txtPrice").val();
+        //this is the page's link we want to use to transfer data
+        var sLink = "save-company.php?";
+
+        //execute the add company php site, to save the company data to the json file
+        $.get( sLink + "name="+ sNameFromTextBox + "&price="+ sPriceFromTextBox, function(sData){
+          //we write succes message in the DOM
+          $("#lblMessage").html(sData);
+        });
+
+      });
+
+      //searching among the company names
+      $("#btnSearchCompany").click(function(){
+        //empty the DOM
+        $("#lblSearchResult").empty();
+        //get the search phrase from the input
+        var sSearchValue = $("#txtSearch").val();
+        //this is the page's link we want to use to transfer data
+        var sLink = "search-company.php?";
+
+        //send the data to the server for process,
+        //get search result data back, convert it into json objects,
+        //and write all the results in the DOM
+        $.get( sLink + "search="+ sSearchValue, function(sData){
+          var aSearchResult = JSON.parse(sData);
+          for (var i = 0; i < aSearchResult.length; i++) {
+            $("#lblSearchResult").append("<div>" + aSearchResult[i] + "</div>");
+          }
+
+        });
+
+      });
+
+
+    </script>
+
+  </body>
+
+</html>
