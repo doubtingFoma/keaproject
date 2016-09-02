@@ -308,8 +308,9 @@
 
    			/* Remove from currentlyBeingEdited*/
    			for (var i = aCurrentlyBeingEdited.length - 1; i >= 0; i--) {
-   				if (aCurrentlyBeingEdited[i] == sId);
-   				aCurrentlyBeingEdited.splice(i, 1);
+   				if (aCurrentlyBeingEdited[i] == sId){
+   					aCurrentlyBeingEdited.splice(i, 1);
+   				}
    			}
 
    			/* Store array in local storage */
@@ -319,15 +320,42 @@
    		/* Stop editing element */
    		$("body").on("click", ".controls__cancelItem", function(){
    			var sId = $(this).parent().parent().attr("id");
+   			
+   			var iId = parseInt(sId.substring(sId.indexOf("_")+1, sId.length));
+
+   			/* Defining object type */
+   			var objectType = sId.substring(0, sId.indexOf("_"));
+   			switch (objectType) {
+   				case "user":
+   					var aArray = aUsers;
+   					var secondaryClass = "lastName";
+   					break;
+   				case "company":
+   					var aArray = aCompanies;
+   					var secondaryClass = "price";
+   					break;
+   				default:
+   					var aArray = [];
+   			}
+
+   			for (var i = aArray.length - 1; i >= 0; i--) {
+   				if (aArray[i].id  == iId) {
+   					var originalField1 = aArray[i].name;
+   					var originalField2 = aArray[i][secondaryClass];
+   				}
+   			}
+
    			/* Reset Dom */
    			var controlsHtml = "<i class='fa fa-pencil fa-2x fa-fw controls__editItem' aria-hidden='true'></i> <i class='fa fa-trash-o fa-2x fa-fw' aria-hidden='true'></i>";
+
    			$("#" + sId + " td.firstValue").html(originalField1);
    			$("#" + sId + " > td.secondValue").html(originalField2);
    			$("#" + sId + " td.controls").html(controlsHtml);
 
    			for (var i = aCurrentlyBeingEdited.length - 1; i >= 0; i--) {
-   				if (aCurrentlyBeingEdited[i] == sId);
-   				aCurrentlyBeingEdited.splice(i, 1);
+   				if (aCurrentlyBeingEdited[i] == sId){
+   					aCurrentlyBeingEdited.splice(i, 1);
+   				}
    			}
 
    		})
