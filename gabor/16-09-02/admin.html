@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin</title>
+
+	<!-- Load jQuery with Google CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	Font awesome
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+	
+	<style>
+		.task {
+			padding: 1rem;
+			border-bottom: 1px solid #E4E4E4;
+		}
+	</style>
+
+</head>
+<body>
+	<div class="task">
+		<p>Task 1: get number from backend: Tesla stock: <span id="stock-price"></span></p>
+	</div>
+	<div class="task">
+		<p>Task 2: get json from backend: Person name: <span id="person-name"></span></p>
+	</div>
+	<div class="task">
+		<p>Task 3: get companies from backend: </p>
+		<ul id="companyList3"></ul>
+	</div>
+	<div class="task">
+		<p>Task 4: see console</p>
+	</div>
+	<div class="task">
+		<p>Task 5: see console</p>
+	</div>
+	<div class="task">
+		<p>Task 6: write content to file from backend</p>
+		<input type="text" id="companyForm__txt"><button id="companyForm__button">Add company</button>
+		<p>See <a href="companies.txt">companies.txt</a></p>
+	</div>
+	<div class="task">
+		<p>Task 7: write first name and last name to file from backend</p>
+		<input type="text" id="namesForm__firstname" placeholder="First name...">
+		<input type="text" id="namesForm__lastname" placeholder="Last name">
+		<button id="namesForm__button">Add name</button>
+		<p>See <a href="names.txt">names.txt</a></p>
+	</div>
+
+	<!-- jQuery: ajax exercises -->
+	<script>
+		/* Task 1: get a random number from backend with AJAX and output it */
+		setInterval(function(){
+			$.get("get-number.php", function(sData){
+				$("#stock-price").text(sData);
+			})
+		}, 1000);
+
+		/* Task 2: get json from backend with AJAX an output it */
+		$.getJSON("get-json.php", function(jData){
+			$("#person-name").text(jData.name);
+		})
+
+		/* Task 3: get a group of companies from backend and output them */
+		/* Bonus: also sort them by price */
+		setInterval(function(){
+			var aCompanies = [];
+			$.getJSON("get-companies.php", function(jData){
+				aCompanies = jData;
+				
+				/* Sort them */
+				aCompanies.sort(function(a, b){ return a.price - b.price})
+				
+				$("#companyList3").html("");
+				/* Display in DOM */
+				for (var i = aCompanies.length - 1; i >= 0; i--) {
+					var listElem__icon = "<i class='fa " + aCompanies[i].icon + " fa-fw' aria-hidden='true'></i>";
+					var listElem = "<li>" + aCompanies[i].name + ": " + aCompanies[i].price + listElem__icon + "</li>";
+					$("#companyList3").append(listElem);
+				}
+			})
+		}, 1000)
+
+		/* Task 4: get a group of companies from backend which takes the date from external file */
+		$.getJSON("get-companies-from-json.php", function(jData){
+			console.log("Task 4: ", jData);
+		});
+
+		/* Task 5: get a group of companies from backend which takes the data from external file. Add a property 'price' to each object and pass it to client */
+		$.getJSON("get-companies-from-json-then-add-price.php", function(jData){
+			console.log("Task 5: ", jData);
+		});
+
+		/* Task 6: Write to file from backend */
+		$("#companyForm__button").click(function(e){
+			var sCompanyName = $("#companyForm__txt").val();
+			console.log("You pressed the button: ", sCompanyName);
+			e.preventDefault();
+			$.get("write-content-to-file.php?name="+sCompanyName, function(sData){
+				console.log(sData);
+			})
+		})
+
+		/* Task 7: Write first name and last name to file from backend */
+		/* Bonus: make it compatible with JSON and nonJSON files as well */
+		$("#namesForm__button").click(function(e){
+			var sFirstName = $("#namesForm__firstname").val();
+			var sLastName = $("#namesForm__lastname").val();
+			e.preventDefault();
+			$.get("write-names-to-file.php?firstname="+sFirstName+"&lastname="+sLastName, function(sData){
+				console.log(sData);
+			})
+		})
+		
+	</script>
+</body>
+</html>

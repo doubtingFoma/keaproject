@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Company Inspector</title>
+
+	<!-- Load jQuery with Google CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+	<style>
+		.form-control {
+			max-width: 500px;
+		}
+	</style>
+</head>
+<body>
+	
+	<!-- Save company -->
+	<h1>Save company</h1>
+	<form action="" id="saveCompanyForm">
+		<input type="text" id="saveCompanyForm__name" class="form-control" placeholder="Enter company name....">
+		<input type="text" id="saveCompanyForm__price" class="form-control" placeholder="Enter company price...">
+		<button id="saveCompanyForm" class='btn btn-default' type="submit">Save</button>
+		<div id="saveCompanyForm__feedback"></div>
+	</form>
+
+	
+	<!-- Search company -->
+	<h1>Search company</h1>
+	<form action="" id="searchCompanyForm">
+		<input type="text" id="searchCompanyForm__name" class="form-control" placeholder="Enter company name...\">
+		<button id="searchCompanyForm__button" class='btn btn-default' type="submit">Search</button>
+		<ul id="searchCompanyForm__feedback"></ul>
+	</form>
+
+	<script>
+		/* Event listeners */
+		$("#saveCompanyForm").submit(function(e){
+			e.preventDefault();
+			sCompanyName = $("#saveCompanyForm__name").val();
+			sCompanyPrice = $("#saveCompanyForm__price").val();
+
+			var url = "company_inspector_save.php?companyName=" + sCompanyName + "&companyPrice=" + sCompanyPrice;
+
+			console.log(url);
+
+			$.get(url, function(sData){
+				// package returned
+				$("#saveCompanyForm__feedback").html(sData);
+			});
+		})
+
+		$("#searchCompanyForm").submit(function(e){
+			e.preventDefault();
+			sCompanyName = $("#searchCompanyForm__name").val();
+
+			var url = "company_inspector_search.php?companyName=" + sCompanyName;
+			$.getJSON(url, function(sData){
+				for (var i = sData.length - 1; i >= 0; i--) {
+					var row = "<li>" + sData[i].name + "</li>";
+					$("#searchCompanyForm__feedback").append(row);
+				}
+			})
+		})
+	</script>
+	
+</body>
+</html>/
