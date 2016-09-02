@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Stock Exchange - First mandatory assignment</title>
+	<!-- Load jQuery with Google CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css">
+	<!-- Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+	<style>
+		/* Padding because of fixed navbar */
+		footer { text-align: center; color: #CFCFCF; }
+		.c-navbar--nomargin {margin: 0; border-radius: 0px;}
+		.c-secondary-text { color: #CFCFCF; }
+		.c-cover { background-color: #435e79; }
+		.c-cover__headline {color: #fff;}
+
+		.c-table-title__reset { 
+			font-size: 1.8rem;
+			text-decoration: underline;
+			color: #128f76;
+		 }
+
+		 .c-table-title__reset:hover {
+		 	cursor: pointer;
+		 	color: #C75517;
+		 }
+
+		.o-content { padding: 2rem; }
+		.o-inline { display: inline; }
+		.fa {color: #999999;}
+		.fa:hover {cursor: pointer;}
+		.fa-pencil:hover, .fa-check:hover {color: #18bc9c;}
+		.fa-trash-o:hover, .fa-times:hover {color: #e74c3c;}
+
+		td.priceIncreased {color: #128f76;}
+		td.priceIncreased i {color: #128f76;}
+
+		td.priceDecreased {color: #e74c3c;}
+		td.priceDecreased i {color: #e74c3c;}
+
+	</style>
+</head>
+<body>
+	
+	<!-- Navigation -->
+	<nav class="navbar navbar-default c-navbar--nomargin">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">Stock Exchange</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="">Home</a></li>
+				<li><a href="http://github.com/gaboratorium/keaproject" target="_blank">See project on GitHub</a></li>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Content -->
+	<div class="container-fluid">
+		<div class="row c-cover">
+			<div class="col-md-6 col-md-offset-3 text-center o-content">
+				<h1 class="c-cover__headline">Search in the database of Stock Exchange</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row c-cover">
+			<div class="col-md-6 col-md-offset-3 text-center o-content">
+				<form action="" class="form-inline" id="searchForm">
+					<div class="form-group">
+						<input type="text" id="searchForm__text" class="form-control" placeholder="What?">
+						<div class="dropdown o-inline" id="dropdownMenu">
+						 	<button class="btn btn-default dropdown-toggle" type="button" id="searchForm__dropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    Where?
+						    <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						   	<li class="dropdown-header">Where would you like to search?</li>
+						    <li value="everywhere"><a href="#">Everywhere</a></li>
+						    <li role="separator" class="divider"></li>
+						    <li value="users"><a href="#">Only between users</a></li>
+						    <li value="companies"><a href="#">Only between companies</a></li>
+						  </ul>
+						</div>
+							<button class="btn btn-success" type="submit">Go!</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h2>
+					<span id="companiesTitle">Companies</span>
+					<span id="companiesTitle--search"></span>
+					<span class="c-secondary-text">(<span id="companiesTitle--number">2</span>)</span>
+					<span id="companiesTitle--reset" class="c-table-title__reset"></span>
+				</h2>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<th>Company ID</th>
+						<th>Company name</th>
+						<th>Stock price</th>
+						<th>Options</th>
+						<tr>
+							<form action="" id="addCompanyForm">
+								<td>
+									<input type="text" class="form-control" disabled="disabled" placeholder="IDs are generated">
+								</td>
+								<td>
+									<input type="text" class="form-control" id="addCompanyForm__name" placeholder="Type name..." required="required">
+								</td>
+								<td>
+									<input type="text" class="form-control" id="addCompanyForm__price" placeholder="Type price..." required="required">
+								</td>
+								<td>
+									<button class="btn btn-success" type="submit">Add new company</button>
+								</td>
+							</form>
+						</tr>
+					</thead>
+					<tbody id="companyTableBody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h2>
+					<span id="usersTitle">Users</span>
+					<span id="usersTitle--search"></span>
+					<span class="c-secondary-text">(<span id="usersTitle--number">2</span>)</span>
+					<span id="usersTitle--reset" class="c-table-title__reset"></span>
+				</h2>
+				<table class="table table-striped table-bordered">
+					<thead>
+					<th>User ID</th>
+					<th>First name</th>
+					<th>Last name</th>
+					<th>Options</th>
+					<tr>
+						<form action="" id="addUserForm">
+							<td>
+								<input type="text" class="form-control" disabled="disabled" placeholder="IDs are generated">
+							</td>
+							<td>
+								<input type="text" class="form-control" id="AddUserForm__name" placeholder="Type name..." required="required">
+							</td>
+							<td>
+								<input type="text" class="form-control" id="AddUserForm__lastName" placeholder="Type last name..." required="required">
+							</td>
+							<td>
+								<button class="btn btn-success" type="submit">Add new user</button>
+							</td>
+						</form>
+					</tr>
+					</thead>
+					<tbody id="userTableBody">
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		Gábor Pintér - 2016
+	</footer>
+	
+	<script>
+		/*************************************/
+		/*************************************/
+		/* Application initializaation: */
+		/*************************************/
+		/*************************************/
+
+		var aUsers = [];
+		var aCompanies = [];
+		var aCurrentlyBeingEdited = [];
+		var sSearchArea = "everywhere";
+		var originalField1 = "";
+		var originalField2 = "";
+		init();
+
+
+		/*************************************/
+		/*************************************/
+		/* Event listeners: */
+		/*************************************/
+		/*************************************/
+
+		/* Adding new company */
+		$("#addCompanyForm").submit(function(e) {
+			console.log("#addCompanyForm submitted...");
+		  	addCompany();
+		  	e.preventDefault();
+		});
+
+		/* Adding new user... */
+		$("#addUserForm").submit(function(e) {
+			console.log("#addUserForm submitted...");
+		  	addUser();
+		  	e.preventDefault();
+		});
+
+		/* Searching... */
+		$("#searchForm").submit(function(e) {
+			console.log("#searchForm submitted...");
+		  	search();
+		  	e.preventDefault();
+		});
+
+		/* Dropdown selection */
+	  	$(".dropdown-menu li a").click(function(){ // a has to be selected because the dividers are lis as well
+		  	sSearchArea = $(this).parent().attr('value'); // grabs the value of the li
+		  	sSearchAreaText = $(this).text(); // to replace dropdown button text
+		  	console.log("A dropdown option selected: " + sSearchArea);
+      		$("#searchForm__dropdownButton").html(sSearchAreaText + "<span class='caret'></span>"); // replace dropdown button text
+      		$("#searchForm__dropdownButton").val(sSearchArea); //save selected area
+   		});
+
+   		/* Resetting company DOM */
+   		$("#companiesTitle--reset").click(function(){
+   			$("#companyTableBody").html("");
+   			$("#companiesTitle--number").text(aCompanies.length);
+   			$("#companiesTitle--search").text("");
+   			$("#companiesTitle--reset").text("");
+   			fillUpCompaniesDom();
+   		})
+
+   		/* Resetting user DOM */
+   		$("#usersTitle--reset").click(function(){
+   			$("#userTableBody").html("");
+   			$("#usersTitle--number").text(aUsers.length);
+   			$("#usersTitle--search").text("");
+   			$("#usersTitle--reset").text("");
+   			fillUpUsersDom();
+   		})
+
+   		/* Clicking on Edit */
+   		// $(".controls__editItem").click(function(){
+   		$("body").on("click", ".controls__editItem", function(){
+   			console.log("selecting...");
+   			var sId = $(this).parent().parent().attr("id"); // storing ids twice vs parent().parent() ¯\_(ツ)_/¯
+
+   			// Mark as being edited
+   			aCurrentlyBeingEdited.push(sId);
+
+   			originalField1 = $("#" + sId + " td.firstValue").text();
+   			originalField2 = $("#" + sId + " td.secondValue").text();
+
+   			console.log(originalField1);
+   			console.log(originalField2);
+
+   			editItem(sId);
+   		})
+
+   		/* Saving element */
+   		$("body").on("click", ".controls__saveItem", function(){
+   			/* Targeting id */
+   			var sId = $(this).parent().parent().attr("id");
+   			var iId = parseInt(sId.substring(sId.indexOf("_")+1, sId.length));
+
+   			/* Defining object type */
+   			var objectType = sId.substring(0, sId.indexOf("_"));
+   			switch (objectType) {
+   				case "user":
+   					var aArray = aUsers;
+   					var secondaryClass = "lastName";
+   					var localStorageArray = "sUsers";
+   					break;
+   				case "company":
+   					var aArray = aCompanies;
+   					var secondaryClass = "price";
+   					var localStorageArray = "sCompanies";
+   					break;
+   				default:
+   					var aArray = [];
+   			}
+
+   			/* Preparing values to insert*/
+   			var nameToInsert =  $("#" + sId + " input.name").val();
+   			var secondaryProperty =  $("#" + sId + " input." + secondaryClass ).val();
+
+   			/* Targeting object */
+   			for (var i = aArray.length - 1; i >= 0; i--) {
+   				if (aArray[i].id == iId) {
+   					aArray[i].name = nameToInsert;
+   					aArray[i][secondaryClass] = secondaryProperty;
+
+   					console.log(aArray[i]);
+   				}
+   			}
+
+   			/* Reset Dom */
+   			var controlsHtml = "<i class='fa fa-pencil fa-2x fa-fw controls__editItem' aria-hidden='true'></i> <i class='fa fa-trash-o fa-2x fa-fw controls__deleteItem' aria-hidden='true'></i>";
+   			$("#" + sId + "> td + td").html(nameToInsert);
+   			$("#" + sId + " > td + td + td").html(secondaryProperty);
+   			$("#" + sId + " td.controls").html(controlsHtml);
+
+   			/* Remove from currentlyBeingEdited*/
+   			for (var i = aCurrentlyBeingEdited.length - 1; i >= 0; i--) {
+   				if (aCurrentlyBeingEdited[i] == sId);
+   				aCurrentlyBeingEdited.splice(i, 1);
+   			}
+
+   			/* Store array in local storage */
+			localStorage[localStorageArray] = JSON.stringify(aArray);
+   		})
+
+   		/* Stop editing element */
+   		$("body").on("click", ".controls__cancelItem", function(){
+   			var sId = $(this).parent().parent().attr("id");
+   			/* Reset Dom */
+   			var controlsHtml = "<i class='fa fa-pencil fa-2x fa-fw controls__editItem' aria-hidden='true'></i> <i class='fa fa-trash-o fa-2x fa-fw' aria-hidden='true'></i>";
+   			$("#" + sId + " td.firstValue").html(originalField1);
+   			$("#" + sId + " > td.secondValue").html(originalField2);
+   			$("#" + sId + " td.controls").html(controlsHtml);
+
+   			for (var i = aCurrentlyBeingEdited.length - 1; i >= 0; i--) {
+   				if (aCurrentlyBeingEdited[i] == sId);
+   				aCurrentlyBeingEdited.splice(i, 1);
+   			}
+
+   		})
+
+   		/* Delete element*/
+   		$("body").on("click", ".controls__deleteItem", function(){
+   			var sId = $(this).parent().parent().attr("id");
+   			var iId = parseInt(sId.substring(sId.indexOf("_")+1, sId.length));
+
+   			/* Defining object type */
+   			var objectType = sId.substring(0, sId.indexOf("_"));
+   			switch (objectType) {
+   				case "user":
+   					var aArray = aUsers;
+   					var localStorageArray = "sUsers";
+   					break;
+   				case "company":
+   					var aArray = aCompanies;
+   					var localStorageArray = "sCompanies";
+   					break;
+   				default:
+   					var aArray = [];
+   			}
+
+   			/* Targeting object */
+   			for (var i = aArray.length - 1; i >= 0; i--) {
+   				if (aArray[i].id == iId) {
+   					aArray.splice(i, 1);
+   				}
+   			}
+
+   			// Write to local storage
+			localStorage[localStorageArray] = JSON.stringify(aArray);
+
+   			// Remove from Dom
+   			$("#"+sId).remove();
+   		})
+
+   		/*************************************/
+		/*************************************/
+		/* Intervals: */
+		/*************************************/
+		/*************************************/
+
+		/* Get new prices every second */
+		setInterval(function(){
+			updateCompaniesPrice();
+		}, 1000);
+
+		/*************************************/
+		/*************************************/
+		/* Functions: */
+		/*************************************/
+		/*************************************/
+
+		/* Checks if database has been initialized before. If not, it calls for DB initialization */
+		function init(){
+			console.log("init()...");
+			var bOnBoard = localStorage.getItem("sOnBoard");
+			if (!bOnBoard) {
+				// If localStorage is untouched, fill it up with companies and users
+				initCompanies();
+				initUsers();
+				localStorage.sOnBoard = true;
+			} else {
+				// If localStorage contains information
+				// Get users
+				var sUsers = localStorage.getItem("sUsers");
+				aUsers = JSON.parse(sUsers);
+
+				// Get comppanies
+				var sCompanies = localStorage.getItem("sCompanies");
+				aCompanies = JSON.parse(sCompanies);
+			}
+
+			// Refresh Dom
+			fillUpUsersDom();
+			fillUpCompaniesDom();
+		}
+
+		/* Creates dummy DB of companies */
+		function initCompanies(){
+			console.log("initCompanies()...");
+
+			// Generate properties
+			var iId = getId();			
+			var iRandomPrice1 = getRandomPrice();
+			var iRandomPrice2 = getRandomPrice();
+			var iRandomPrice3 = getRandomPrice();
+
+			// Create example companies
+			aCompanies = [
+				{ "id": iId, "name": "Google", "price": iRandomPrice1 },
+				{ "id": iId+1, "name": "Twitter", "price": iRandomPrice2 },
+				{ "id": iId+2, "name": "Facebook", "price": iRandomPrice3 }
+			];
+
+			// Store companies
+			localStorage.sCompanies = JSON.stringify(aCompanies);
+		}
+
+		/* Creates dummy DB of users */
+		function initUsers(){
+			console.log("initUsers()...");
+
+			// Generate properties
+			var iId = getId();
+
+			// Generate example users
+			aUsers = [
+				{ "id": iId, "name": "Gabor", "lastName": "Pinter"},
+				{ "id": iId+1, "name": "Zoltan", "lastName": "Fraknoi"},
+				{ "id": iId+2, "name": "Santiago", "lastName": "Donoso"},
+			];
+
+			// Store users
+			localStorage.sUsers = JSON.stringify(aUsers);
+		}
+
+		/* Returns a random number between 0 and 10000*/
+		function getRandomPrice(){
+			console.log("getRandomPrice()...");
+			return Math.round(Math.random()*10000);
+		}
+
+		/* Returns unique ID based on current time */
+		function getId(){
+			console.log("getId()...");
+			var date = new Date();
+			return date.getTime();
+		}
+
+		/* Returns a row markup based on the input object */
+		function getRow(object, objectType){
+			console.log("getRow()...");
+
+			/* Personalizing row to objectType */
+			switch (objectType) {
+				case "company":
+					var thirdColumn = "<td class='price secondValue'>" + object.price + "</td>";
+					var editItem = "";
+					var deleteItem = "";
+					break;
+
+				case "user":
+					var thirdColumn = "<td class='lastName secondValue'>" + object.lastName + "</td>"
+					var editItem = "";
+					var deleteItem = "";
+					break;
+				
+				default: 
+					var row = "<tr> \
+						<td>Unknown objectType</td> \
+						<td>null</td> \
+						<td>null</td> \
+						<td>null</td> \
+					</tr>";
+					break;
+			}
+					
+			/* Store markup as a string */
+			/* Let's assume not all the IDs are unique (even though in this implementation they are), so we prefix them with objectType */
+			var row = "<tr id='"+ objectType + "_" + object.id +"'>\
+					<td class='id'>"+object.id+"</td>\
+					<td class='name firstValue'>"+object.name+"</td>"
+					+ thirdColumn + 
+					"<td class='text-center controls'><i class='fa fa-pencil fa-2x fa-fw controls__editItem' aria-hidden='true'></i> <i class='fa fa-trash-o fa-2x fa-fw controls__deleteItem' aria-hidden='true'></i></td>\
+					</tr>";
+			return row;
+		}
+
+		/* Redraws the content of the user table */
+		function fillUpUsersDom(){
+			console.log("fillUpUsersDom()...");
+			for (var i = 0; i < aUsers.length; i++) {
+				var user = aUsers[i];
+				var row = getRow(user, "user");
+				$("#userTableBody").prepend(row);
+			}
+			$("#usersTitle--number").text(aUsers.length);
+		}
+
+		/* Redraws the content of the company table */
+		function fillUpCompaniesDom(){
+			console.log("fillUpCompaniesDom()...");
+			for (var i = 0 ; i < aCompanies.length; i++) {
+				var company = aCompanies[i];
+				var row = getRow(company, "company");
+				$("#companyTableBody").prepend(row);
+			}
+			$("#companiesTitle--number").text(aCompanies.length);
+		}
+
+		/* Adding a new company: storing it in localstorage, and draw in DOM*/
+		function addCompany(){
+			console.log("addCompany()...");
+			var sName = $("#addCompanyForm__name").val();
+			var sPrice = $("#addCompanyForm__price").val();
+			var iId = getId();
+			
+			var jCompany = {
+				"id": iId,
+				"name": sName,
+				"price": sPrice
+			};
+
+			// Add company to array, and store it locally
+			aCompanies.push(jCompany);
+			var sCompanies = JSON.stringify(aCompanies);
+			localStorage.sCompanies = sCompanies;
+
+			// Draw in DOM
+			var row = getRow(jCompany, "company");
+			$("#companyTableBody").prepend(row);
+			$("#companiesTitle--number").text(aCompanies.length);
+
+			$("#addCompanyForm__name").val("");
+			$("#addCompanyForm__price").val("");
+		}
+
+		function addUser(){
+			console.log("addUser()...");
+			var sName = $("#AddUserForm__name").val();
+			var sLastName = $("#AddUserForm__lastName").val();
+			var iId = getId();
+
+			var jUser = {
+				"id": iId,
+				"name": sName,
+				"lastName": sLastName
+			}
+
+			aUsers.push(jUser);
+			var sUsers = JSON.stringify(aUsers);
+			localStorage.sUsers = sUsers;
+
+			var row = getRow(jUser, "user");
+			$("#userTableBody").prepend(row);
+			$("#usersTitle--number").text(aUsers.length);
+
+			$("#AddUserForm__name").val("");
+			$("#AddUserForm__lastName").val("");
+		}
+
+		function search() {
+			var sSearchText = $("#searchForm__text").val().toLowerCase();
+			console.log("Searching " + sSearchText + " in " + sSearchArea);
+
+			// Search companies
+			if (sSearchArea == 'everywhere' || sSearchArea == 'companies') {
+				searchCompanies(sSearchText);
+			}
+
+			// Search users
+			if (sSearchArea == 'everywhere' || sSearchArea == 'users') {
+				searchUsers(sSearchText);
+			}
+		}
+
+		function searchCompanies(sSearchText){
+			console.log("Searching in companies...");
+			
+			/* Update + prepare DOM */
+			$("#companiesTitle--search").text(" with \"" + sSearchText + "\"");
+			$("#companiesTitle--reset").text("See all companies");
+			$("#companyTableBody").html(""); // reset to 0
+			
+			/* Do the search */
+			var iCompanyMatch = 0;
+			for (var i = aCompanies.length - 1; i >= 0; i--) {
+				var company = aCompanies[i];
+				
+				/* Update DOM if found*/
+				if (company.name.toLowerCase().includes(sSearchText)) {
+					var row = getRow(company, "company");
+					$("#companyTableBody").prepend(row);
+					iCompanyMatch++;
+				}
+			}
+			$("#companiesTitle--number").text(iCompanyMatch);
+		}
+
+		function searchUsers(sSearchText){
+			console.log("searchUsers");
+
+			/* Update + prepare DOM */
+			$("#usersTitle--search").text(" with \"" + sSearchText + "\"");
+			$("#usersTitle--reset").text("See all users");
+			$("#userTableBody").html("");
+
+			/* Do the search */
+			var iUserMatch = 0;
+			for (var i = aUsers.length - 1; i >= 0; i--) {
+				var user = aUsers[i];
+				if (user.name.toLowerCase().includes(sSearchText) || user.lastName.toLowerCase().includes(sSearchText)) {
+					console.log(aUsers[i].name);
+					var row = getRow(user, "user");
+					$("#userTableBody").prepend(row);
+					iUserMatch++;
+					console.log(iUserMatch);
+				}
+			}
+			$("#usersTitle--number").text(iUserMatch);
+		}
+
+		function editItem(id){
+
+			/* Splitting up ID string to get information */
+			var objectType = id.substr(0, id.indexOf('_'));
+			console.log("Editing type: ", objectType);
+			var iId = id.substr(id.indexOf('_')+1, id.length);
+			console.log("Editing id: ", iId);
+
+			/* Customizing search criteria*/
+			var sName = "";
+			var sCustomValue = "";
+			switch (objectType){
+				case 'user':
+					var aArrayToLookAt = aUsers;
+					var sField1 = $("#" + id + " .name");
+					var sField2 = $("#" + id + " .lastName");
+					break;
+				case 'company':
+					var aArrayToLookAt = aCompanies;
+					var sField1 = $("#" + id + " .name");
+					var sField2 = $("#" + id + " .price");
+					break;
+				default:
+					return;
+			}
+
+			/* Targeting object */
+			for (var i = aArrayToLookAt.length - 1; i >= 0; i--) {
+				if (aArrayToLookAt[i].id == iId) {
+					jCurrentObject = aArrayToLookAt[i];
+					sName = jCurrentObject.name;
+					iId = jCurrentObject.id;
+					if (objectType == "user"){
+						sCustomValue = jCurrentObject.lastName;
+						var secondaryClass = "lastName";
+					} else if (objectType == "company") {
+						sCustomValue = jCurrentObject.price;
+						var secondaryClass = "price"
+					}
+				}
+			}
+
+			/* Create Controls HTML */
+			var sControlsHtml = "<i class='fa fa-check fa-2x fa-fw controls__saveItem' aria-hidden='true'></i> <i class='fa fa-times fa-2x fa-fw controls__cancelItem'  aria-hidden='true'></i>";
+			
+			// Inject HTML
+			$("#" + id + " .controls").html(sControlsHtml);
+			sField1.html("<input type='text' id='" + iId + "' class='form-control name' value='" + sName + "'>");
+			sField2.html("<input type='text' class='form-control "+ secondaryClass +"' value='" + sCustomValue + "'>");
+		}
+
+		function updateCompaniesPrice() {
+			for (var i = aCompanies.length - 1; i >= 0; i--) {
+				
+				// Check if element is being edited
+				var bBeingEdited = false;
+				for (var j = aCurrentlyBeingEdited.length - 1; j >= 0; j--) {
+					if (aCurrentlyBeingEdited[j] == "company_" + aCompanies[i].id) {
+						bBeingEdited = true; // set a flag if yes
+					}
+				}
+
+				if (!bBeingEdited) {
+					var iId = aCompanies[i].id;
+					var iPrice = aCompanies[i].price;
+					iNewPrice = Math.floor(Math.random()*1000);
+
+					switch (iPrice < iNewPrice) {
+						case true:
+							var sIcon = "fa-arrow-up";
+							var sClass = "priceIncreased";
+							break;
+						case false:
+							var sIcon = "fa-arrow-down";
+							var sClass = "priceDecreased";
+							break;
+					}
+
+					$("#company_" + iId + " td.price ").html(iNewPrice + "<i class='fa fa-fw " + sIcon + "'></i>");
+					$("#company_" + iId + " td.price ").removeClass("priceIncreased");
+					$("#company_" + iId + " td.price ").removeClass("priceDecreased");
+					$("#company_" + iId + " td.price ").addClass(sClass);
+
+					aCompanies[i].price = iNewPrice
+					
+					//update localstorage
+					localStorage.sCompanies = JSON.stringify(aCompanies);
+				}
+
+			}
+		}
+
+	</script>
+
+</body>
+</html>
