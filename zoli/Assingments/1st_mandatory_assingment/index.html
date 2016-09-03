@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Zoltán Fraknói - Mandatory assingment 1</title>
+    <meta name="description" content="DESCRIPTION">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Font awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <style>
+      span{
+        background-color: #fcff75;
+      }
+      .lblIncrease{
+        background-color: transparent;
+        color: #199300;
+      }
+      .lblDecrease{
+        background-color: transparent;
+        color: #ff0000;
+      }
+      h1{
+        margin-bottom: 1em;
+        font-size: 2em;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+        vertical-align: middle;
+      }
+      .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+        border-radius: 0;
+        background-color: #376795;
+      }
+      .navbar{
+        border-radius: 0;
+        background-color: #2e577e;
+        border: 0;
+      }
+      .row-id{
+        font-style: italic;
+        font-weight: normal;
+        color: #cccccc;
+        background-color: transparent;
+      }
+      #txtSearch{
+        max-width: 50em;
+        margin: auto;
+        margin-bottom: 3em;
+      }
+
+    </style>
+
+
+  </head>
+
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <nav class="navbar navbar-inverse">
+  	  <div class="container-fluid">
+  	    <!-- Brand and toggle get grouped for better mobile display -->
+  	    <div class="navbar-header">
+  	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+  	        <span class="sr-only">Toggle navigation</span>
+  	        <span class="icon-bar"></span>
+  	        <span class="icon-bar"></span>
+  	        <span class="icon-bar"></span>
+  	      </button>
+  	      <a class="navbar-brand" href="#">1st Mandatory Assignment</a>
+  	    </div>
+
+  	    <!-- Collect the nav links, forms, and other content for toggling -->
+  	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  	      <ul class="nav navbar-nav">
+  	        <li class="active"><a href="#">Companies<span class="sr-only">(current)</span></a></li>
+  	        <!-- <li><a href="#">Users</a></li> -->
+  	      </ul>
+  	      <form class="navbar-form navbar-left">
+  	      </form>
+
+
+  	    </div><!-- /.navbar-collapse -->
+  	  </div><!-- /.container-fluid -->
+  	</nav>
+
+
+<!--
+    <h2>Company list</h2>
+    <div id="lblCompanies">
+  	</div>
+-->
+    <br>
+
+
+    <input id="txtSearch" type="text" placeholder="Universal Search" class="form-control">
+
+    <h1>Companies</h1>
+
+
+		<div class="bs-example" data-example-id="hoverable-table">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Company ID</th>
+						<th>Company Name</th>
+						<th>Stock Price</th>
+            <th>Option</th>
+					</tr>
+				</thead>
+
+				<tbody id="lblCompanies">
+          <tr>
+            <th><span class="row-id">Generated automatically</span></th>
+            <th><input id="txtCompanyName" type="text" placeholder="Company name" class="form-control"></th>
+            <th><input id="txtCompanyStockValue" type="text" placeholder="Stock Value" class="form-control"></th>
+            <th><button id="btnAddCompany" class="btn btn-success">Add company</button></th>
+          </tr>
+				</tbody>
+			</table>
+		</div>
+
+    <h1>Users</h1>
+
+
+    <div class="bs-example" data-example-id="hoverable-table">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>User ID</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+            <th>Option</th>
+					</tr>
+				</thead>
+
+				<tbody id="lblUsers">
+        <tr>
+          <th><span class = "row-id">Generated automatically</span></th>
+          <th><input id="txtUserFirstName" type="text" class="form-control" placeholder="First Name"></th>
+          <th><input id="txtUserLastName" type="text" class="form-control" placeholder="Last Name"></th>
+          <th><button id="btnAddUser" class="btn btn-success">Add User</button></th>
+        </tr>
+
+				</tbody>
+			</table>
+		</div>
+
+
+<!--
+    <h2>Search results</h2>
+    <div id="lblSearchResult">
+    </div>
+-->
+
+    <script>
+      //I like this here. This turns on strict mode which doesn't let you
+      //use undeclared variables. It is actually helpful because it prevents typos.
+      "use strict"
+
+//----------------------------EXERCISE----------------------------------------//
+      //Create objects with companies in it (just like last time).
+      //Store the objects in an array, and store the array in the local storage,
+      //then read it back from the local storage as an array and write it to the DOM
+
+
+      //this is an array which contains the companies
+      var aCompanies = [];
+      var aUsers = [];
+
+      //this is the array which contains the local storage data which we read
+      //also, the content of this will appear in the DOM
+      var aNewCompanies = [];
+      var aNewUsers = [];
+
+      //we determine if we edit any of the two values (if yes, we can't edit another one)
+      var bEditing1 = false;
+      var bEditing2 = false;
+
+
+
+//--------------------------------Functions-----------------------------------//
+
+      //new add company function that adds companies to the table
+      function addCompany() {
+        var iCompanyId = new Date().getTime();      //get current time in milliseconds from January 1. 1970.
+  			var sCompanyName = $("#txtCompanyName").val();
+        var nStockValue = $("#txtCompanyStockValue").val();
+
+        //converting string to float type
+        nStockValue = parseFloat(nStockValue);
+
+  			var jCompany = {
+          iCompanyId: iCompanyId,
+          sCompanyName: sCompanyName,
+          stockvalue: nStockValue
+        };
+
+  			aCompanies.push(jCompany);
+  			console.log(aCompanies);
+
+        //convert the companies array into string
+        var sCompanies = JSON.stringify(aCompanies);
+        localStorage.Companies = sCompanies;
+
+        aNewCompanies = JSON.parse(localStorage.Companies);
+
+        $("#lblCompanies").append('<tr id='+ iCompanyId +'><th scope="row">' + iCompanyId + '</th><td>' + sCompanyName + '</td><td>' + nStockValue + '</td><td><button class="btn-default btn" id="btnEdit">Edit</button> <button class="btn-danger btn" id="btnDelete">Delete</button></td></tr>');
+
+        $("#txtCompanyStockValue").val("");
+        $("#txtCompanyName").val("");
+      }
+
+
+      //Add new users
+      function addUser() {
+        var iUserId = new Date().getTime();      //get current time in milliseconds from January 1. 1970.
+  			var sFirstName = $("#txtUserFirstName").val();
+        var sLastName = $("#txtUserLastName").val();
+
+  			var jUser = {
+          iUserId: iUserId,
+          sFirstName: sFirstName,
+          sLastName: sLastName
+        };
+
+  			aUsers.push(jUser);
+  			console.log(aUsers);
+
+        //convert the companies array into string
+        var sUsers = JSON.stringify(aUsers);
+        localStorage.Users = sUsers;
+
+        aNewUsers = JSON.parse(localStorage.Users);
+
+        $("#lblUsers").append('<tr id='+ iUserId +'><th scope="row">' + iUserId + '</th><td>' + sFirstName + '</td><td>' + sLastName + '</td><td><button class="btn-default btn" id="btnEdit">Edit</button> <button class="btn-danger btn" id="btnDelete">Delete</button></td></tr>');
+
+        $("#txtUserFirstName").val("")
+        $("#txtUserLastName").val("");
+      }
+
+
+      //Universal search for both the companies and the users
+      //it searches for every character, not just for a 100% match
+      function nameSearch(sSearchFor, sSearchIn){
+        sSearchFor = sSearchFor.toLowerCase();
+
+        $( sSearchIn ).children("tr").children("td:nth-of-type(1)").each(function(){
+
+  				var sCompareTo = $(this).text();
+          sCompareTo = sCompareTo.toLowerCase();
+
+          var iResult = sCompareTo.search(sSearchFor);
+
+  				if(iResult>=0 && sSearchFor.length>0){
+  					$(this).parent().css("background-color","yellow");
+  				}else{
+  					$(this).parent().css("background-color","white");
+  				}
+
+				});
+
+      }
+
+      //there is only one delete function for every record
+      function deleteRecord(thisObj){
+        var iRowId = thisObj.parent().parent().attr('id');
+        var sTableType = thisObj.parent().parent().parent().attr('id');
+
+        if (sTableType == "lblCompanies") {
+          for (var i = 0; i < aCompanies.length; i++) {
+            if (aCompanies[i].iCompanyId == iRowId) {
+              aCompanies.splice(i, 1);
+            }
+          }
+          //store the data in the local storage (and read it back)
+          var sCompanies = JSON.stringify(aCompanies);
+          localStorage.Companies = sCompanies;
+          aNewCompanies = JSON.parse(localStorage.Companies);
+        //I used else if, in case that a new table will be added in the future
+        } else if (sTableType == "lblUsers") {
+          for (var i = 0; i < aUsers.length; i++) {
+            if (aUsers[i].iUserId == iRowId) {
+              aUsers.splice(i, 1);
+            }
+          }
+          var sUsers = JSON.stringify(aUsers);
+          localStorage.Users = sUsers;
+          aNewUsers = JSON.parse(localStorage.Users);
+        }
+
+
+        thisObj.parent().parent().remove();
+      }
+
+
+      //when editing, we store the html data here.
+      //yes, it should be a global variable, otherwise the
+      //event handling won't work
+      var sEditOriginal1 = "", sEditOriginal2 = "";
+      var sNewValue, iEditID, sEditType, currentEditObj;
+
+      function editValues(thisObj){
+        //indicator that we are currently editing
+        bEditing1 = true;
+        bEditing2 = true;
+
+        //the individual ID
+        iEditID = thisObj.parent().parent().attr('id');
+        //determining if it is a company or a user
+        sEditType = thisObj.parent().parent().parent().attr('id');
+
+        //we store the original values
+        sEditOriginal1 = thisObj.parent().parent().children("td:nth-of-type(1)").html();
+        sEditOriginal2 = thisObj.parent().parent().children("td:nth-of-type(2)").html();
+
+        //replace them with a text field so it can be edited and two buttons to save and cancel;
+        thisObj.parent().parent().children("td:nth-of-type(1)").html('<input id="txtEdit1" type="text" placeholder="" class="form-control"> <button id="btnSaveEdit1" class="btn btn-success">Save</button> <button class="btn-danger btn" id="btnCancelEdit1">Cancel</button>')
+        thisObj.parent().parent().children("td:nth-of-type(2)").html('<input id="txtEdit2" type="text" placeholder="" class="form-control"> <button id="btnSaveEdit2" class="btn btn-success">Save</button> <button class="btn-danger btn" id="btnCancelEdit2">Cancel</button>')
+
+        currentEditObj = thisObj;
+
+      }
+
+      //replacing values in the arrays and push them to the local storage
+      function replaceValue(iID, sArray, sReplaceWith, iColumn){
+        if (sArray == "lblCompanies") {
+
+          for (var i = 0; i < aCompanies.length; i++) {
+            if (aCompanies[i].iCompanyId == iID) {
+              if (iColumn == 1) {
+                aCompanies[i].sCompanyName = sReplaceWith;
+              } else if (iColumn == 2) {
+                aCompanies[i].stockvalue = parseFloat(sReplaceWith);
+              }
+              break;
+            }
+          }
+          var sCompanies = JSON.stringify(aCompanies);
+          localStorage.Companies = sCompanies;
+          aNewCompanies = JSON.parse(localStorage.Companies);
+
+        } else if (sArray == "lblUsers") {
+
+          for (var i = 0; i < aUsers.length; i++) {
+            if (aUsers[i].iUserId == iID) {
+              if (iColumn == 1) {
+                aUsers[i].sFirstName = sReplaceWith;
+              } else if (iColumn == 2) {
+                aUsers[i].sLastName = sReplaceWith;
+              }
+              break;
+            }
+          }
+          var sUsers = JSON.stringify(aUsers);
+          localStorage.Users = sUsers;
+          aNewUsers = JSON.parse(localStorage.Users);
+
+        }
+      }
+
+      //simulating stock price fluctuation
+      function GetNewPrice(){
+        //do this for every company in the array
+        for (var i = 0; i < aCompanies.length; i++) {
+          //save the previous value for comparison
+          var nLastStockValue = aCompanies[i].stockvalue;
+
+          //generate a random number between 5 and -5
+          var nChange = (Math.random() * 10 )-5;
+
+          //add the number to the stock value
+          aCompanies[i].stockvalue += nChange;
+
+          //make the floating point value to fixed point (2 decimals)
+          aCompanies[i].stockvalue = parseFloat(aCompanies[i].stockvalue.toFixed(2));
+          //creating an id string for search
+          var sSearchID = "#"+aCompanies[i].iCompanyId;
+
+          //formatting the and writing the new values according to their change
+          //also added some font-awesome arrows to make them look better
+          if (nLastStockValue > aCompanies[i].stockvalue) {
+            $(sSearchID).children("td:nth-of-type(2)").html('<span class=lblDecrease>' + aCompanies[i].stockvalue + ' <i class="fa fa-arrow-down" aria-hidden="true"></i></span>');
+          } else if (nLastStockValue < aCompanies[i].stockvalue) {
+            $(sSearchID).children("td:nth-of-type(2)").html('<span class=lblIncrease>' + aCompanies[i].stockvalue + ' <i class="fa fa-arrow-up" aria-hidden="true"></i></span>');
+          } else {
+            $(sSearchID).children("td:nth-of-type(2)").html(aCompanies[i].stockvalue);
+          }
+          //console.log(sSearchID);
+        }
+        var sCompanies = JSON.stringify(aCompanies);
+        localStorage.Companies = sCompanies;
+        aNewCompanies = JSON.parse(localStorage.Companies);
+
+      }
+
+/*
+      //I didn't want to delete this, but it's completely unneccesary
+
+      //search and highlight the found string
+      //this is an older function. Actually pretty neat, it highlights
+      //only the found characters, not just whole words
+      function advSearchCompany(sSearchPhrase){
+        if (sSearchPhrase.length > 0) {
+
+          //delete all current elements of the DOM
+          $("#lblSearchResult").empty();
+          //cycle through all the elements of the array
+          for (var i = 0; i < aCompanies.length; i++) {
+            //create a variable that holds the fully lower case version of the company name (to make search results better)
+            var sSearchIn = aCompanies[i].sCompanyName.toLowerCase();
+            // string.search() function returns with an index value if it finds something (if not, it's -1)
+            var iResult = sSearchIn.search(sSearchPhrase);
+
+            if ( iResult >= 0){
+              //the output of the search result, stored in a variable
+              var sWriteOut = "";
+              //write the letters before the search result
+              for (var j = 0; j < iResult; j++) {
+                sWriteOut = sWriteOut + aCompanies[i].sCompanyName[j];
+              }
+              //create a span to highlight the search result characters
+              sWriteOut = sWriteOut + "<span>";
+              //here are the highlighted characters
+              for (var j = iResult; j < iResult+sSearchPhrase.length; j++) {
+                sWriteOut = sWriteOut + aCompanies[i].sCompanyName[j];
+              }
+              //close the span tag
+              sWriteOut = sWriteOut + "</span>";
+              //write the rest of the result
+              for (var j = iResult+sSearchPhrase.length; j < aCompanies[i].sCompanyName.length; j++) {
+                sWriteOut = sWriteOut + aCompanies[i].sCompanyName[j];
+              }
+
+              //write the found company name in the DOM
+              $("#lblSearchResult").append("<div>"+ sWriteOut +"</div>");
+            }
+          }
+
+        } else {
+          //if there's no search term, then just delete everything
+          $("#lblSearchResult").empty();
+        }
+      }
+*/
+//----------------------------------------------------------------------------//
+
+        /*  PAGE LAUNCH  */
+
+      //we read back the data from the local storage at the launch of the page
+      if (localStorage.Companies) {
+        aCompanies = JSON.parse(localStorage.Companies);
+        aNewCompanies = JSON.parse(localStorage.Companies);
+      }
+      if (localStorage.Users) {
+        aUsers = JSON.parse(localStorage.Users);
+        aNewUsers = JSON.parse(localStorage.Users);
+      }
+
+      for (var i = 0; i < aCompanies.length; i++) {
+//        $("#lblCompanies").append("<div>"+ aNewCompanies[i].sCompanyName + " " + aNewCompanies[i].stockvalue + "<i data-arrayIndex='" + aNewCompanies[i].iCompanyId + "' class='fa fa-trash-o fa-fw'></i></div>");
+          $("#lblCompanies").append('<tr id='+ aCompanies[i].iCompanyId +'><th scope="row">' + aCompanies[i].iCompanyId + '</th><td>' + aCompanies[i].sCompanyName + '</td><td>' + aCompanies[i].stockvalue + '</td><td><button class="btn-default btn" id="btnEdit">Edit</button> <button class="btn-danger btn" id="btnDelete">Delete</button></td></tr>');
+      }
+      for (var i = 0; i < aUsers.length; i++) {
+          $("#lblUsers").append('<tr id='+ aUsers[i].iUserId +'><th scope="row">' + aUsers[i].iUserId + '</th><td>' + aUsers[i].sFirstName + '</td><td>' + aUsers[i].sLastName + '</td><td><button class="btn-default btn" id="btnEdit">Edit</button> <button class="btn-danger btn" id="btnDelete">Delete</button></td></tr>');
+      }
+
+      //creating a simple timer for the new prices every second
+      var tmrStockChange = setInterval(GetNewPrice, 1000);
+
+
+//----------------------------------------------------------------------------//
+
+//-------------------EVENTS---------------------------------------------------//
+
+      //Adding a new Company
+      $(document).on("click", "#btnAddCompany", function(){
+        addCompany();
+      });
+
+      //Adding a new user
+      $(document).on("click", "#btnAddUser", function(){
+        addUser();
+      });
+
+      //Search in the both tables
+      $(document).on("input", "#txtSearch", function(){
+        nameSearch($(this).val(), "#lblCompanies");
+        nameSearch($(this).val(), "#lblUsers");
+      });
+
+      //Deleting a row
+      $(document).on("click", "#btnDelete", function(){
+        deleteRecord($(this));
+      });
+
+      //Go into edit mode
+      $(document).on("click", "#btnEdit", function(){
+        if (bEditing1 == false && bEditing2 == false) {
+          //whenever someone is editing something, the stock price changes stop to avoid interference
+          clearInterval(tmrStockChange);
+          editValues($(this));
+        }
+
+			});
+
+      //When cancel is pressed, the original values are placed back in the DOM
+      $(document).on("click", "#btnCancelEdit1", function(){
+        $(this).parent().html(sEditOriginal1);
+        bEditing1 = false;
+        //restart the timer (and the stock price simulation) when every edit was finished
+        if (bEditing2 == false) {
+          tmrStockChange = setInterval(GetNewPrice, 1000)
+        }
+      });
+      $(document).on("click", "#btnCancelEdit2", function(){
+        $(this).parent().html(sEditOriginal2);
+        bEditing2 = false;
+        //restart the timer (and the stock price simulation) when every edit was finished
+        if (bEditing1 == false) {
+          tmrStockChange = setInterval(GetNewPrice, 1000)
+        }
+      });
+
+
+      //saving the new values of the first column
+      $(document).on("click", "#btnSaveEdit1", function(){
+        sNewValue = $("#txtEdit1").val();
+        if (sNewValue.length > 0) {
+          currentEditObj.parent().parent().children("td:nth-of-type(1)").html( sNewValue );
+          replaceValue(iEditID, sEditType, sNewValue, 1);
+        } else {
+          $(this).parent().html(sEditOriginal1);
+        }
+        bEditing1 = false;
+        //restart the timer (and the stock price simulation) when every edit was finished
+        if (bEditing2 == false) {
+          tmrStockChange = setInterval(GetNewPrice, 1000)
+        }
+
+      });
+
+      //saving the new values of the second column
+      $(document).on("click", "#btnSaveEdit2", function(){
+        sNewValue = $("#txtEdit2").val();
+        if (sNewValue.length > 0) {
+          //replacing in the DOM
+          currentEditObj.parent().parent().children("td:nth-of-type(2)").html( sNewValue );
+          //replacing in the array and the Local Storage
+          replaceValue(iEditID, sEditType, sNewValue, 2);
+        } else {
+          $(this).parent().html(sEditOriginal2);
+        }
+        bEditing2 = false;
+        //restart the timer (and the stock price simulation) when every edit was finished
+        if (bEditing1 == false) {
+          tmrStockChange = setInterval(GetNewPrice, 1000)
+        }
+
+      });
+
+//----------------------------------------------------------------------------//
+
+
+/*
+//This is not neccessary anymore, but I don't want to delete it :(
+      //Delete elements
+      $(document).on("click", ".fa-trash-o", function(){
+        //remove the element from the DOM
+        $(this).parent().remove();
+        //finding the deleted item's ID and delete it from the array
+        var iArrayIndex = $(this).attr('data-arrayIndex');
+        for (var i = 0; i < aCompanies.length; i++) {
+          if (aCompanies[i].iCompanyId == iArrayIndex) {
+            aCompanies.splice(i, 1);
+          }
+        }
+        //update local storage
+        //convert the companies array into string
+        var sCompanies = JSON.stringify(aCompanies);
+        localStorage.Companies = sCompanies;
+        aNewCompanies = JSON.parse(localStorage.Companies)
+      });
+*/
+
+    </script>
+
+  </body>
+
+</html>
