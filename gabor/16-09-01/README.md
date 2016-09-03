@@ -1,4 +1,4 @@
-# GET, POST methods in PHP
+# GET, POST methods with forms and PHP
 
 ```
     [

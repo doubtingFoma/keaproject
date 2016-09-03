@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Reciever</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+
+	<ul id="messages"></ul>
+	
+    <script type="text/javascript">
+
+    	var jMessages = "";
+
+    	// Initialization
+    	$.getJSON("messenger.php?action=get", function(jData) {
+    		jMessages = jData;
+    		for (var i = 0; i < jMessages.length; i++) {
+    			var sListElement = "<li>From: " + jMessages[i].from + ", to: " + jMessages[i].to + ": " + jMessages[i].message + " | date: " + jMessages[i].date + "</li>";
+    			$("#messages").prepend(sListElement);
+    		}
+    	})
+
+    	// Checking for new messages
+    	setInterval(function(){
+    		$.getJSON("messenger.php?action=get", function(jNewMessages){
+
+    			// Check for new messages
+    			if (jMessages.length !== jNewMessages.length) {
+    				// If package from server differs from local package
+    				jMessages = jNewMessages;
+    				$("#messages").html("");
+
+    				// Update DOM
+    				for (var i = 0; i < jMessages.length; i++) {
+		    			var sListElement = "<li>From: " + jMessages[i].from + ", to: " + jMessages[i].to + ": " + jMessages[i].message + " | date: " + jMessages[i].date + "</li>";
+		    			$("#messages").prepend(sListElement);
+		    		}
+
+		    		// Send notification
+		    		notifyMe("You have a new message from: " + jMessages[jMessages.length-1].from);
+    			} else {
+    				// There are no updates
+    			}
+    		})
+    	}, 1000)
+
+    	// Notification
+		function notifyMe(text) {
+			// Let's check if the browser supports notifications
+			if (!("Notification" in window)) {
+			  alert("This browser does not support desktop notification"); 
+			}
+
+			// Let's check whether notification permissions have already been granted
+			else if (Notification.permission === "granted") {
+			  // If it's okay let's create a notification
+			  var notification = new Notification(text);
+			}
+
+			// Otherwise, we need to ask the user for permission
+			else if (Notification.permission !== 'denied') {
+				console.log("denied");
+			  Notification.requestPermission(function (permission) {
+			    // If the user accepts, let's create a notification
+			    if (permission === "granted") {
+			      var notification = new Notification("Hi there!");
+			    }
+			  });
+			}
+		}
+	</script>
+</body>
+</html>
