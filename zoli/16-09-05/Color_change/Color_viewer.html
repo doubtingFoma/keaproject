@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>
+      Color changer
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <style>
+
+    *{
+      margin: 0px;
+      padding: 0px;
+      box-sizing: border-box;
+    }
+
+    html,body{
+      width: 100%;
+      height: 100%;
+      color: white;
+      background-color: #222222;
+    }
+
+    #qr1{
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      border: 10px solid blue;
+    }
+
+    #qr2{
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      border: 10px solid red;
+    }
+
+    #qr3{
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      border: 10px solid purple;
+    }
+
+    #qr4{
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      border: 10px solid yellow;
+    }
+
+    </style>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- QR Codes that contain the link to change the color automatically -->
+    <!-- The QR codes should contain the link to the php site with the correct input data -->
+    <div id="qr1">
+      <img src="blue.png">
+    </div>
+
+    <div id="qr2">
+      <img src="red.PNG">
+    </div>
+
+    <div id="qr3">
+      <img src="purple.PNG">
+    </div>
+
+    <div id="qr4">
+      <img src="yellow.PNG">
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript">
+
+    //check the color.txt file every second for a color change
+    setInterval(function(){
+      //read the color from the color.txt file and set the background-color to that color
+      $.get("color.txt", function(sColor){
+        $("body").css("background-color", sColor);
+      })
+    }, 1000);
+
+
+
+    </script>
+
+  </body>
+</html>

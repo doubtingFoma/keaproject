@@ -29,6 +29,7 @@ In case of collaboration please:
  - [Hand-in requirements and options](https://docs.google.com/spreadsheets/d/1D8OHzxcbDc_Reom1hbl5pxeK6pxjodrXVPPaBf6U43c/edit)
  - [Exam project requirements](https://docs.google.com/document/d/11s2seqE7-sMjOlLTH6CrvpR1EgmdbYKgYRNr5ufKgEE/edit)
  - [1st Mandatory assignment requirements](https://docs.google.com/document/d/1juLrh62X-OzMA8Cu8ttIebpwneKRjIA6lsgCum0JT6A/pub)
+ - [Schedule for the 1st semester](https://docs.google.com/spreadsheets/d/17calSFIYJFmXsx4_O_10RNqLMmBvAVo4JTxCHQg09Vw/edit#gid=0)
 
 ### Social
 
