@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>TITLE</title>
+    <meta name="description" content="DESCRIPTION">
+    <!--[if lt IE 9]>
+    <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+
+      img{
+        width: 50px;
+        height: 50px;
+      }
+    </style>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <table class="table">
+          <tbody id="tableCompanies">
+          </tbody>
+        </table>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+      "use strict"
+      //global ajax function in jquery
+      //this function is called when using $.get() or $.getJSON()
+
+
+      $.ajax(
+        {
+          "url":"wallstreet.php",  //opening server.php
+          "method":"get",  //do a get function
+          "cache":false, //don't cache it
+          "dataType":"json" //the type of the data I get back (eg: text, JSON, script)
+        }
+      ).done(function(sData){ //when the ajax function is done, execute the next function
+
+        getCompanies(sData);
+
+      }).fail(function(jError){ //when the ajax function fails to run, execute this code
+        //we write an error message, and some extra information
+        console.log("Error: " + JSON.stringify(jError));
+      });
+
+      function getCompanies(aCompanies){
+
+
+        console.log(aCompanies);
+        //this is the html we want to write out.
+        //IMPORTANT: if you want to just append everything with jQuery to the html
+        //it will not work, because it automatically closes every tag it opens,
+        //so $("#tableCompanies").append("<tr>") will actually output <tr></tr>
+        var htmlWrite = "";
+
+        for (var i = 0; i < aCompanies.length; i++) {
+          //add a row opening to the page
+          htmlWrite+="<tr>";
+
+          //these are the coloumns
+          for (var j = i; j < i+4; j++) {
+            //a try-catch function will try to execute the try part, if it fails,
+            //it jumps to the catch part and executes the code there
+            try {
+              htmlWrite += "<td>" + aCompanies[j].stockName + " " + aCompanies[j].stockPrice + " <img src=" + aCompanies[j].stockIcon +"></td>";
+            } catch (e) {
+              console.log("Error at this element: " + aCompanies[j] + " " + (i+1) );
+            }
+
+          }
+          htmlWrite+="</tr>";
+          i+=3;
+        }
+
+        $("#tableCompanies").html(htmlWrite);
+
+      }
+
+
+
+
+
+    </script>
+
+
+  </body>
+
+</html>
