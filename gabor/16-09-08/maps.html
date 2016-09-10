@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        width: 90%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+
+      var map;
+      var aMapKeys = 
+      [
+/*        '1WVj0jrCTWRzVYEgcnqq1wDiAaMhTgyAjWgoa0SxfJOA',
+        '1BSoGE4pSR7Y7vdYT1gcvnYdGg7c6JO89ZX9PZFMJqO0',
+        '1KmjqWz6JElrpY5EjyvD4oPANDQM35XIRiedmG9ABvhA',
+        '1jlWBpb39q1OpVacFYA8jT8A7ajPxBP8Q10yJ4q0_4hk',
+        '1sdU9w9PSOCCw6HDypyyFDOI6ZUxlK4dwID3OIygm4ao',
+        '1VN5QOSe5KUbRLam9jAtTuApsU3vxa1yQ3qtGADhMuiA',
+        '1uhs1UIVHWsJJSI2x2QVYG0gDEdhaM28NcMzgstFa4o0',
+        '1DR7-vxt61rHbMOXvtvtix8bIVWI_Oj70di4lc9B31iQ',
+        '1jIjx94NP-NI4OiK6CBI0VtNCKlDd69rNlTbW_Tnn0CU',
+        '1_X0rM3sHw6zRKFGkPQtg_DXpXjURtIoPt74vKZ-TdSU',
+        '1x7BWbAj6Mg6eXOfOmOHUh7VveBbn0oPRwxKM1a8jYZM',
+        '11SdcIdl8fajEKf83nX3pdFCm8zbPQzqQxZM52RNLMfA',
+        '1gHphsCSpXTrLqrfTtJtBjHfge_UMeHApn4qpjGtBql0',
+        '1lEEsXeAVNpX2gR5Y_MqQJ5mOcpnI68Zfo0fTohW0tmg',*/
+        '1BaruPZvOHgGi9K7EHfjFS-NqXjB2R6lXC-hOtNzoUPk'
+/*        '1N7q7Xb7hwsy7RercP5oSRMy0VaYU9rATrDl19lrg5so',
+        '1tDE5SY4MvtjItWedhIzkqb6e27BJuNeIkZFzlCX1Dq4',
+        '1KmjqWz6JElrpY5EjyvD4oPANDQM35XIRiedmG9ABvhA',
+        '1ocvC46jZqaIJ98H5zHV_gul6RCIVIpkiiKP1SGrB_2U',
+        '1P_98i7qVhzVWdpYpORM_9MnRbDs_MsZqDwBp1NAtbYw',
+        '1AFFUnhI5vdCNnFqLuFB9_CZ4aejL9Mx-eqhMlGj5-ig',
+        '1qWva7oxUYG3pHdHoNWg3hxxRhdMPZS4x3SXDpycpw84',
+        '10vvNjBan2im8nc0D8XSpc17FT95XhuQ08iQXAmEHcHs',
+        '1jGm-PreFucq1oIytalT-oI_z4fC5ES73N412gsNWWG0',
+        '1j4aJ1rHojLMJLoEBOgQgysFX-LD269lZcGJB-PZ4zw4',
+        '1KmjqWz6JElrpY5EjyvD4oPANDQM35XIRiedmG9ABvhA',
+        '127T7jwI-0m9rUlD0rYAnsnssiegwW6pCTe5w4utyGEY'*/
+      ];
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 55.696203, lng: 12.556982},
+          zoom: 12
+        });
+        for (var i = 0; i < aMapKeys.length; i++) {
+          getMarkerPoints(aMapKeys[i]);
+        }
+      }
+
+      function getMarkerPoints( sKey ){
+        //AJAX
+        var sLink = "https://spreadsheets.google.com/feeds/list/"+sKey+"/1/public/full?alt=json";
+        $.ajax({
+          "url":sLink,
+          "method":"get",
+          "dataType":"JSON",
+          "cache":false
+        }).done( function( jData ){
+          for(var i = 0; i < jData.feed.entry.length; i++){
+            var fLat = jData.feed.entry[i].gsx$latitude.$t;
+            var fLong = jData.feed.entry[i].gsx$longitude.$t;
+            var fPrice = jData.feed.entry[i].gsx$price.$t;
+            setMarker(fLat, fLong, fPrice);
+
+            var contentString = 
+            '<div id="content">'+
+            '<div id="siteNotice">'+'</div>'+
+            '<h1 id="firstHeading" class="firstHeading">' + jData.feed.entry[i].gsx$name.$t + '</h1>'+
+            '<div id="bodyContent">' + '</div>'+
+            '</div>';
+
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString
+            });
+          }
+        });
+      }
+
+      function setMarker( fLat, fLong, fPrice ){
+        var image = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+        if (fPrice < 200) {
+          image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+        } else if (fPrice > 500) {
+          image = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+        }
+
+        marker = new google.maps.Marker({
+            position:  new google.maps.LatLng(fLat, fLong),
+            map: map,
+            icon: image
+          });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAluncQAK0Vj46hBg5JGdr6J-8Q2NKbNY0&callback=initMap"
+    async defer></script>
+  </body>
+</html>

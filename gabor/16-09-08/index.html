@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+	
+	$.getJSON( "https://spreadsheets.google.com/feeds/list/1BaruPZvOHgGi9K7EHfjFS-NqXjB2R6lXC-hOtNzoUPk/1/public/full?alt=json", function( jData ) {
+	  	for(var i = 0; i < jData.feed.entry.length; i++){
+			$("body").append("<div>" + jData.feed.entry[i].gsx$name.$t + " " +  jData.feed.entry[i].gsx$price.$t +  "</div>");
+		}
+	});
+
+</script>
+</body>
+</html>
