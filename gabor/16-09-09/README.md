@@ -11,14 +11,6 @@
   - Show companies on map, indicate stock prices going down or up (green arrow, red arrow)
 
 
-# Google api key
-
-  - AIzaSyCFTLbCeyDKKTWI4pP_G7fqUzu-kGpnFoY
-
-# Google spreadsheet key
-
-  - 1iSSMAUBmc9NdfgoIgX97GIY8Wjat5HLTPFIVyaHBNDg
-
 # Steps
 
   - Get data from Google spreadsheet - check
