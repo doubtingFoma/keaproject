@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>
+      WALLSTREET
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style type="text/css">
+
+      @import 'https://fonts.googleapis.com/css?family=Raleway';
+
+      html,body{
+        width: 100%;
+        height: 100%;  
+        box-sizing: border-box;
+        overflow: hidden;      
+      }
+
+      .app-navbar{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        position: fixed;
+        width: 100%;
+        height: 75px;
+        color: white;
+        font-size: 1.5em;
+        background-color: #222222;
+        font-family: 'Raleway', sans-serif;
+      }
+
+      #wdw-main-window{
+        position: fixed; 
+        display: flex;      
+        top: 76px;
+        width: 100%;
+        height: calc( 100% - 75px);
+        background-color: rgba(0,0,0,0.1);
+      }
+
+      #wdw-main-window > div{
+        width: 100%;
+      }
+
+      #wdw-companies{
+        /*background-color: rgba(0,0,0,0.5);*/
+        border-right: 1px solid #CFCFCF;
+        padding: 1rem;
+        overflow-x: scroll;
+      }
+
+      #wdw-map{
+        /*background-color: rgba(0,0,0,0.8);*/
+      }  
+
+      #map{
+        width: 100%;
+        height: 100%;
+      }        
+
+      .companies {
+      	display: flex;
+      	flex-flow: column nowrap;
+      }
+
+      .companies__company {
+      	display: flex;
+      	flex-flow: row nowrap;
+      	/*margin-bottom: 2rem;*/
+      	border-bottom: 1px solid #E3E3E3;
+      	align-items: center;
+      	background-color: white;
+      	padding: 1rem;
+      }
+
+      .companies__company-name {
+      	font-size: 20px;
+      	margin-bottom: .5rem;
+      	font-weight: bold;
+      }
+
+      .companies__logo {
+      	max-width: 40px;
+      	height: 40px;
+      	margin-right: 2rem;
+      	margin-left: 2rem;
+      }
+
+      .companies__info-box {
+      	width: 100%;
+      	background-color: white;
+      	padding: 2rem;
+      	height: 200px;
+      	color: #BBBBBB;
+      	text-align: center;
+      	font-size: 1.8rem;
+      	display: flex;
+      }
+
+      .companies__info-text {
+      	margin: auto;
+      }
+   
+
+    </style>
+
+
+  </head>
+  <body>
+    <!-- Navigation bar -->
+    <div class="app-navbar">
+      <div>WALLSTREET</div>
+      <div>COMPANIES GOING UP</div>
+      <div>COMPANIES GOING DOWN</div>
+      <div>MUST BUY</div>
+    </div>
+
+    <!-- Content -->
+    <div id="wdw-main-window">
+      
+      <!-- Left side: companies -->
+      <div id="wdw-companies">
+        <div class="companies" id="company-list">
+        	<div class="companies__info-box">
+        		<p class="companies__info-text">
+        			Didn't find what you were looking for? Too bad.
+        		</p>
+        	</div>
+        </div>
+      </div>
+
+      <!-- Right side: Google Map -->
+      <div id="wdw-map">
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFTLbCeyDKKTWI4pP_G7fqUzu-kGpnFoY&callback=initMap"
+    async defer></script>
+
+    <script>
+
+
+      var map;
+
+      var sCompanyTemplate = '<div class="companies__company" id="company-id-{{company-id}}"> \
+	        						<img src="http://www.myiconfinder.com/uploads/iconsets/256-256-89fdce5084dbe77556cf99f7b22ae7e8-pin.png" class="companies__logo"> \
+	        						<div> \
+	        							<h2 class="companies__company-name">{{company-name}}</h2> \
+	        							<p> \
+                          <span class="company-price">{{company-price}}</span> ·  \
+                          <span class="company-price-difference">0</span>% \
+                          <span class="company-price-arrow"></span> \
+                        </p>\
+	        						</div> \
+        						</div>';
+
+      /**********************************************************************/
+      /**********************************************************************/
+      /**********************************************************************/
+      function initMap() {
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 55.701058, lng: 12.537260},
+          zoom: 12
+        });
+        getDataFromGoogleSheet();
+      }
+
+      /**********************************************************************/
+      /**********************************************************************/
+      /**********************************************************************/
+      function getDataFromGoogleSheet(){
+        var gaCompaniesIds = [];
+        var sCompaniesFromLocalStorage = localStorage.sCompanies;
+        var jCompaniesFromLocalStorage = JSON.parse(sCompaniesFromLocalStorage);
+
+      	var sKey = "1iSSMAUBmc9NdfgoIgX97GIY8Wjat5HLTPFIVyaHBNDg";
+
+        var sLink = "https://spreadsheets.google.com/feeds/list/"+sKey+"/1/public/full?alt=json";
+
+        $.ajax({
+          "url":sLink,
+          "method":"get",
+          "dataType":"JSON",
+          "cache":false
+        }).done( function( jData ){
+          gaCompaniesIds = [];
+          jData.feed.entry.forEach( function( jCompany ){        
+
+            // Create new object
+            var sCompanyName = jCompany.gsx$companyname.$t;
+            var sCompanyPrice = jCompany.gsx$stockprice.$t;
+            var fLatitude = jCompany.gsx$xpos.$t;
+            var fLongitude = jCompany.gsx$ypos.$t;
+            var sCompanyId = jCompany.gsx$companyid.$t;
+            var lastStatus = 
+            // var sCompanyIcon = jCompany.gsx$icon.$t;
+
+            gaCompaniesIds.push(sCompanyId);
+            setMarker(fLatitude, fLongitude, sCompanyPrice);
+
+            // Add to DOM if it does not exist already
+            if ($("#company-id-"+sCompanyId).length == 0) {
+              // show company in the window for companies
+              var sTempCompany = sCompanyTemplate;
+              sTempCompany = sTempCompany.replace("{{company-id}}", sCompanyId);
+              // sTempCompany = sTempCompany.replace("{{company-icon}}", sCompanyIcon);
+              sTempCompany = sTempCompany.replace("{{company-name}}", sCompanyName);
+              sTempCompany = sTempCompany.replace("{{company-price}}", sCompanyPrice);
+              $("#company-list").prepend(sTempCompany);
+            } else { // yes, the company exists
+              var sPriceInDom = $("#company-id-"+sCompanyId+" .company-price").text();
+
+              var iPriceInDom = parseFloat(sPriceInDom);
+              var iCompanyPrice = parseFloat(sCompanyPrice);
+
+              // console.log(sPriceInDom);
+
+
+              // this is not a good place to switch
+
+              var iDifference = $("#company-id-"+sCompanyId+" .company-price-difference").text();
+
+              switch(true){
+
+                case iPriceInDom > iCompanyPrice:
+                  $("#company-id-"+sCompanyId+" .companies__company-name").css("color","red");
+                  $("#company-id-"+sCompanyId+" .company-price").css("color","red");
+
+                  iDifference = calcPriceDifference(iPriceInDom, iCompanyPrice);
+                  var sArrowDom = '<i class="fa fa-arrow-down" aria-hidden="true"></i>';
+                  $("#company-id-"+sCompanyId+" .company-price-arrow").html(sArrowDom);
+                break;
+
+                case iPriceInDom < iCompanyPrice:
+                  console.log("Greater");
+                  
+                  console.log(iPriceInDom);
+                  console.log(iCompanyPrice);
+
+                  $("#company-id-"+sCompanyId+" .companies__company-name").css("color","green");
+                  $("#company-id-"+sCompanyId+" .company-price").css("color","green");
+
+                  iDifference = calcPriceDifference(iPriceInDom, iCompanyPrice);
+                  var sArrowDom = '<i class="fa fa-arrow-up" aria-hidden="true"></i>';
+                  $("#company-id-"+sCompanyId+" .company-price-arrow").html(sArrowDom);
+                break;
+                default:
+                  // sArrowDom = "";
+                  
+              }
+
+
+
+              // if(sPriceInDom > sCompanyPrice){
+              //    $("#company-id-"+sCompanyId+" .company-name").css("color","red")
+              //    $("#company-id-"+sCompanyId+" .company-price").css("color","red")
+              // }
+              // if(sPriceInDom < sCompanyPrice){
+              //    $("#company-id-"+sCompanyId+" .company-name").css("color","green")
+              //    $("#company-id-"+sCompanyId+" .company-price").css("color","green")
+              // }  
+
+
+              $("#company-id-"+sCompanyId+" .company-price").text(sCompanyPrice);
+              $("#company-id-"+sCompanyId+" .company-price-difference").text(iDifference);
+            }
+          } )
+
+          // Remove element if exists
+          $.each( $(".companies__company"), function(){
+            var sExpectedId =  $(this).attr("id").substring(11, $(this).attr("id").length);
+
+            if( gaCompaniesIds.indexOf( sExpectedId ) == -1 ){
+              $(this).fadeOut(800);
+            }
+          });
+
+        });
+
+      }
+
+      function calcPriceDifference(oldPrice, newPrice){
+        if (oldPrice < newPrice){
+          return (Math.round((newPrice - oldPrice) / oldPrice * 100));
+        } else if (oldPrice >= newPrice) {
+          return (Math.round((newPrice - oldPrice) / newPrice * 100));
+        }
+      }
+
+
+      /**********************************************************************/
+      /**********************************************************************/
+      /**********************************************************************/
+      function setMarker(fLatitude, fLongitude, sPrice){
+
+        var image = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+        if(sPrice >= 500){
+          image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        }
+        if(sPrice <= 200){
+          image = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+        }
+
+        image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+
+        marker = new google.maps.Marker({
+            position:  new google.maps.LatLng(fLatitude, fLongitude),
+            map: map,
+            icon: image
+        });      
+      }
+
+      setInterval(function(){ getDataFromGoogleSheet(); }, 10000);
+
+
+    </script>
+
+
+
+
+  </body>
+</html>
