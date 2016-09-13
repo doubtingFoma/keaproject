@@ -7,3 +7,4 @@
   - Friday from 12.30 through 15.00
   - Exam: both individual or group work (max 5 members) are possible
   - Mandatory presentation (group work)
+
