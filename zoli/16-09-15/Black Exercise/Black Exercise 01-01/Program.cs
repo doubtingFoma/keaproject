@@ -32,7 +32,14 @@ namespace Black_Exercise_01_01
             //the variable names, instead of their values
             Console.WriteLine($"Name: {name}, Age: {age}, Rate: {rate}$");
 
-            //Wait for the user to press a key and don't stop the program
+            //waiting for a simple key press, to prevent the automatic
+            //close of the program, so that we can see the "Hello World" message.
+            //It's not neccessary, but the dialog will disappear and the program
+            //will stop running after executing the "WriteLine" function.
+            //Alternatively you can run the code with CTRL+F5 (sorry Mac people,
+            //I don't know and I don't care what you should press), so you don't 
+            //have to write this here. But please note, that CTRL+F5 runs the code WITHOUT
+            //the debugger!!!!!!
             Console.ReadKey();
         }   
     }
