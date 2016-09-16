@@ -20,17 +20,27 @@ In case of collaboration please:
 - **Use understandable commit messages** referring to the content inside e.g.: `Arrays and for loops`.
 - **Use comments in your code.** This is crucial. As the purpose of this repo is to share knowledge and work with others, please make it as easy-to-read as possible (and actually it is a good practice in general).
 
-## KEA Webdev class related links
+## KEA WebDev class related links
 
-### Docs
+### Semester Docs
+
+ - [Schedule for the 1st semester](https://docs.google.com/spreadsheets/d/17calSFIYJFmXsx4_O_10RNqLMmBvAVo4JTxCHQg09Vw/edit#gid=0)
+ - [Student Team List](https://docs.google.com/spreadsheets/d/1oXzW_VJzaGSPwl-xk4gjTpnE0JLmhTNCugGSDuV7a8M/pubhtml)
+
+#### Web Development
 
  - [Module Document](https://docs.google.com/document/d/1e27PmGJw-Y4IZqmP-YWFgqb2P4tU5KU3qvJVnytV-MY/pub)
  - [Calendar for assignment and exam dates](https://docs.google.com/spreadsheets/d/1m3lTxiW8433h5L_g9lljzWvtmq4-WX2qlkkREfrFIsY/edit#gid=0)
  - [Hand-in requirements and options](https://docs.google.com/spreadsheets/d/1D8OHzxcbDc_Reom1hbl5pxeK6pxjodrXVPPaBf6U43c/edit)
  - [Exam project requirements](https://docs.google.com/document/d/11s2seqE7-sMjOlLTH6CrvpR1EgmdbYKgYRNr5ufKgEE/edit)
+ - [Exam handbook](https://docs.google.com/document/d/1nqPh-wW_y-a5riZjggVnUCiCJbkGkNgWXdi0iwHyaPk/edit)
  - [1st Mandatory assignment requirements](https://docs.google.com/document/d/1juLrh62X-OzMA8Cu8ttIebpwneKRjIA6lsgCum0JT6A/pub)
- - [Schedule for the 1st semester](https://docs.google.com/spreadsheets/d/17calSFIYJFmXsx4_O_10RNqLMmBvAVo4JTxCHQg09Vw/edit#gid=0)
- - [C#  Language Fundamentals](https://docs.google.com/presentation/d/1BGi6YZg3Li9IsuJa3Z7URg8JYRvA_yJ-ij0ydRuZzHY/edit#slide=id.g17023dfeb3_0_120)
+
+#### Development Environments
+ - [Module Document](https://slack-files.com/files-pri-safe/T0TCCGG13-F2BTCQUF5/dev_env_fall_16.pdf?c=1474052521-018bd57affe5cc8c154251e757e99781995b1546)
+ - [C# Language Fundamentals](https://docs.google.com/presentation/d/1BGi6YZg3Li9IsuJa3Z7URg8JYRvA_yJ-ij0ydRuZzHY/edit#slide=id.g17023dfeb3_0_120)
+ - [Official Google Drive Folder for Team I](https://drive.google.com/drive/folders/0B6jqucXqXPUVdG5NT1AzZVVQN0E)
+ - [Official Google Drive Folder for Team J](https://drive.google.com/drive/folders/0B6jqucXqXPUVNnZzSERiV0s5Rnc)
 
 ### Social
 
