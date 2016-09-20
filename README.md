@@ -37,14 +37,15 @@ In case of collaboration please:
  - [1st Mandatory assignment requirements](https://docs.google.com/document/d/1juLrh62X-OzMA8Cu8ttIebpwneKRjIA6lsgCum0JT6A/pub)
 
 ### Development Environments
- - [Module Document](https://slack-files.com/files-pri-safe/T0TCCGG13-F2BTCQUF5/dev_env_fall_16.pdf?c=1474052521-018bd57affe5cc8c154251e757e99781995b1546)
+ - [Module Document](https://drive.google.com/open?id=0B3bphlthkijSZGFxazhQRG5lRTA)
  - [C# Language Fundamentals](https://docs.google.com/presentation/d/1BGi6YZg3Li9IsuJa3Z7URg8JYRvA_yJ-ij0ydRuZzHY/edit#slide=id.g17023dfeb3_0_120)
  - [Official Google Drive Folder for Team I](https://drive.google.com/drive/folders/0B6jqucXqXPUVdG5NT1AzZVVQN0E)
  - [Official Google Drive Folder for Team J](https://drive.google.com/drive/folders/0B6jqucXqXPUVNnZzSERiV0s5Rnc)
 
 ### Databases
 
- - [Module Document](https://fronter.com/kea/links/files.phtml/57df8f0de53a5.1153049437$792389443$/Semester+1/Databases/db0.pdf)
+ - [Module Document](https://fronter.com/kea/links/files.phtml/1153049437$792389443$/Semester+1/Databases/Module+description+_prcent_28with+ongoing+study+plan_prcent_29)
+ - [Course introduction](https://fronter.com/kea/links/files.phtml/1153049437$792389443$/Semester+1/Databases/Course+Introduction.pdf)
 
 ### Social
 
