@@ -35,6 +35,7 @@ In case of collaboration please:
  - [Exam project requirements](https://docs.google.com/document/d/11s2seqE7-sMjOlLTH6CrvpR1EgmdbYKgYRNr5ufKgEE/edit)
  - [Exam handbook](https://docs.google.com/document/d/1nqPh-wW_y-a5riZjggVnUCiCJbkGkNgWXdi0iwHyaPk/edit)
  - [1st Mandatory assignment requirements](https://docs.google.com/document/d/1juLrh62X-OzMA8Cu8ttIebpwneKRjIA6lsgCum0JT6A/pub)
+ - [2nd Mandatory assignment requirements](https://docs.google.com/document/d/1LjdQQF_ORM-ow6FWl2LEpwK3SMfPcW6udFSirH9SD-Y/pub)
 
 ### Development Environments
  - [Module Document](https://drive.google.com/open?id=0B3bphlthkijSZGFxazhQRG5lRTA)
