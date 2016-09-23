@@ -59,11 +59,11 @@
 		// Session credentals don't exist or are corrupted
 		// Log user out
 		session_destroy();
-		switch (true) {
-			case ($pPage !== $pLoginPage):
-				$pPage = $pLoginPage;
-				break;
-		}
+		// switch (true) {
+		// 	case ($pPage !== $pLoginPage):
+		// 		$pPage = $pLoginPage;
+		// 		break;
+		// }
 	}
 ?>
 

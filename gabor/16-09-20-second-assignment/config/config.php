@@ -5,11 +5,12 @@
 		public $sSiteTitle = "Stock Exchange";
 
 		// Components
-		public $sRouterPath = "router/router.php";
-		public $sApiPath = "webapi/api.php";
+		public $sRouterPath = "config/router.php";
+		public $sApiPath = "webapi/webapi.php";
 
 		// URL parameters
 		public $sUrlVarPage = "page";
+		public $sUrlVarRequest = "request";
 	}
 
 	$config = new AppConfig();

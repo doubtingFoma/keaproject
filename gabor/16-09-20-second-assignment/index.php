@@ -9,7 +9,6 @@
 	// Load configurations, router and api
 	include_once "config/config.php";
 	include_once $config -> sRouterPath;
-	include_once $config -> sApiPath;
 ?>
 
 <!-- HTML -->
