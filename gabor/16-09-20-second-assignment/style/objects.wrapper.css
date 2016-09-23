@@ -1,0 +1,11 @@
+/*Wrapper to wrap to content of the site*/
+.o-wrapper {
+	background-color: #F1F1F1;
+	width: 100%;
+	height: 100vh;
+	/*background-color: red;*/
+	position: absolute;
+	margin: 0;
+	padding: 1rem;
+
+}

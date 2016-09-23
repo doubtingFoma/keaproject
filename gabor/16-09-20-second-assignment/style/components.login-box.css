@@ -1,0 +1,26 @@
+/* Block */
+.c-login-box {
+	background-color: #fff;
+	border-radius: 2px;
+	border: 1px solid #E1E1E1;
+	max-width: 400px;
+	width: 100%;
+	text-align: center;
+}
+
+.c-login-box__elem {
+	margin-bottom: 2rem;
+}
+
+.c-login-box__meta {
+	max-width: 400px;
+	text-align: center;
+	font-size: 1.25rem;
+	line-height: 2rem;
+	color: #A5A5A5;
+}
+
+.c-login-box__fa {
+	margin-left: -6px;
+	margin-right: 6px;
+}

@@ -1,0 +1,33 @@
+/* General padding */
+input[type=text], input[type=password], button {
+	padding: 12px 10px;
+	border-radius: 4px;
+}
+
+/* Text fields */
+input[type=text], input[type=password] {
+	border: none;
+	background-color: #EDEDED;
+}
+
+/* Buttons */
+button {
+	background-color: #E0E0E0;
+	border-radius: 2px;
+	border: none;
+	text-transform: uppercase;
+}
+
+.button--success {
+	background-color: #5AB44B;
+	color: #fff;
+}
+
+.button--primary {
+	background-color: #1F95E7;
+	color: #fff;
+}
+
+.button--primary:hover {
+	background-color: #1682CD;
+}
