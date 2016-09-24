@@ -20,23 +20,26 @@
 	</div>
 </div>
 
+<!-- Send login request to webapi on form submit -->
 <script>
 	$("#login-form").submit(function(e){
 		e.preventDefault();
 		var sUserName = $("#login-form__username").val();
-		var sUserPassword = $("#login-form__password").val();
+		var sUserPassword = $.sha256($("#login-form__password").val());
 
 		$.ajax({
 			"url": '<?php echo $config->sApiPath ?>?request=login',
 			"method": "get",
 			"cache": false,
-			"dataType": "text",
+			"dataType": "json",
 			"data": {
 				"sUserName": sUserName,
 				"sUserPassword": sUserPassword
 			}
 		}).done(function(data){
 			console.log(data);
+		}).fail(function(err){
+			console.log("Error: ", err);
 		})
 	})
 </script>

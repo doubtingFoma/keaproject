@@ -1,4 +1,4 @@
-<!-- router.php containing routing information - add new pages here -->
+<!-- router.php containing routing information -->
 <?php
 
 	// 1. Page list
@@ -37,33 +37,39 @@
 	$bUserLoggedIn = isset($_SESSION['userId']) && isset($_SESSION['userRole']);
 	if ($bUserLoggedIn) {
 		switch ($_SESSION['userRole']) {
+			
 			// Redirecting admins 
 			case "admin":
 				switch (true) {
-					case ($pPage === $sLoginPage):
-						$pPage = $sHomePage;
+					case ($pPage === $pLoginPage):
+						$pPage = $pHomePage;
 						break;
 				}
+				break;
+			
 			// Redirecting customers
 			case "customer":
 				switch(true) {
 					case ($pPage === $pLoginPage):
-						$pPage = $sHomePage;
+						$pPage = $pHomePage;
 						break;
-					case ($pPage === $sUsersPage):
-						$pPage = $sHomePage;
+					case ($pPage === $pUsersPage):
+						$pPage = $pHomePage;
 						break;
 				}
+				break;
+			
+			// Unknown role
+			// Log user out
+			default:
+				session_destroy();
+				$pPage = $pLoginPage;
 		}
 	} else {
 		// Session credentals don't exist or are corrupted
 		// Log user out
 		session_destroy();
-		// switch (true) {
-		// 	case ($pPage !== $pLoginPage):
-		// 		$pPage = $pLoginPage;
-		// 		break;
-		// }
+		$pPage = $pLoginPage;
 	}
 ?>
 
