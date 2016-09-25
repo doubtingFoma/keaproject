@@ -8,15 +8,29 @@
 	text-align: center;
 }
 
+/* Elements */
+.c-login-box__logo {
+	height: 5rem;
+	margin: 0;
+}
+
+.c-login-box__logo--circled {
+	border-radius: 50%;
+}
+
 .c-login-box__elem {
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem;
+}
+
+.c-login-box__invalid-text {
+	color: red;
 }
 
 .c-login-box__meta {
 	max-width: 400px;
 	text-align: center;
-	font-size: 1.25rem;
-	line-height: 2rem;
+	font-size: .85rem;
+	line-height: 1.15rem;
 	color: #A5A5A5;
 }
 

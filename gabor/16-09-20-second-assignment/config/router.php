@@ -11,6 +11,10 @@
 	$pLoginPage->sPageName = "login";
 	$pLoginPage->sPageUrl .= "page.login.php";
 
+	$pSignupPage = new Page();
+	$pSignupPage->sPageName = "signup";
+	$pSignupPage->sPageUrl .= "page.signup.php";
+
 	$pHomePage = new Page();
 	$pHomePage->sPageName = "home";
 	$pHomePage->sPageUrl .= "page.home.php";
@@ -19,7 +23,7 @@
 	$pUsersPage->sPageName = "users";
 	$pUsersPage->sPageUrl .= "page.users.php";
 
-	$aPages = array($pLoginPage, $pHomePage, $pUsersPage);
+	$aPages = array($pLoginPage, $pSignupPage, $pHomePage, $pUsersPage);
 
 	// 2. Define requested page
 	$pPage = new Page();
@@ -69,7 +73,9 @@
 		// Session credentals don't exist or are corrupted
 		// Log user out
 		session_destroy();
-		$pPage = $pLoginPage;
+		if ($pPage !== $pSignupPage) {
+			$pPage = $pLoginPage;
+		}
 	}
 ?>
 

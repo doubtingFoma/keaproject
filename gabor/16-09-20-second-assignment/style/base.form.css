@@ -1,11 +1,11 @@
 /* General padding */
-input[type=text], input[type=password], button {
-	padding: 12px 10px;
+input[type=text], input[type=password], input[type=email], button {
+	padding: 16px 12px;
 	border-radius: 4px;
 }
 
 /* Text fields */
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email] {
 	border: none;
 	background-color: #EDEDED;
 }
@@ -16,6 +16,12 @@ button {
 	border-radius: 2px;
 	border: none;
 	text-transform: uppercase;
+}
+
+label {
+	text-align: left;
+	margin-bottom: .5rem;
+	color: #A5A5A5;
 }
 
 .button--success {
@@ -30,4 +36,13 @@ button {
 
 .button--primary:hover {
 	background-color: #1682CD;
+}
+
+.button--success {
+	background-color: #30CE37;
+	color: #fff;
+}
+
+.button--success:hover {
+	background-color: #27B82D;
 }

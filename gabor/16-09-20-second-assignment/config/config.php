@@ -2,7 +2,7 @@
 // config.php containing basic settings of the application
 	class AppConfig {
 		// Site properties
-		public $sSiteTitle = "Stock Exchange";
+		public $sSiteTitle = "Stock Exchange Simulator";
 
 		// Components
 		public $sRouterPath = "config/router.php";

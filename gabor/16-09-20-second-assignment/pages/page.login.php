@@ -4,18 +4,38 @@
 			<!-- Login Card -->
 			<div class="c-login-box c-login-box__elem">
 				<div class="o-grid__content--comf">
+					
+					<!-- Logo -->
+					<img src="http://image.prntscr.com/image/489b77ecd2a54ab2992dc7a233e28d4c.png" alt="Stock Exchange Simulator" class="c-login-box__logo">
+
+					<!-- Title -->
 					<h1 class="c-login-box__elem">Welcome to <span class="o-text--block o-text--bold"><?php echo $config -> sSiteTitle ?></span></h1>
+
+					<!-- Description -->
 					<p class="c-login-box__elem">Play with virtual money, practice your trading skills and become the richest broker!</p>
+
+					<!-- Login form -->
 					<form action="" id="login-form" class="o-grid o-grid--vertical c-login-box__elem">
-						<input type="text" placeholder="Enter username..." class="c-login-box__elem" id="login-form__username">
-						<input type="password" placeholder="Enter password..." class="c-login-box__elem" id="login-form__password">
+						
+						<!-- E-mail -->
+						<input type="email" placeholder="Enter e-mail address..." class="c-login-box__elem" id="login-form__email" required="required">
+
+						<!-- Password -->
+						<input type="password" placeholder="Enter password..." class="c-login-box__elem" id="login-form__password" required="required">
+
+						<!-- Submit -->
 						<button class="button--primary"><i class="fa fa-sign-in fa-fw c-login-box__fa" aria-hidden="true"></i>Sign in</button>
 					</form>
-					<p class="o-text--last-paragraph">Doesn't have an account yet? <span class="o-text--bold">Sign up now!</span></p>
+
+					<!-- Error message, forgot passwrod, and create account -->
+					<p class="c-login-box__invalid-text"></p>
+					<p id="forgot-password"><a href="#">Forgot password?</a></p>
+					<p class="o-text--last-paragraph o-text--bold"><a href="index.php?page=signup">Create new account</a></p>
 				</div>
 			</div>
+
 			<!-- Login Meta Information -->
-			<p class="c-login-box__meta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="?page=home">Google</a> Optio odio consequuntur ipsam non nam velit, dicta! Eveniet velit optio, tempore autem, sed, amet qui ducimus sequi et, perferendis at quas.</p>
+			<p class="c-login-box__meta">Second mandatory assignment for Web Development KEA 2016 Fall. Please check out the project on <a href="https://github.com/gaboratorium/keaproject" target="_blank">GitHub</a> for more information. <span class="o-text--block">Gábor Pintér</span></p>
 		</div>
 	</div>
 </div>
@@ -23,23 +43,53 @@
 <!-- Send login request to webapi on form submit -->
 <script>
 	$("#login-form").submit(function(e){
+
+		// Prevent default, get values
 		e.preventDefault();
-		var sUserName = $("#login-form__username").val();
+		var sUserEmail = $("#login-form__email").val();
 		var sUserPassword = $.sha256($("#login-form__password").val());
 
+		// Make ajax call
 		$.ajax({
 			"url": '<?php echo $config->sApiPath ?>?request=login',
 			"method": "get",
 			"cache": false,
 			"dataType": "json",
 			"data": {
-				"sUserName": sUserName,
+				"sUserEmail": sUserEmail,
 				"sUserPassword": sUserPassword
 			}
 		}).done(function(data){
-			console.log(data);
+			if (data.iStatusCode == 200) {
+				logUserIn();
+			} else {
+				alertWrongLogin();
+			}
 		}).fail(function(err){
 			console.log("Error: ", err);
+			alertWrongLogin();
 		})
 	})
+
+	// Trigger forgot password
+	$("#forgot-password").click(function(e){
+		e.preventDefault();
+		forgotPassword();
+	})
+
+	
+	// Login callback
+	function logUserIn(){
+		window.location.href = 'index.php?page=<?php echo $pLoginPage->sPageName ?>';
+	}
+
+	// Wrong login call back
+	function alertWrongLogin(){
+		$(".c-login-box__invalid-text").text("Oh snap! The user name or password is incorrect.");
+	}
+
+	// Forgot pw callback
+	function forgotPassword(){
+		$(".c-login-box__invalid-text").text("Too bad. There is nothing I can do at this point.")
+	}
 </script>

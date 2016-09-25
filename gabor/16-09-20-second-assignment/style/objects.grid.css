@@ -22,16 +22,24 @@
 	justify-content: center;
 }
 
+.o-grid--align-right {
+	justify-content: flex-end;
+}
+
 .o-grid--valign-center {
 	align-items: center;
 }
 
 /* Elements */
 .o-grid__content {
-	padding: 2rem;
+	padding: 1rem;
 }
 
 .o-grid__content--comf {
-	padding: 4rem;
+	padding: 1.5rem;
+}
+
+.o-grid__content--comp {
+	padding: .5rem;
 }
 
