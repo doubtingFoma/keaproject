@@ -121,12 +121,14 @@
 				sTempName = thisItem.parent().parent().children(":nth-of-type(1)").text();
 				sTempPrice = thisItem.parent().parent().children(":nth-of-type(2)").text();
 
-				var sEditingHTML = '<td><input type="text" class="txtEditName" placeholder="Product Name"></td>\
-														<td><input type="text" class="txtEditPrice" placeholder="Product Price"></td>\
+				var sEditingHTML = '<td><input type="text" class="txtEditName" placeholder="Product Name" value="{{Product-Name}}"></td>\
+														<td><input type="text" class="txtEditPrice" placeholder="Product Price" value="{{Product-Price}}"></td>\
 														<td>\
 													 		<button class="btnSave"  title="Save"><i class="fa fa-check" aria-hidden="true"></i></button>\
 															<button class="btnCancel" title="Cancel"><i class="fa fa-times" aria-hidden="true"></i></button>\
-														</td>'
+														</td>';
+				sEditingHTML = sEditingHTML.replace("{{Product-Name}}", sTempName);
+				sEditingHTML = sEditingHTML.replace("{{Product-Price}}", sTempPrice);
 
 				$(thisItem).parent().parent().html(sEditingHTML);
 			}

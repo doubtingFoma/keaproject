@@ -41,38 +41,117 @@
 			<script type="text/javascript">
 				var ajProducts=[];
 
+				//function that returns with the difference of two arrays
+				//the objects in the arrays are always different is we compare them
+				//the regular way (jObject1 == jObject2), because of some memory
+				//allocation issue. So instead, we have to take every single parameter
+				//of the object and compare them individually
 				function arrayDifference(array1, array2){
-					var foo = [];
-					var i = 0;
+					//array1: ajProducts
+					//array2: LocalStorage
+					diffArray = []
+					isFound = false;
 
-					jQuery.grep(array2, function(el) {
-					    if (jQuery.inArray(el, array1) == -1) foo.push(el);
-						  i++;
-					});
+					//Looping through array1 to find modified OR newly added items
+					Loop1:
+					for (var i = 0; i < array1.length; i++) {
+						isFound = false;
 
-					jQuery.grep(array1, function(el) {
-					    if (jQuery.inArray(el, array2) == -1) foo.push(el);
-						  i++;
-					});
+						Loop2:
+						for (var j = 0; j < array2.length; j++) {
 
-					return foo;
+							if (array1[i].id == array2[j].id) {
+								isFound = true;
+								if ((array1[i].name !== array2[j].name) || (array1[i].price !== array2[j].price)) {
+									var jObjectPush = array1[i];
+									jObjectPush.Action = "modified";
+									diffArray.push(jObjectPush);
+								}
+								break Loop2;
+							}
+
+						}
+						if (isFound == false) {
+							var jObjectPush = array1[i];
+							jObjectPush.Action = "new";
+							diffArray.push(jObjectPush);
+						}
+
+					}
+
+					//Looping through array2 to find deleted items
+					Loop3:
+					for (var i = 0; i < array2.length; i++) {
+						isFound = false;
+
+						Loop4:
+						for (var j = 0; j < array1.length; j++) {
+							if (array2[i].id == array1[j].id){
+								isFound = true;
+								break Loop4;
+							}
+						}
+
+						if (isFound == false){
+							var jObjectPush = array2[i];
+							jObjectPush.Action = "deleted";
+							diffArray.push(jObjectPush);
+						}
+
+					}
+
+					return diffArray;
 				}
+
 
 				function checkProducts(){
 					$.get("components/get-product.php", function(sData){
 						ajProducts = JSON.parse(sData);
 						//console.log("sData: " + sData);
-
 						ajLocalStorage = JSON.parse(localStorage.Products);
 
-						aDiff = arrayDifference(ajProducts, ajLocalStorage);
-						// console.log("LS: " + ajLocalStorage);
-						// console.log("Import: " + ajProducts);
 
-						console.log(aDiff);
+						var aDiff = arrayDifference(ajProducts, ajLocalStorage);
+
+						for (var i = 0; i < aDiff.length; i++) {
+							if (aDiff[i].Action == "deleted") {
+
+								$("#"+aDiff[i].id).remove();
+
+							} else if (aDiff[i].Action == "new") {
+								var sProductHTML = "";
+								sProductHTML += '<tr id="{{Product-ID}}">\
+																	<td>{{Product-Name}}</td>\
+																	<td>{{Product-Price}}</td>\
+																</tr>';
+								sProductHTML = sProductHTML.replace("{{Product-ID}}", aDiff[i].id);
+								sProductHTML = sProductHTML.replace("{{Product-Name}}", aDiff[i].name);
+								sProductHTML = sProductHTML.replace("{{Product-Price}}", aDiff[i].price);
+
+								$("#tblProductList").append(sProductHTML);
+
+							} else if (aDiff[i].Action == "modified") {
+								$("#"+aDiff[i].id).children(":nth-of-type(1)").html(aDiff[i].name);
+
+								for (var j = 0; j < ajLocalStorage.length; j++) {
+									if (aDiff[i].id == ajLocalStorage[j].id) {
+										if (aDiff[i].price > ajLocalStorage[j].price) {
+											$("#"+aDiff[i].id).children(":nth-of-type(2)").html(aDiff[i].price + " " + '<i class="fa fa-arrow-up" aria-hidden="true"></i>');
+										} else if (aDiff[i].price < ajLocalStorage[j].price) {
+											$("#"+aDiff[i].id).children(":nth-of-type(2)").html(aDiff[i].price + " " + '<i class="fa fa-arrow-down" aria-hidden="true"></i>');
+										}
+									}
+								}
+
+							}
+						}
+
+						ajLocalStorage = ajProducts;
+						localStorage.Products = JSON.stringify(ajLocalStorage);
+
+						//console.log(aDiff);
 
 					});
-
 
 
 				}
