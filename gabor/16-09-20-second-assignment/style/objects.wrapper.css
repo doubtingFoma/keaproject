@@ -5,5 +5,17 @@
 	min-height: 100vh;
 	position: absolute;
 	margin: 0;
+	display: flex;
+	justify-content: center;
+}
+
+.o-wrapper--navbar {
+	padding-top: 55px;
+}
+
+.o-wrapper__content {
+	width: 900px;
+	margin: auto;
+	min-height: 100vh;
 	padding: 1rem;
 }

@@ -1,15 +1,26 @@
 /* Block */
 .c-navbar {
-	background-color: #6D1127;
-	border-bottom: 1px solid #611A1A;
-	color: #EAEAEA;
+	background-color: #fff;
+	border-bottom: 1px solid #E1E1E1;
+	/*color: #EAEAEA;*/
+	position: fixed;
+	z-index: 1;
+	height: 55px;
 }
+
 
 /* Elements */
 .c-navbar__title {
 	font-size: 1rem;
 	font-weight: bold;
-	color: #fff;
+	/*color: #fff;*/
 	text-decoration: none;
 }
 
+.c-navbar__menu-item {
+	margin-right: 1.5rem;
+}
+
+.c-navbar__menu-item:last-of-type {
+	margin-right: 0rem;
+}

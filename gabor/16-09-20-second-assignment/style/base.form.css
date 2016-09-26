@@ -15,7 +15,12 @@ button {
 	background-color: #E0E0E0;
 	border-radius: 2px;
 	border: none;
+	font-weight: bold;
 	text-transform: uppercase;
+}
+
+button:hover {
+	cursor: pointer;
 }
 
 label {
@@ -27,6 +32,10 @@ label {
 .button--success {
 	background-color: #5AB44B;
 	color: #fff;
+}
+
+.button--small {
+	/*padding: 4px 6px;*/
 }
 
 .button--primary {

@@ -35,6 +35,10 @@
 	padding: 1rem;
 }
 
+.o-grid__content--vertical {
+	padding: 1rem 0rem;
+}
+
 .o-grid__content--comf {
 	padding: 1.5rem;
 }

@@ -1,1 +1,79 @@
-[{"userEmail":"admin","userId":1,"userName":"admin","userPassword":"8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","userRole":"admin"},{"userEmail":"asd","userId":"57e7fc65d4b2c","userName":"as","userPassword":"asd","userRole":"customer"},{"userEmail":"gaboratorium@gmail.com","userId":"57e7fc87bd7a1","userName":"gabor","userPassword":"password","userRole":"customer"},{"userEmail":"gaboremai2l","userId":"57e7fd060aa2d","userName":"gabor2","userPassword":"password2","userRole":"customer"},{"userEmail":"gaboratorium3@gmail.com","userId":"57e800d91233d","userName":"gabor3","userPassword":"688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6","userRole":"customer"},{"userId":"57e801645daa2","userName":"asd","userEmail":"asd@asd.asd","userRole":"costumer","userPassword":"688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6"},{"userId":"57e801894ddcf","userName":"asd2","userEmail":"asd2@asd.asd","userRole":"costumer","userPassword":"688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6"},{"userId":"57e801ba3cb15","userName":"asd3","userEmail":"asd3@asd.asd","userRole":"costumer","userPassword":"688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6"},{"userId":"57e801ea8872b","userName":"gaboratorium","userEmail":"gaboratorium455@gmail.com","userRole":"costumer","userPassword":"688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6"},{"userId":"57e80247d55b0","userName":"test","userEmail":"test@test.test","userRole":"costumer","userPassword":"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"},{"userId":"57e803d96a011","userName":"asd321","userEmail":"asd32@asd.asd","userRole":"costumer","userPassword":"688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6"}]
+[
+  {
+    "userEmail": "admin@ses.com",
+    "userId": 1,
+    "userName": "admin",
+    "userPassword": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+    "userRole": "admin"
+  },
+  {
+    "userEmail": "asd",
+    "userId": "57e7fc65d4b2c",
+    "userName": "as",
+    "userPassword": "asd",
+    "userRole": "customer"
+  },
+  {
+    "userEmail": "gaboratorium@gmail.com",
+    "userId": "57e7fc87bd7a1",
+    "userName": "gabor",
+    "userPassword": "password",
+    "userRole": "customer"
+  },
+  {
+    "userEmail": "gaboremai2l",
+    "userId": "57e7fd060aa2d",
+    "userName": "gabor2",
+    "userPassword": "password2",
+    "userRole": "customer"
+  },
+  {
+    "userEmail": "gaboratorium3@gmail.com",
+    "userId": "57e800d91233d",
+    "userName": "gabor3",
+    "userPassword": "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6",
+    "userRole": "customer"
+  },
+  {
+    "userEmail": "asd@asd.asd",
+    "userId": "57e801645daa2",
+    "userName": "asd",
+    "userPassword": "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6",
+    "userRole": "costumer"
+  },
+  {
+    "userEmail": "asd2@asd.asd",
+    "userId": "57e801894ddcf",
+    "userName": "asd2",
+    "userPassword": "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6",
+    "userRole": "costumer"
+  },
+  {
+    "userEmail": "asd3@asd.asd",
+    "userId": "57e801ba3cb15",
+    "userName": "asd3",
+    "userPassword": "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6",
+    "userRole": "costumer"
+  },
+  {
+    "userEmail": "gaboratorium455@gmail.com",
+    "userId": "57e801ea8872b",
+    "userName": "gaboratorium",
+    "userPassword": "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6",
+    "userRole": "costumer"
+  },
+  {
+    "userEmail": "test@test.test",
+    "userId": "57e80247d55b0",
+    "userName": "test",
+    "userPassword": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    "userRole": "costumer"
+  },
+  {
+    "userEmail": "asd32@asd.asd",
+    "userId": "57e803d96a011",
+    "userName": "asd321",
+    "userPassword": "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6",
+    "userRole": "costumer"
+  }
+]

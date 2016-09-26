@@ -32,6 +32,11 @@
 			loginUser($config);
 			break;
 
+		// Logout request
+		case "logout":
+			logoutUser($config);
+			break;
+
 		// Signup request
 		case "signup":
 			signupUser($config);
@@ -77,6 +82,11 @@
 		sendResponse(404, null, "User with this password cannot be found.");
 	}
 
+	function logoutUser($config){
+		session_destroy();
+		sendResponse(200, null);
+	}
+
 	function signupUser($config){
 		// Validate request
 		if (!isset($_GET['sUserName']) || !isset($_GET['sUserEmail']) || !isset($_GET['sUserPassword'])) {
@@ -112,14 +122,14 @@
 		$uUser->userId = uniqid();
 		$uUser->userName = $sUserName;
 		$uUser->userEmail = $sUserEmail;
-		$uUser->userRole = "costumer";
+		$uUser->userRole = "customer";
 		$uUser->userPassword = $sUserPassword;
 
 		// Add user object to array, save it to file
 		array_push($aUsers, $uUser);
 		$sUsers = json_encode($aUsers);
 		file_put_contents($sUsersPath, $sUsers);
-		
+
 		sendResponse(200, null);
 	}
 

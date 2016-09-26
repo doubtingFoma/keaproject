@@ -30,6 +30,7 @@
 	<link rel="stylesheet" href="style/base.body.css">
 	<link rel="stylesheet" href="style/base.form.css">
 	<link rel="stylesheet" href="style/base.typography.css">
+	<link rel="stylesheet" href="style/base.table.css">
 	<link rel="stylesheet" href="style/objects.grid.css">
 	<link rel="stylesheet" href="style/objects.text.css">
 	<link rel="stylesheet" href="style/objects.list.css">

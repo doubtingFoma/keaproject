@@ -1,0 +1,19 @@
+table {
+	width: 100%;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 1rem;
+	border-collapse: collapse;
+}
+
+tr {
+	border: 1px solid #E1E1E1;
+	border-bottom: 1px solid #E1E1E1;
+	/*border: 1px red solid;*/
+}
+
+td, th {
+	/*border-bottom: 1px solid #E1E1E1;*/
+	text-align: left;
+	padding: 1rem;
+}

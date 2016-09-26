@@ -5,7 +5,7 @@
 			<div class="c-login-box c-login-box__elem">
 				<div class="o-grid__content--comf">
 					<img src="https://s.ytimg.com/yts/img/avatar_720-vflYJnzBZ.png" alt="Stock Exchange Simulator" class="c-login-box__logo c-login-box__logo--circled">
-					<h1 class="c-login-box__elem">Create a new account</h1>
+					<h1 class="c-login-box__elem">Create new account</h1>
 					<p class="c-login-box__elem">Creating a new account is free. Your password will be encrypted with sha256.</p>
 					<form action="" id="signup-form" class="o-grid o-grid--vertical c-login-box__elem">
 
