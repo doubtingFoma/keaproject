@@ -1,0 +1,62 @@
+html, body{
+  height: 100%;
+  color: #222;
+  font-size: 1em;
+
+}
+
+/**{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}*/
+
+body{
+  color: #00b4a4;
+  justify-content: center;
+  align-items: center;
+}
+
+/*#wdw-welcome{
+  width: 100vw;
+  text-align: center;
+  color: #00b4a4;
+  border: 1px solid #999999;
+  background-color: white;
+}*/
+
+
+.btnEdit, .btnDelete, .btnAdd, .btnSave, .btnCancel{
+  width: 2em;
+  background-color: transparent;
+  border: none;
+}
+
+.txtNewName, .txtNewPrice{
+  border: 1px solid #00b4a4;
+  color: #000000;
+}
+
+.lblUserName{
+  color: #00b4a4;
+}
+
+.txtEditName, .txtEditPrice{
+  border: 1px solid #ff3030;
+}
+
+
+#tblProducts {
+  text-align: left;
+  width: 80vw;
+  max-width: 70em;
+  margin: auto;
+  border: 1px solid #00b4a4;
+}
+
+.navbar-default{
+  background-color: #eeeeee;
+  border: none;
+  border-radius: 0;
+  box-shadow: 1px 1px 1px #919191;
+}
