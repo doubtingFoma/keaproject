@@ -53,6 +53,7 @@
 					isFound = false;
 
 					//Looping through array1 to find modified OR newly added items
+					//labeling is possible in javascript so we can break only the loop we want
 					Loop1:
 					for (var i = 0; i < array1.length; i++) {
 						isFound = false;
@@ -64,6 +65,7 @@
 								isFound = true;
 								if ((array1[i].name !== array2[j].name) || (array1[i].price !== array2[j].price)) {
 									var jObjectPush = array1[i];
+									//we give an extra attribute to make changes easier. this is for modification
 									jObjectPush.Action = "modified";
 									diffArray.push(jObjectPush);
 								}
@@ -73,6 +75,7 @@
 						}
 						if (isFound == false) {
 							var jObjectPush = array1[i];
+							//extra attribute for a newly created element
 							jObjectPush.Action = "new";
 							diffArray.push(jObjectPush);
 						}
@@ -94,12 +97,14 @@
 
 						if (isFound == false){
 							var jObjectPush = array2[i];
+							//extra attribute for a deleted element
 							jObjectPush.Action = "deleted";
 							diffArray.push(jObjectPush);
 						}
 
 					}
-
+					//the function returns with an array that contains the elements
+					//that differ in the two given arrays
 					return diffArray;
 				}
 
@@ -110,15 +115,17 @@
 						//console.log("sData: " + sData);
 						ajLocalStorage = JSON.parse(localStorage.Products);
 
-
+						//we run the code that gives back the differences in the two arrays
 						var aDiff = arrayDifference(ajProducts, ajLocalStorage);
 
 						for (var i = 0; i < aDiff.length; i++) {
 							if (aDiff[i].Action == "deleted") {
 
+								//remove deleted items
 								$("#"+aDiff[i].id).remove();
 
 							} else if (aDiff[i].Action == "new") {
+								//create new items
 								var sProductHTML = "";
 								sProductHTML += '<tr id="{{Product-ID}}">\
 																	<td>{{Product-Name}}</td>\
@@ -131,6 +138,7 @@
 								$("#tblProductList").append(sProductHTML);
 
 							} else if (aDiff[i].Action == "modified") {
+								//modify existing items
 								$("#"+aDiff[i].id).children(":nth-of-type(1)").html(aDiff[i].name);
 
 								for (var j = 0; j < ajLocalStorage.length; j++) {
@@ -145,7 +153,7 @@
 
 							}
 						}
-
+						//store the new data in the local storage
 						ajLocalStorage = ajProducts;
 						localStorage.Products = JSON.stringify(ajLocalStorage);
 
@@ -156,13 +164,8 @@
 
 				}
 
-
-
-				// //we can use this to get variables from php instead of AJAX if we want to
-				// var jProducts = <?php //echo $sProducts ?>;
-
-				//since the task says we have to use ajax, I just use it. but the solution
-				//on above this is much simpler, and does the same...
+				//the launch of the website
+				//send an ajax request to the server to get data back
 				$.ajax({
 					"url": "components/get-product.php",
 					"method":"get",
@@ -189,7 +192,7 @@
 				});
 
 
-				//checkProducts();
+				//check products every second
 				var timerCheck = setInterval(checkProducts, 1000);
 
 			</script>

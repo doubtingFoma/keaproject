@@ -11,14 +11,18 @@
   $sNewPrice = $_GET["price"];
   $fNewPrice = floatval($sNewPrice);
 
+  //search for the item we want to edit
   for ($i=0; $i < count($aProducts); $i++) {
     if ($aProducts[$i]->id == $sEditID) {
+      //change the name
       $aProducts[$i]->name = $sNewName;
+      //change the price
       $aProducts[$i]->price = $fNewPrice;
+      //exit the for loop to reduce calculation time
       break;
     }
   }
-
+  
   $sWriteToFile = json_encode($aProducts);
   //write the converted string into the file
   file_put_contents("products.json", $sWriteToFile);

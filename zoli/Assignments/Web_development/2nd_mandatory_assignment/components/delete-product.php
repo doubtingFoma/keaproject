@@ -8,9 +8,10 @@
   //get ID from URL
   $sDeleteId = $_GET["id"];
 
-
+  //we search for the item we want to delete
   for ($i=0; $i < count($aProducts); $i++) {
     if ($aProducts[$i]->id == $sDeleteId) {
+      //we delete the item
       array_splice($aProducts, $i, 1);
       break;
     }
