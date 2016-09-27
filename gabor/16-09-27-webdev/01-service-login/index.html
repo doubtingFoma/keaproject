@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+      API
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <style>
+      *{
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      html, body{
+        width: 100%;
+        height: 100%;
+      }
+      button{
+        width: 100%;
+        height: 50px;
+        padding: 20px;
+        color: white;
+        background-color: #C5CAE9;
+        border: none;
+        cursor: pointer;
+      }
+      .wdw{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #999;
+        display: none;
+      }
+      #wdw-user-data{
+        background-color: #009688;
+        /*display: block;*/
+      }      
+      #wdw-login{
+        background-color: #7986CB;
+        display: block;
+      }
+
+
+
+    </style>
+
+
+  </head>
+  <body>
+
+
+
+    <div id="wdw-user-data" class="wdw">
+      <div id="lbl-user-data-name">USER NAME</div>
+      <div id="lbl-user-data-last-name">USER LAST NAME</div>
+      <div id="lbl-user-data-email">USER EMAIL</div>
+    </div>
+
+    <div id="wdw-product-data" class="wdw">
+      <div id="lbl-product-data-name">USER NAME</div>
+      <div id="lbl-product-data-brand">USER LAST NAME</div>
+    </div>
+
+
+
+    <div id="wdw-login" class="wdw">
+      <button id="btn-login">LOGIN</button>
+      <button id="btn-get-product">GET PRODUCT</button>
+    </div>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+      /**********************************************************************/
+      /**********************************************************************/
+      /**********************************************************************/
+      $(document).on("click", "#btn-login", function(){
+        var sLink = "service-login.php";
+        $.getJSON(sLink, function(jData){
+          $("#lbl-user-data-name").text( jData.name );
+          $("#lbl-user-data-last-name").text( jData.lastName );
+          $("#lbl-user-data-email").text( jData.email );
+          // hide all the windows, but show the specific one
+          $(".wdw").fadeOut( 500 );
+          $("#wdw-user-data").fadeIn( 500 );
+        });
+      });
+
+      $(document).on("click", "#btn-get-product", function(){
+        var sLink = "service-get-product.php";
+        $.getJSON(sLink, function(jData){
+          $("#lbl-product-data-name").text( jData.name );
+          $("#lbl-product-data-brand").text( jData.brand );
+          // hide all the windows, but show the specific one
+          $(".wdw").fadeOut( 500 );
+          $("#wdw-product-data").fadeIn( 500 );
+        });
+      });
+
+    </script>
+
+  </body>
+</html>
+
+

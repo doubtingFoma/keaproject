@@ -1,0 +1,5 @@
+<?php
+// PRENTEND THAT YOU HAVE A DATABASE
+// YOU CHECK THAT THE LOGIN IS CORRECT
+echo '{"name":"SANTIAGO", "lastName":"DONOSO", "email":"SAND@KEA.DK"}';
+?>
