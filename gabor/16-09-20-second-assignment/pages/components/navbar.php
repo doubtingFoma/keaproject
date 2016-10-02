@@ -11,11 +11,11 @@
 	<div class="o-grid">
 		<div class="o-grid__content o-grid o-grid--align-right o-grid--valign-center">
 			<ul class="o-list--horizontal">
-				<li class='c-navbar__menu-item'><a href="index.php?page=home">Home</a></li>
+				<li class='c-navbar__menu-item'><a href="index.php?page=home"><i class="fa fa-home fa-fw" aria-hidden="true"></i>Home</a></li>
 				<?php if ($_SESSION['userRole'] == 'admin') : ?>
-				<li class='c-navbar__menu-item'><a href="index.php?page=users">Users</a></li>
+				<li class='c-navbar__menu-item'><a href="index.php?page=users"><i class="fa fa-user fa-fw" aria-hidden="true"></i>Users</a></li>
 				<?php endif; ?>
-				<li class='c-navbar__menu-item'><a href="" id="navbar__logout">Logout</a></li>
+				<li class='c-navbar__menu-item'><a href="" id="navbar__logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout</a></li>
 			</ul>
 		</div>
 	</div>

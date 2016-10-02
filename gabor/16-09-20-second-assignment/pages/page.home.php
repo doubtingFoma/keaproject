@@ -5,7 +5,7 @@
 <div class="o-wrapper o-wrapper--navbar o-grid ">
 	<div class="o-wrapper__content">
 		<div class="o-grid o-grid--valign-bottom o-grid--align-between c-title-bar">
-			<h1><i class="fa fa-home fa-fw" aria-hidden="true"></i><?php echo $pPage->sPageName ?> of companies</h1>
+			<h1><i class="fa fa-home fa-fw" aria-hidden="true"></i><?php echo $pPage->sPageName ?></h1>
 			<p class="o-text--subtitle"></p>
 		</div>
 		<p id="error_msg" class='o-text--error'></p>
@@ -25,6 +25,40 @@
 				
 			</tbody>
 		</table>
+		<?php if ($_SESSION['userRole'] == "admin") : ?>
+			<div class="o-grid o-grid--valign-bottom o-grid--align-between c-title-bar">
+				<h1><i class="fa fa-plus fa-fw" aria-hidden="true"></i>Create new company</h1>
+				<p class="">Only administrators can create new companies.</p>
+			</div>
+			<table>
+				<thead>
+					<th>Company Name</th>
+					<th>Company Shares</th>
+					<th>Company Share Price</th>
+					<?php if ($_SESSION['userRole'] == "admin") : ?>
+						<th>Action</th>
+					<?php endif; ?>
+				</tr>
+				</thead>
+				<tr data-id='new-company'>
+	
+				<td id='new-company__name'>
+					<input type='text' placeholder='Company name...' id='input-new-company__name'>
+				</td>
+				<td id='new-company__shares'>
+					<input type='text' placeholder='Company shares...' id='input-new-company__shares'>
+				</td>
+				<td id='new-company__share-price'>
+					<input type='text' placeholder='Company share price...' id='input-new-company__share-price'>
+				</td>
+				<td>
+					<a class='a-create' href='#'>
+					<i class='fa fa-plus fa-fw' aria-hidden='true'></i>Create
+				</a>
+				</td>
+						
+			</table>
+		<?php endif; ?>
 	</div>
 </div>
 
@@ -62,6 +96,7 @@
 	
 	// Functions
 	function showCompanies(aCompanies){
+		iEditingItemIndex = null;
 		$("#tbl-companies").css("display", "table");
 		$("#tbl-companies__body").html("");
 		$(".o-text--subtitle").html("There are <span class='o-text--bold'>"+ aCompanies.length + "</span> companies.");
@@ -146,10 +181,12 @@
 
 	// Editing an item
 	function editItem(iId){
+
+		console.log("Editing item...", iId);
+
 		//1. reset iEditingItemIndex DOM (remove input fields)
 		if (iEditingItemIndex !== null) {
 			resetRowHtml(iEditingItemIndex);
-
 		}
 
 		iEditingItemIndex = iId;
@@ -158,6 +195,7 @@
 		//2. select current company
 		jCompany = returnCompany(iId);
 
+		console.log("Editing itme", jCompany);
 
 		//3. Update dom
 		sNameInputHtml = "\
@@ -196,6 +234,7 @@
 
 	function resetRowHtml(iId){
 		jCompany = returnCompany(iId);
+		iEditingItemIndex = null;
 
 		sAcitonHtml = "\
 				<a class='a-edit' href='#' data-id='"+iId+"'>\
@@ -216,6 +255,7 @@
 	/*Clicking on save*/
 	$("body").on("click", ".a-save", function(e){
 		iId = $(this).data('id');
+		iEditingItemIndex = null;
 		saveCompany(iId);
 		// resetRowHtml(iId);
 	});
@@ -254,8 +294,45 @@
 		// reset dom
 	}
 
+	/*Create new company*/
+	/*Clicking on create*/
+	$("body").on("click", ".a-create", function(e){
+		sCompanyName = $("#input-new-company__name").val();
+		sCompanyShares = $("#input-new-company__shares").val();
+		sCompanySharePrice = $("#input-new-company__share-price").val();
+		
+		$.ajax({
+			"url": "<?php echo $config->sApiPath ?>?request=create-company",
+			"method": "get",
+			"cache": false,
+			"dataType": "json",
+			"data": {
+				"companyName": sCompanyName,
+				"companyShares": sCompanyShares,
+				"companySharePrice": sCompanySharePrice
+			}
+		}).done(function(jData){
+				if (jData.iStatusCode == 200){
+					// success
+					aCompanies = jData.jPackage;
+					showCompanies(jData.jPackage);
+					$("#input-new-company__name").val("");
+					sCompanyShares = $("#input-new-company__shares").val("");
+					sCompanySharePrice = $("#input-new-company__share-price").val("");
+
+				} else {
+					showError(jData.sMessage);
+				}
+			}).fail(function(err){
+				//fail
+				console.log(err);
+				showError("Something went wrong.");
+			})
+	});
+
 	// Returns a company with given ID
 	function returnCompany(iId){
+		console.log("returncompany receives this id", iId);
 		for (var i = 0; i < aCompanies.length; i++) {
 			if (aCompanies[i].companyId == iId) {
 				return aCompanies[i];

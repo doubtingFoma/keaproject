@@ -62,6 +62,11 @@
 			updateCompany($config);
 			break;
 
+		// Create a company
+		case "create-company":
+			createCompany($config);
+			break;
+
 		// Undefined (bad) request
 		default:
 			sendResponse(400, null, "Unknown request type ('".$config->sUrlVarRequest."' parameter is invalid).");
@@ -286,6 +291,50 @@
 		}
 
 		sendResponse(404, null, "Company was found with this ID: " . $iCompanyId);
+	}
+
+	function createCompany($config){
+		//If required parameters are not set
+		if (
+			!isset($_GET['companyName']) ||
+			!isset($_GET['companyShares']) ||
+			!isset($_GET['companySharePrice'])
+			) {
+			sendResponse(400, null, "One or more of the following parameters were not set: `companyId`, `companyName`, `companyShares`, `companySharePrice`");
+		}
+
+		//If user is not logged in
+		session_start();
+		if (!isset($_SESSION['userRole'])){
+			sendResponse(403, null, "Access forbidden. You need to log in.");
+		}
+
+		//If user is not admin
+		if ($_SESSION['userRole'] !== 'admin') {
+			sendResponse(403, null, "Access forbidden. You need to be an administrator.");
+		}
+
+		// Create new company
+		$jCompany = new stdClass();
+		$jCompany->companyId = uniqid();
+		$jCompany->companyName = $_GET['companyName'];
+		$jCompany->companySharePrice = $_GET['companySharePrice'];
+		$jCompany->companyShares = $_GET['companyShares'];
+
+		// Get companies
+		$sCompaniesPath = "../" . $config->sDatabaseCompaniesPath;
+		$sCompanies = file_get_contents($sCompaniesPath);
+		$aCompanies = json_decode($sCompanies);
+
+		// Add new company
+		array_push($aCompanies, $jCompany);
+
+		// Save companies
+		$sCompanies = json_encode($aCompanies);
+		file_put_contents($sCompaniesPath, $sCompanies);
+
+		// Send response
+		sendResponse(200, $aCompanies);
 	}
 
 
