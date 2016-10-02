@@ -37,6 +37,7 @@
 	<link rel="stylesheet" href="style/objects.wrapper.css">
 	<link rel="stylesheet" href="style/components.login-box.css">
 	<link rel="stylesheet" href="style/components.navbar.css">
+	<link rel="stylesheet" href="style/components.title-bar.css">
 </head>
 <body>
 	<?php include_once $pPage->sPageUrl; ?>

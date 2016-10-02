@@ -17,3 +17,8 @@ Second mandatory assignment for *Web Development* class - Web Development KEA 20
   3. `router.php` is responsible for maintaining the acces to each page. If the user is allowed to see the requested page, the `router.php` will return the requested page to `index.php`. 
   4. Most of the pages include an ajax call. The ajax call sends a request for the `webapi.php`. The webapi processes the request, gets information from the `database`, and sends back a response object to the page. 
   5. The page processes the response object, may manipulate the DOM or redirect to another page (which is the `index.php` again, but with a different page included in it), and the loop starts again.
+
+## Dummy users
+
+  - Log in as customer with `customer@customer.customer` and `customer` or create a new account
+  - Log in as administrator with `admin@admin.admin` and `admin`

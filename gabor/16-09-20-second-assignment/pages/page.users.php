@@ -4,8 +4,10 @@
 <!-- Users  -->
 <div class="o-wrapper o-wrapper--navbar o-grid ">
 	<div class="o-wrapper__content">
-		<h1><i class="fa fa-user fa-fw" aria-hidden="true"></i><?php echo $pPage->sPageName ?></h1>
-		<p class='o-text--subtitle'></p>
+		<div class="o-grid o-grid--valign-bottom o-grid--align-between c-title-bar">
+			<h1><i class="fa fa-user fa-fw" aria-hidden="true"></i><?php echo $pPage->sPageName ?></h1>
+			<p class='o-text--subtitle'></p>
+		</div>
 		<p id="error_msg" class='o-text--error'></p>
 		<table id="tbl-users" style="display: none;">
 			<thead>
@@ -43,7 +45,7 @@
 
 	function showUsers(aUsers){
 		$("#tbl-users").css("display", "table");
-		$(".o-text--subtitle").text("There are " + aUsers.length + " users.");
+		$(".o-text--subtitle").html("There are <span class='o-text--bold'>" + aUsers.length + "</span> users.");
 		for (var i = 0; i < aUsers.length; i++) {
 			row = "\
 				<tr>\

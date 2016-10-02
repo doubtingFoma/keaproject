@@ -12,5 +12,9 @@
 }
 
 .o-text--error {
-	color: red;
+	color: #F44336;
+}
+
+a.o-text--error {
+	color: #F44336;
 }

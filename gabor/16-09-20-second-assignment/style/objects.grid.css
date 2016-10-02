@@ -23,12 +23,20 @@
 	justify-content: center;
 }
 
+.o-grid--align-between {
+	justify-content: space-between;
+}
+
 .o-grid--align-right {
 	justify-content: flex-end;
 }
 
 .o-grid--valign-center {
 	align-items: center;
+}
+
+.o-grid--valign-bottom {
+	align-items: flex-end;
 }
 
 /* Elements */

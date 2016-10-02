@@ -57,6 +57,11 @@
 			deleteCompany($config);
 			break;
 
+		// Delete a company
+		case "update-company":
+			updateCompany($config);
+			break;
+
 		// Undefined (bad) request
 		default:
 			sendResponse(400, null, "Unknown request type ('".$config->sUrlVarRequest."' parameter is invalid).");
@@ -230,6 +235,57 @@
 
 		// Company was not found
 		sendResponse(404, null, "Company was not found with given id: " . $iCompanyId);
+	}
+
+	function updateCompany($config){
+		//If required parameters are not set
+		if (
+			!isset($_GET['companyId']) || 
+			!isset($_GET['companyName']) ||
+			!isset($_GET['companyShares']) ||
+			!isset($_GET['companySharePrice'])
+			) {
+			sendResponse(400, null, "One or more of the following parameters were not set: `companyId`, `companyName`, `companyShares`, `companySharePrice`");
+		}
+
+		//If user is not logged in
+		session_start();
+		if (!isset($_SESSION['userRole'])){
+			sendResponse(403, null, "Access forbidden. You need to log in.");
+		}
+
+		//If user is not admin
+		if ($_SESSION['userRole'] !== 'admin') {
+			sendResponse(403, null, "Access forbidden. You need to be an administrator.");
+		}
+
+		// Get companies
+		$sCompaniesPath = "../" . $config->sDatabaseCompaniesPath;
+		$sCompanies = file_get_contents($sCompaniesPath);
+		$aCompanies = json_decode($sCompanies);
+
+		$iCompanyId = $_GET["companyId"];
+		$sCompanyName = $_GET["companyName"];
+		$sCompanyShares = $_GET["companyShares"];
+		$sCompanySharePrice = $_GET["companySharePrice"];
+
+		// Look companies with given ID
+		for ($i=0; $i < sizeof($aCompanies); $i++) { 
+			
+			// ID found, update array, save it to file
+			if ($iCompanyId == $aCompanies[$i]->companyId) {
+			
+				$aCompanies[$i]->companyName = $sCompanyName;
+				$aCompanies[$i]->companyShares = $sCompanyShares;
+				$aCompanies[$i]->companySharePrice = $sCompanySharePrice;
+
+				$sCompanies = json_encode($aCompanies);
+				file_put_contents($sCompaniesPath, $sCompanies);
+				sendResponse(200, $aCompanies);
+			}
+		}
+
+		sendResponse(404, null, "Company was found with this ID: " . $iCompanyId);
 	}
 
 

@@ -2,8 +2,9 @@
 <div class="o-grid c-navbar">
 	<div class="o-grid">
 		<div class="o-grid__content o-grid o-grid--valign-center">
-			<a href="index.php?page=<?php echo $pHomePage->sPageName ?>">
-				<h1 class="c-navbar__title"><?php echo $config -> sSiteTitle ?></h1>
+			<a class="c-navbar__logo" href="index.php?page=<?php echo $pHomePage->sPageName ?>">
+				<img src="http://image.prntscr.com/image/489b77ecd2a54ab2992dc7a233e28d4c.png" alt="Stock Exchange Simulator" class="c-navbar__logo-image">
+				<h1 class="c-navbar__logo-text"><?php echo $config -> sSiteTitle ?></h1>
 			</a>
 		</div>
 	</div>
