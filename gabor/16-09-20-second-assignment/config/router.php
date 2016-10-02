@@ -1,4 +1,5 @@
 <!-- router.php containing routing information -->
+<!-- To create a new page, create a new Page object and add it to the aPages array. That's it! Add additional restrictions for users if you want. -->
 <?php
 
 	// 1. Page list
@@ -25,7 +26,7 @@
 
 	$aPages = array($pLoginPage, $pSignupPage, $pHomePage, $pUsersPage);
 
-	// 2. Define requested page
+	// 2. Define requested page - set a default and change it to requested if set
 	$pPage = new Page();
 	$pPage = $aPages[0]; // Login by default
 
@@ -38,6 +39,7 @@
 	}
 
 	// 3. Access control - redirecting users
+	// Redirect user according to their role if user is logged in. Otherwise log them out and redirect to Login
 	$bUserLoggedIn = isset($_SESSION['userId']) && isset($_SESSION['userRole']);
 	if ($bUserLoggedIn) {
 		switch ($_SESSION['userRole']) {
@@ -45,7 +47,8 @@
 			// Redirecting admins 
 			case "admin":
 				switch (true) {
-					case ($pPage === $pLoginPage):
+					// Signup or Login -> Home
+					case ($pPage === $pLoginPage || $pPage === $pSignupPage):
 						$pPage = $pHomePage;
 						break;
 				}
@@ -54,9 +57,11 @@
 			// Redirecting customers
 			case "customer":
 				switch(true) {
-					case ($pPage === $pLoginPage):
+					// Signup or Login -> Home
+					case ($pPage === $pLoginPage || $pPage === $pSignupPage):
 						$pPage = $pHomePage;
 						break;
+					// Users -> Home
 					case ($pPage === $pUsersPage):
 						$pPage = $pHomePage;
 						break;
@@ -64,7 +69,7 @@
 				break;
 			
 			// Unknown role
-			// Log user out
+			// Log user out -> Login
 			default:
 				session_destroy();
 				$pPage = $pLoginPage;

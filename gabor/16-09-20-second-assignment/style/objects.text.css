@@ -10,3 +10,7 @@
 .o-text--last-paragraph {
 	margin-bottom: 0;
 }
+
+.o-text--error {
+	color: red;
+}

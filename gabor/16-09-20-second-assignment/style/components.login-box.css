@@ -22,10 +22,6 @@
 	margin-bottom: 1.5rem;
 }
 
-.c-login-box__invalid-text {
-	color: red;
-}
-
 .c-login-box__meta {
 	max-width: 400px;
 	text-align: center;

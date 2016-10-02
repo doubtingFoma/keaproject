@@ -5,10 +5,10 @@
 	// 2. Request endpoint methods
 	// 3. Send response
 
-	// The webapi handles requests, and sends response objects.
-	// Response object:
+	// The webapi handles requests, and sends response objects back.
+	// Response object contains:
 	//  - Status code
-	//  - Package (can be null)
+	//  - Requested package (can be null)
 	//  - Status message
 	// Status codes:
 	// 200 - OK
@@ -42,6 +42,21 @@
 			signupUser($config);
 			break;
 
+		// Get lit of users
+		case "get-users":
+			getUsers($config);
+			break;
+
+		// Get lit of companies
+		case "get-companies":
+			getCompanies($config);
+			break;
+
+		// Delete a company
+		case "delete-company":
+			deleteCompany($config);
+			break;
+
 		// Undefined (bad) request
 		default:
 			sendResponse(400, null, "Unknown request type ('".$config->sUrlVarRequest."' parameter is invalid).");
@@ -52,7 +67,7 @@
 	// 2. Request endpoint methods
 	//////////////////////////////////////////////////////////////////////////
 	function loginUser($config){
-		// Validate request
+		// Validate request, send back 400 if bad request
 		if (!isset($_GET['sUserEmail']) || !isset($_GET['sUserPassword'])) {
 			sendResponse("400", null, "No 'sUserEmail' or 'sUserPassword' was provided.");
 		}
@@ -78,11 +93,12 @@
 			}
 		}
 
-		// Not found
+		// If loop ends without success -> Not found
 		sendResponse(404, null, "User with this password cannot be found.");
 	}
 
 	function logoutUser($config){
+		session_start();
 		session_destroy();
 		sendResponse(200, null);
 	}
@@ -103,7 +119,7 @@
 		$sUsers = file_get_contents($sUsersPath);
 		$aUsers = json_decode($sUsers);
 
-		// Look for requested user
+		// Look for taken e-mail address or user name
 		for ($i=0; $i < sizeof($aUsers); $i++) { 
 			
 			// Email taken
@@ -124,6 +140,7 @@
 		$uUser->userEmail = $sUserEmail;
 		$uUser->userRole = "customer";
 		$uUser->userPassword = $sUserPassword;
+		$uUser->userRegDate = date("D M d, Y G:i");
 
 		// Add user object to array, save it to file
 		array_push($aUsers, $uUser);
@@ -131,6 +148,88 @@
 		file_put_contents($sUsersPath, $sUsers);
 
 		sendResponse(200, null);
+	}
+
+	function getUsers($config){
+		
+		session_start();
+		// User is not logged in
+		if (!isset($_SESSION['userRole'])){
+			sendResponse(403, null, "Access forbidden. You need to log in.");
+		}
+
+		// User is not an admin
+		if ($_SESSION['userRole'] !== 'admin') {
+			sendResponse(403, null, "Access forbidden. Only admins can see the list of users.");
+		}
+
+		// Send list of users back
+		$sUsersPath = "../" . $config->sDatabaseUsersPath;
+		$sUsers = file_get_contents($sUsersPath);
+		$aUsers = json_decode($sUsers);
+		sendResponse(200, $aUsers);
+	}
+
+	function getCompanies($config){
+		
+		session_start();
+		// User is not logged in
+		if (!isset($_SESSION['userRole'])){
+			sendResponse(403, null, "Access forbidden. You need to log in.");
+		}
+
+		// Send list of users back
+		$sCompaniesPath = "../" . $config->sDatabaseCompaniesPath;
+		$sCompanies = file_get_contents($sCompaniesPath);
+		$aCompanies = json_decode($sCompanies);
+		sendResponse(200, $aCompanies);
+	}
+
+	function deleteCompany($config){
+		//If id is not set
+		if (!isset($_GET['companyId'])) {
+			sendResponse(400, null, "Company ID (`companyId`)was not set");
+		}
+
+		//If user is not logged in
+		session_start();
+		if (!isset($_SESSION['userRole'])){
+			sendResponse(403, null, "Access forbidden. You need to log in.");
+		}
+
+		//If user is not admin
+		if ($_SESSION['userRole'] !== 'admin') {
+			sendResponse(403, null, "Access forbidden. You need to be an administrator.");
+		}
+
+		// Get companies
+		$sCompaniesPath = "../" . $config->sDatabaseCompaniesPath;
+		$sCompanies = file_get_contents($sCompaniesPath);
+		$aCompanies = json_decode($sCompanies);
+
+		$iCompanyId = $_GET["companyId"];
+
+		// Look companies with given ID
+		for ($i=0; $i < sizeof($aCompanies); $i++) { 
+			
+			// ID found
+			if ($iCompanyId == $aCompanies[$i]->companyId) {
+				
+				// Delete
+				array_splice($aCompanies, $i, 1);
+				
+				// Save
+				$sCompanies = json_encode($aCompanies);
+				$sCompaniesPath = "../" . $config->sDatabaseCompaniesPath;
+				file_put_contents($sCompaniesPath, $sCompanies);
+
+				// Send response
+				sendResponse(200, null);
+			}
+		}
+
+		// Company was not found
+		sendResponse(404, null, "Company was not found with given id: " . $iCompanyId);
 	}
 
 
@@ -147,6 +246,4 @@
 		echo $sResponseObject;
 		exit();
 	}
-
-
 ?>

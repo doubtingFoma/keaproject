@@ -15,7 +15,8 @@ button {
 	background-color: #E0E0E0;
 	border-radius: 2px;
 	border: none;
-	font-weight: bold;
+	/*font-weight: bold;*/
+	font-size: .8rem;
 	text-transform: uppercase;
 }
 
@@ -27,11 +28,6 @@ label {
 	text-align: left;
 	margin-bottom: .5rem;
 	color: #A5A5A5;
-}
-
-.button--success {
-	background-color: #5AB44B;
-	color: #fff;
 }
 
 .button--small {
@@ -48,10 +44,10 @@ label {
 }
 
 .button--success {
-	background-color: #30CE37;
+	background-color: #4CAF50;
 	color: #fff;
 }
 
 .button--success:hover {
-	background-color: #27B82D;
+	background-color: #388E3C;
 }

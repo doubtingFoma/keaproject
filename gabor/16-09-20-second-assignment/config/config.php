@@ -9,6 +9,7 @@
 		public $sApiPath = "webapi/webapi.php";
 
 		public $sDatabaseUsersPath = "database/users.json";
+		public $sDatabaseCompaniesPath = "database/companies.json";
 
 		// URL parameters
 		public $sUrlVarPage = "page";

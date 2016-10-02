@@ -12,6 +12,10 @@ tr {
 	/*border: 1px red solid;*/
 }
 
+tr:nth-child(odd) {
+	background-color: #F8F8F8;
+}
+
 td, th {
 	/*border-bottom: 1px solid #E1E1E1;*/
 	text-align: left;

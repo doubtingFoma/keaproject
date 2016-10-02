@@ -28,7 +28,7 @@
 					</form>
 
 					<!-- Error message, forgot passwrod, and create account -->
-					<p class="c-login-box__invalid-text"></p>
+					<p class="o-text--error"></p>
 					<p id="forgot-password"><a href="#">Forgot password?</a></p>
 					<p class="o-text--last-paragraph o-text--bold"><a href="index.php?page=signup">Create new account</a></p>
 				</div>
@@ -48,6 +48,7 @@
 		e.preventDefault();
 		var sUserEmail = $("#login-form__email").val();
 		var sUserPassword = $.sha256($("#login-form__password").val());
+		console.log("something");
 
 		// Make ajax call
 		$.ajax({
@@ -61,20 +62,23 @@
 			}
 		}).done(function(data){
 			if (data.iStatusCode == 200) {
+				console.log("success,", data);
 				logUserIn();
 			} else {
-				alertWrongLogin();
+				console.log("else,", data);
+				showErrorMessage("Oh snap! The user name or password is incorrect.");
 			}
 		}).fail(function(err){
+			console.log("fail,", data);
 			console.log("Error: ", err);
-			alertWrongLogin();
+			showErrorMessage("Oh snap! The user name or password is incorrect.");
 		})
 	})
 
 	// Trigger forgot password
 	$("#forgot-password").click(function(e){
 		e.preventDefault();
-		forgotPassword();
+		showErrorMessage("Too bad. There is nothing I can do at this point.");
 	})
 
 	
@@ -84,12 +88,7 @@
 	}
 
 	// Wrong login call back
-	function alertWrongLogin(){
-		$(".c-login-box__invalid-text").text("Oh snap! The user name or password is incorrect.");
-	}
-
-	// Forgot pw callback
-	function forgotPassword(){
-		$(".c-login-box__invalid-text").text("Too bad. There is nothing I can do at this point.")
+	function showErrorMessage(sMessage){
+		$(".o-text--error").text(sMessage);
 	}
 </script>

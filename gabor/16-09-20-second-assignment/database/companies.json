@@ -1,0 +1,14 @@
+[
+	{
+		"companyId": "123",
+		"companyName": "Product1",
+		"companyShares": 5,
+		"companySharePrice": 4
+	},
+	{
+		"companyId": "1234",
+		"companyName": "Product2",
+		"companyShares": 42,
+		"companySharePrice": 123
+	}
+]
