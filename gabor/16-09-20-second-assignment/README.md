@@ -4,8 +4,8 @@ Second mandatory assignment for *Web Development* class - Web Development KEA 20
 
 ## File structure
 
-  - `config` contains the configuration settings of the application and the router
-  - `database` contains the database storing information about the users, stocks and companies
+  - `config` contains the **configuration settings** of the application and the **router**
+  - `database` contains the database storing information about the **users** and **companies**
   - `pages` contains the pages (e.g.: `login`, `home` etc.)
   - `style` contains the stylesheets
   - `webapi` contains the webapi being responsible for handling requests and communicating with the database. 
@@ -25,6 +25,6 @@ Second mandatory assignment for *Web Development* class - Web Development KEA 20
 
 ## Future plans
 
-  - [ ] Split home scripts into components
-  - [ ] Write `required` methods for webapi endpoint handling `loginRequired()`, `adminRequired()`
+  - [ ] Split home script into components
+  - [ ] Write `required` methods for webapi endpoint handling `loginRequired()`, `adminRequired()` (too much repetition)
   - [ ] Make it responsive

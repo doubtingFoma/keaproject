@@ -62,18 +62,22 @@
 	</div>
 </div>
 
-<!-- Should be splitted into separate files -->
+<!-- JS -->
+<!-- Should be splitted into separate file - page.home.js -->
 <script>
-
-	// Globals
+	//////////////////////////////////////////////////////
+	// 1. Globals
 	iEditingItemIndex = null;
 	aCompanies = [];
 
-	// Init
+	//////////////////////////////////////////////////////
+	// 2. Init
 	fetchCompanies();
 
+	//////////////////////////////////////////////////////
+	// 3. Functions
 	// Fetch companies from backend
-	// !! Pass a Companies
+	// init = true -> draw everything in DOM, init = false -> update existing table
 	function fetchCompanies(init = true){
 		// On Page load
 		$.ajax({
@@ -85,12 +89,12 @@
 			if (data.iStatusCode == 200){
 				
 				// Succesful request
-				// Draw companies if initialization
+				// Draw companies in DOM if initialization = true
 				if (init) {
 					aCompanies = data.jPackage;
 					showCompanies(aCompanies);
 				
-				//Update companies if not initialization
+				//Update existing companies in DOM if initialization = false
 				} else {
 					updateCompanies(aCompanies, data.jPackage);
 				}
@@ -179,8 +183,10 @@
 		aCompanies = aNewCompanies;
 		$(".o-text--subtitle").html("There are <span class='o-text--bold'>"+ aCompanies.length + "</span> companies.");
 	}
+	// end of updateCompanies()
 
 	// Updates the row
+	// Updates the markup of a row of a given company
 	function updateRow(jCompany, arrow) {
 		$("#company-row-"+jCompany.companyId+"__id").html(jCompany.companyId)
 		$("#company-row-"+jCompany.companyId+"__name").html(jCompany.companyName)
@@ -188,7 +194,7 @@
 		$("#company-row-"+jCompany.companyId+"__share-price").html(arrow + jCompany.companySharePrice)
 	}
 	
-	// Functions
+	// Redraws the entire table
 	function showCompanies(aCompanies){
 		iEditingItemIndex = null;
 		$("#tbl-companies").css("display", "table");
@@ -230,6 +236,7 @@
 		}
 	}
 
+	// Display given error message in DOM
 	function showError(sMessage){
 		sOutputMessage = "<span class='o-text--bold'>Error! </span>";
 		sOutputMessage += sMessage;

@@ -1,5 +1,6 @@
 <!-- router.php containing routing information -->
-<!-- To create a new page, create a new Page object and add it to the aPages array. That's it! Add additional restrictions for users if you want. -->
+<!-- To create a new page, create a new Page object and add it to the aPages array. That's it! -->
+<!-- Add additional restrictions for specific users (admins or customers) if you want. -->
 <?php
 
 	// 1. Page list

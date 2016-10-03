@@ -8,6 +8,7 @@
 		public $sRouterPath = "config/router.php";
 		public $sApiPath = "webapi/webapi.php";
 
+		// Database
 		public $sDatabaseUsersPath = "database/users.json";
 		public $sDatabaseCompaniesPath = "database/companies.json";
 
