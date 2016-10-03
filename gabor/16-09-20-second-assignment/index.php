@@ -35,6 +35,7 @@
 	<link rel="stylesheet" href="style/objects.text.css">
 	<link rel="stylesheet" href="style/objects.list.css">
 	<link rel="stylesheet" href="style/objects.wrapper.css">
+	<link rel="stylesheet" href="style/objects.form.css">
 	<link rel="stylesheet" href="style/components.login-box.css">
 	<link rel="stylesheet" href="style/components.navbar.css">
 	<link rel="stylesheet" href="style/components.title-bar.css">

@@ -22,3 +22,9 @@ Second mandatory assignment for *Web Development* class - Web Development KEA 20
 
   - Log in as customer with `customer@customer.customer` and `customer` or create a new account
   - Log in as administrator with `admin@admin.admin` and `admin`
+
+## Future plans
+
+  - [ ] Split home scripts into components
+  - [ ] Write `required` methods for webapi endpoint handling `loginRequired()`, `adminRequired()`
+  - [ ] Make it responsive

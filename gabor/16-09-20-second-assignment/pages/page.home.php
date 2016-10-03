@@ -43,13 +43,13 @@
 				<tr data-id='new-company'>
 	
 				<td id='new-company__name'>
-					<input type='text' placeholder='Company name...' id='input-new-company__name'>
+					<input type='text' class="o-form--full-width" placeholder='Company name...' id='input-new-company__name'>
 				</td>
 				<td id='new-company__shares'>
-					<input type='text' placeholder='Company shares...' id='input-new-company__shares'>
+					<input type='text' class="o-form--full-width" placeholder='Company shares...' id='input-new-company__shares'>
 				</td>
 				<td id='new-company__share-price'>
-					<input type='text' placeholder='Company share price...' id='input-new-company__share-price'>
+					<input type='text' class="o-form--full-width" placeholder='Company share price...' id='input-new-company__share-price'>
 				</td>
 				<td>
 					<a class='a-create' href='#'>
@@ -62,37 +62,130 @@
 	</div>
 </div>
 
-<!-- Get companies on page load - output error message if fails -->
-<!-- Loading companies -->
+<!-- Should be splitted into separate files -->
 <script>
 
 	// Globals
 	iEditingItemIndex = null;
 	aCompanies = [];
 
+	// Init
+	fetchCompanies();
 
-	// On Page load
-	$.ajax({
-		"url": "<?php echo $config->sApiPath ?>?request=get-companies",
-		"method": "get",
-		"cache": false,
-		"dataType": "json",
-	}).done(function(data){
-		if (data.iStatusCode == 200){
-			// Succesful request
-			showCompanies(data.jPackage);
-			aCompanies = data.jPackage;
-		} else {
-			// Request not OK
+	// Fetch companies from backend
+	// !! Pass a Companies
+	function fetchCompanies(init = true){
+		// On Page load
+		$.ajax({
+			"url": "<?php echo $config->sApiPath ?>?request=get-companies",
+			"method": "get",
+			"cache": false,
+			"dataType": "json",
+		}).done(function(data){
+			if (data.iStatusCode == 200){
+				
+				// Succesful request
+				// Draw companies if initialization
+				if (init) {
+					aCompanies = data.jPackage;
+					showCompanies(aCompanies);
+				
+				//Update companies if not initialization
+				} else {
+					updateCompanies(aCompanies, data.jPackage);
+				}
+			} else {
+				// Request not OK
+				console.log(data);
+				showError(data.sMessage);
+			}
+		}).fail(function(err){
+			// Request Failed
 			console.log(data);
 			showError(data.sMessage);
-		}
-	}).fail(function(err){
-		// Request Failed
-		console.log(data);
-		showError(data.sMessage);
-	});
+		});
+	}
 
+	// DOM update
+	// This method updates the rows of the company table
+	// 1. delete company row, if company does not exist anymore
+	// 2. creates a company row, if new company has been fetched
+	// 3. update a company row, if company exist but have been modified
+	// 4. save the new array of companies
+	function updateCompanies(aOldCompanies, aNewCompanies){
+
+		// 1. Delete not existing company rows
+		for (var i = 0; i < aOldCompanies.length; i++) {
+			var found = false
+			for (var j = 0; j < aNewCompanies.length; j++) {
+				if (aNewCompanies[j].companyId == aOldCompanies[i].companyId) {
+					var found = true;
+				}
+			}
+
+			// If company in old list was not found in new list, remove it from old
+			if (!found){
+				console.log("Company has to be deleted!", aOldCompanies[i].companyId);
+				$("tr[data-id="+aOldCompanies[i].companyId+"]").remove();
+				aOldCompanies.splice(i, 1);
+			}
+		}
+
+		// 2. Add new, not existing company rows
+		for (var i = 0; i < aNewCompanies.length; i++) {
+			var found = false;
+			for (var j = 0; j < aOldCompanies.length; j++) {
+				if (aNewCompanies[i].companyId == aOldCompanies[j].companyId) {
+					found = true;
+				}
+			}
+
+			// If company in new list was not found in old list, add it to dom and old list
+			if (!found){
+
+				row = "\
+				<tr data-id='"+aNewCompanies[i].companyId+"'>\
+					<td id='company-row-"+aNewCompanies[i].companyId+"__id'>"+aNewCompanies[i].companyId+"</td>\
+					<td id='company-row-"+aNewCompanies[i].companyId+"__name'>"+aNewCompanies[i].companyName+"</td>\
+					<td id='company-row-"+aNewCompanies[i].companyId+"__shares'>"+aNewCompanies[i].companyShares+"</td>\
+					<td id='company-row-"+aNewCompanies[i].companyId+"__share-price'>"+aNewCompanies[i].companySharePrice+"</td>\
+				";
+
+				$("#tbl-companies__body").append(row);
+				aOldCompanies.push(aOldCompanies[0]);
+			}
+		}
+
+		// 3. Update existing company rows
+		for (var i = 0; i < aOldCompanies.length; i++) {
+			if (aNewCompanies[i].companyId == aOldCompanies[i].companyId){
+				if (
+					aNewCompanies[i].companyId !== aOldCompanies[i].companyId ||
+					aNewCompanies[i].companyName !== aOldCompanies[i].companyName ||
+					aNewCompanies[i].companyShares !== aOldCompanies[i].companyShares ||
+					aNewCompanies[i].companySharePrice !== aOldCompanies[i].companySharePrice
+				) {
+					
+					var arrow = "";
+					if (aNewCompanies[i].companySharePrice > aOldCompanies[i].companySharePrice) arrow = "<i class='fa fa-arrow-up fa-fw' aria-hidden='true'></i>";
+					if (aNewCompanies[i].companySharePrice < aOldCompanies[i].companySharePrice) arrow = "<i class='fa fa-arrow-down fa-fw' aria-hidden='true'></i>";
+
+					updateRow(aNewCompanies[i], arrow)
+				}
+			}
+		}
+
+		// 4. Save new company list
+		aCompanies = aNewCompanies;
+	}
+
+	// Updates the row
+	function updateRow(jCompany, arrow) {
+		$("#company-row-"+jCompany.companyId+"__id").html(jCompany.companyId)
+		$("#company-row-"+jCompany.companyId+"__name").html(jCompany.companyName)
+		$("#company-row-"+jCompany.companyId+"__shares").html(jCompany.companyShares)
+		$("#company-row-"+jCompany.companyId+"__share-price").html(arrow + jCompany.companySharePrice)
+	}
 	
 	// Functions
 	function showCompanies(aCompanies){
@@ -186,26 +279,26 @@
 
 		//1. reset iEditingItemIndex DOM (remove input fields)
 		if (iEditingItemIndex !== null) {
-			resetRowHtml(iEditingItemIndex);
+			resetRowHtml(iEditingItemIndex, aCompanies);
 		}
 
 		iEditingItemIndex = iId;
 		jCompany = null;
 
 		//2. select current company
-		jCompany = returnCompany(iId);
+		jCompany = returnCompany(iId, aCompanies);
 
 		console.log("Editing itme", jCompany);
 
 		//3. Update dom
 		sNameInputHtml = "\
-			<input type='text' id='input-company-name-"+jCompany.companyId+"' value='"+jCompany.companyName+"'>\
+			<input type='text' class='o-form--full-width' id='input-company-name-"+jCompany.companyId+"' value='"+jCompany.companyName+"'>\
 		";
 		sSharesInputHtml = "\
-			<input type='text' id='input-company-shares-"+jCompany.companyId+"' value='"+jCompany.companyShares+"'>\
+			<input type='text' class='o-form--full-width'  id='input-company-shares-"+jCompany.companyId+"' value='"+jCompany.companyShares+"'>\
 		";
 		sSharePriceHtml = "\
-			<input type='text' id='input-company-share-price-"+jCompany.companyId+"' value='"+jCompany.companySharePrice+"'>\
+			<input type='text' class='o-form--full-width'  id='input-company-share-price-"+jCompany.companyId+"' value='"+jCompany.companySharePrice+"'>\
 		";
 
 		sActionHtml = "\
@@ -228,12 +321,12 @@
 	$("body").on("click", ".a-cancel", function(e){
 		iId = $(this).data('id');
 		// console.log(iId);
-		resetRowHtml(iId);
+		resetRowHtml(iId, aCompanies);
 	});
 
 
-	function resetRowHtml(iId){
-		jCompany = returnCompany(iId);
+	function resetRowHtml(iId, aCompanies){
+		jCompany = returnCompany(iId, aCompanies);
 		iEditingItemIndex = null;
 
 		sAcitonHtml = "\
@@ -331,14 +424,26 @@
 	});
 
 	// Returns a company with given ID
-	function returnCompany(iId){
+	function returnCompany(iId, aCompanies){
 		console.log("returncompany receives this id", iId);
+		console.log("iId", iId);
+		console.log("aCompanies", aCompanies);
 		for (var i = 0; i < aCompanies.length; i++) {
 			if (aCompanies[i].companyId == iId) {
+				console.log("I found something");
 				return aCompanies[i];
 			}
 		}
+		console.log("I found nothing");
 		return null;
 	}
+
+	// Refresh site every second if user is customer
+	<?php if ($_SESSION['userRole'] == 'customer') : ?>
+		setInterval(function(){
+			fetchCompanies(false);
+		}, 1000);
+	<?php endif; ?>
+
 </script>
 
