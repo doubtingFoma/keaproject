@@ -167,8 +167,8 @@
 				) {
 					
 					var arrow = "";
-					if (aNewCompanies[i].companySharePrice > aOldCompanies[i].companySharePrice) arrow = "<i class='fa fa-arrow-up fa-fw' aria-hidden='true'></i>";
-					if (aNewCompanies[i].companySharePrice < aOldCompanies[i].companySharePrice) arrow = "<i class='fa fa-arrow-down fa-fw' aria-hidden='true'></i>";
+					if (parseInt(aNewCompanies[i].companySharePrice) > parseInt(aOldCompanies[i].companySharePrice)) arrow = "<i class='fa fa-arrow-up fa-fw' aria-hidden='true'></i>";
+					if (parseInt(aNewCompanies[i].companySharePrice) < parseInt(aOldCompanies[i].companySharePrice)) arrow = "<i class='fa fa-arrow-down fa-fw' aria-hidden='true'></i>";
 
 					updateRow(aNewCompanies[i], arrow)
 				}
@@ -177,6 +177,7 @@
 
 		// 4. Save new company list
 		aCompanies = aNewCompanies;
+		$(".o-text--subtitle").html("There are <span class='o-text--bold'>"+ aCompanies.length + "</span> companies.");
 	}
 
 	// Updates the row
@@ -374,6 +375,7 @@
 			//done
 			if (jData.iStatusCode == 200) {
 				showCompanies(jData.jPackage);
+				aCompanies = jData.jPackage;
 			} else {
 				showError(jData.sMessage);
 			}
