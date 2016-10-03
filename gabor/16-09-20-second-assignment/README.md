@@ -20,8 +20,8 @@ Second mandatory assignment for *Web Development* class - Web Development KEA 20
 
 ## Dummy users
 
-  - Log in as customer with `customer@customer.customer` and `customer` or create a new account
-  - Log in as administrator with `admin@admin.admin` and `admin`
+  - Log in as customer with `carl@customer.customer` and `customer` or create a new account
+  - Log in as administrator with `adrien@admin.admin` and `admin`
 
 ## Future plans
 

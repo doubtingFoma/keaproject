@@ -1,1 +1,18 @@
-[{"userId":"57f0f130802fe","userName":"admin","userEmail":"admin@admin.admin","userRole":"admin","userPassword":"8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","userRegDate":"Sun Oct 02, 2016 13:36"},{"userId":"57f0f15e2651c","userName":"customer","userEmail":"customer@customer.customer","userRole":"customer","userPassword":"b6c45863875e34487ca3c155ed145efe12a74581e27befec5aa661b8ee8ca6dd","userRegDate":"Sun Oct 02, 2016 13:37"}]
+[
+  {
+    "userEmail": "adrien@admin.admin",
+    "userId": "57f0f130802fe",
+    "userName": "adrien",
+    "userPassword": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+    "userRegDate": "Sun Oct 02, 2016 13:36",
+    "userRole": "admin"
+  },
+  {
+    "userEmail": "carl@customer.customer",
+    "userId": "57f0f15e2651c",
+    "userName": "carl",
+    "userPassword": "b6c45863875e34487ca3c155ed145efe12a74581e27befec5aa661b8ee8ca6dd",
+    "userRegDate": "Sun Oct 02, 2016 13:37",
+    "userRole": "customer"
+  }
+]

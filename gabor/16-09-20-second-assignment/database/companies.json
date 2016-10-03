@@ -1,1 +1,20 @@
-[{"companyId":"57f2a086abbb7","companyName":"Google","companySharePrice":"21","companyShares":"85"},{"companyId":"57f2a15a9d3db","companyName":"Netto","companySharePrice":"1001","companyShares":"2001"},{"companyId":"57f2a1b8adf08","companyName":"Tesla","companySharePrice":"600","companyShares":"500"},{"companyId":"57f2a28dd95dc","companyName":"Nutella","companySharePrice":"501","companyShares":"500"}]
+[
+  {
+    "companyId": "57f2a086abbb7",
+    "companyName": "Google",
+    "companySharePrice": "500",
+    "companyShares": "60"
+  },
+  {
+    "companyId": "57f2a1b8adf08",
+    "companyName": "Apple",
+    "companySharePrice": "750",
+    "companyShares": "525"
+  },
+  {
+    "companyId": "57f2aab3cfb14",
+    "companyName": "Tesla",
+    "companySharePrice": "650",
+    "companyShares": "550"
+  }
+]
