@@ -1,0 +1,1 @@
+{"validKey":"A1","verified":1}

@@ -1,6 +1,8 @@
 # KEA Webdev 2016 / 1. semester
 Exercises and source code shared by students of **Web Development 1st semester - 2016 KEA**.
 
+We also created a [Wiki](https://github.com/gaboratorium/keaproject/wiki) page for everything we have learned in every language. You can access it via the [Wiki](https://github.com/gaboratorium/keaproject/wiki) panel.
+
 ## Cloning the repo
 If you would like to get in sync with repo, get the updates or contribute, you need the clone the repo.
 
