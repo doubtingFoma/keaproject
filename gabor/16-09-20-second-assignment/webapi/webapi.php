@@ -1,4 +1,5 @@
 <?php
+	header("Access-Control-Allow-Origin: *");
 	include_once "../config/config.php";
 
 	// 1. Handle request endpoint
@@ -65,6 +66,11 @@
 		// Create a company
 		case "create-company":
 			createCompany($config);
+			break;
+
+		// Returns Stock Company
+		case "get-stock-company":
+			getStockCompany($config);
 			break;
 
 		// Undefined (bad) request
@@ -335,6 +341,13 @@
 
 		// Send response
 		sendResponse(200, $aCompanies);
+	}
+
+	function getStockCompany($config){
+		$sCompaniesPath = "../database/stockcompany.json";
+		$sCompanies = file_get_contents($sCompaniesPath);
+		echo $sCompanies;
+		exit();
 	}
 
 

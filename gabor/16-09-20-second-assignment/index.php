@@ -18,9 +18,12 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><?php echo $config -> sSiteTitle ?></title>
-		<!-- JavaScript: jQuery & sha256 -->
+		<!-- JavaScript: jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<!-- JavaScript: jQuery sha256 -->
 		<script src="js/sha256.jquery.debug.js"></script>
+		<!-- JavaScript: ChartJs -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
 		<!-- Style: Font awesome -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<!-- Style: Roboto font -->

@@ -1,11 +1,27 @@
 <!-- Navbar -->
 <?php include_once "components/navbar.php"; ?>
 
+<style>
+	canvas {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+</style>
+
 <!-- Home  -->
 <div class="o-wrapper o-wrapper--navbar o-grid ">
 	<div class="o-wrapper__content">
+	
 		<div class="o-grid o-grid--valign-bottom o-grid--align-between c-title-bar">
 			<h1><i class="fa fa-home fa-fw" aria-hidden="true"></i><?php echo $pPage->sPageName ?></h1>
+			<p class="o-text--subtitle"></p>
+		</div>
+		
+		<canvas id="myChart" ></canvas>
+
+
+		<div class="o-grid o-grid--valign-bottom o-grid--align-between c-title-bar">
+			<h1><i class="fa fa-home fa-fw" aria-hidden="true"></i>Companies list</h1>
 			<p class="o-text--subtitle"></p>
 		</div>
 		<p id="error_msg" class='o-text--error'></p>
@@ -69,10 +85,17 @@
 	// 1. Globals
 	iEditingItemIndex = null;
 	aCompanies = [];
+	var ctx = $("#myChart");
+	var myChart;
 
 	//////////////////////////////////////////////////////
 	// 2. Init
-	fetchCompanies();
+	// fetchCompanies();
+
+	var aCompaniesForChart = [];
+
+	fetchCompaniesFromExternal();
+
 
 	//////////////////////////////////////////////////////
 	// 3. Functions
@@ -108,6 +131,134 @@
 			console.log(data);
 			showError(data.sMessage);
 		});
+	}
+
+	function initChart(aCompaniesForChart){
+		// Example chart
+		// var myChart = new Chart(ctx, {
+		//     type: 'line',
+		//     data: {
+		//         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+		//         datasets: [{
+		//             label: '# of Votes',
+		//             data: [12, 19, 3, 5, 2, 3],
+		//             backgroundColor: [
+		//                 'rgba(255, 99, 132, 0.2)',
+		//                 'rgba(54, 162, 235, 0.2)',
+		//                 'rgba(255, 206, 86, 0.2)',
+		//                 'rgba(75, 192, 192, 0.2)',
+		//                 'rgba(153, 102, 255, 0.2)',
+		//                 'rgba(255, 159, 64, 0.2)'
+		//             ],
+		//             borderColor: [
+		//                 'rgba(255,99,132,1)',
+		//                 'rgba(54, 162, 235, 1)',
+		//                 'rgba(255, 206, 86, 1)',
+		//                 'rgba(75, 192, 192, 1)',
+		//                 'rgba(153, 102, 255, 1)',
+		//                 'rgba(255, 159, 64, 1)'
+		//             ],
+		//             borderWidth: 1
+		//         }]
+		//     },
+		//     options: {
+		//         scales: {
+		//             yAxes: [{
+		//                 ticks: {
+		//                     beginAtZero:true
+		//                 }
+		//             }]
+		//         }
+		//     }
+		// });
+
+
+		// Init empty chart
+		myChart = new Chart(ctx, {
+		    type: 'line',
+		    data: {
+				labels: ["January", "February", "March", "April", "May", "June", "July"],
+		        datasets: []
+		    }
+		});
+
+
+		// Fill up chart with companies
+		for (var i = 0; i < aCompaniesForChart.length; i++) {
+			let jCompany = {
+				label: aCompaniesForChart[i].companyName,
+	            fill: false,
+	            lineTension: 0.1,
+	            backgroundColor: "rgb(141, 173, 224)",
+	            borderColor: "rgb(66, 134, 244)",
+	            borderCapStyle: 'butt',
+	            borderDash: [],
+	            borderDashOffset: 0.0,
+	            borderJoinStyle: 'miter',
+	            pointBorderColor: "rgba(75,192,192,1)",
+	            pointBackgroundColor: "#fff",
+	            pointBorderWidth: 1,
+	            pointHoverRadius: 5,
+	            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+	            pointHoverBorderColor: "rgba(220,220,220,1)",
+	            pointHoverBorderWidth: 2,
+	            pointRadius: 1,
+	            pointHitRadius: 10,
+	            data: [0, 0, 0, 0, 0, 0, 0],
+	            spanGaps: false,
+			}
+
+			console.log("myChart.data.datasets:", myChart.data.datasets);
+			myChart.data.datasets.push(jCompany);
+		}
+	}
+
+	// Fetch companies from External Apis (Gabor's & Zsofi's)
+	function fetchCompaniesFromExternal(){
+		
+		// Define paths
+		let companyApis = [
+			"http://localhost/projects/keaproject/gabor/16-09-20-second-assignment/webapi/webapi.php?request=get-stock-company",
+			"http://zsofiatoth.net/11-TUE-OCT/service-get-companies.php"
+		]
+
+		aCompaniesForChart = [];
+
+		// Make Api calls in sequence
+		for (var i = 0; i < companyApis.length; i++) {
+
+			let sCompanyApi = companyApis[i];
+			$.ajax({
+				"url": sCompanyApi,
+				"method": "get",
+				"cache": false,
+				"dataType": "json",
+			}).done(function(data){
+				// Api call was succesful
+				aCompaniesForChart.push(data);
+				console.log(data.companySharePrice);
+				isCallFinished(i, companyApis.length, aCompaniesForChart);
+			})
+		}
+		console.log("aCompaniesForChart.length", aCompaniesForChart.length);
+	}
+
+	isCallFinished(elem, containerSize, aCompaniesForChart){
+		if (elem == containerSize) {
+			initChart(aCompaniesForChart);
+		}
+	}
+
+	function updateChart(aCompaniesForChart){
+		console.log("updateChart");
+		myChart.data.labels.push('New month');
+		myChart.data.labels.shift();
+		for (var i = 0; i < aCompaniesForChart.length; i++) {
+			myChart.data.datasets[i].data.push(aCompaniesForChart[i].companySharePrice);
+			myChart.data.datasets[i].data.shift();
+		}
+		// Redraw
+		myChart.update();
 	}
 
 	// DOM update
