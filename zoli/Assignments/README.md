@@ -9,10 +9,16 @@ Here you can find all the assignments we (will) have or had, organized by subjec
 
 # Development Environments
 
--   "Black" Assignments: TBA
+-   "Black" Assignments:
+    -   [Black01](https://github.com/gaboratorium/keaproject/tree/master/zoli/Assignments/Dev_Env/Black_Exercise_01)
+    -   [Black02](https://github.com/gaboratorium/keaproject/tree/master/zoli/Assignments/Dev_Env/Black_Exercise_02)
+    -   [Black03](https://github.com/gaboratorium/keaproject/tree/master/zoli/Assignments/Dev_Env/Black_Exercise_03)
+    -   [Black04](https://github.com/gaboratorium/keaproject/tree/master/zoli/Assignments/Dev_Env/Black_Exercise_04)
+    -   [Black05](https://github.com/gaboratorium/keaproject/tree/master/zoli/Assignments/Dev_Env/Black_Exercise_05)
 
--   "Red" Assignments: TBA
+-   "Red" Assignments:
+    -   [Red1](https://github.com/gaboratorium/keaproject/tree/master/zoli/Assignments/Dev_Env/Red_Assignment_01/Red%20Assignment%201)
 
 # Databases
 
--   Presentations: TBA
+-   Presentations: On Fronter

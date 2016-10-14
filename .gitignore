@@ -220,3 +220,10 @@ pip-log.txt
 #############
 
 **/**/node_modules
+
+
+#############
+## Other
+#############
+
+.tern-project

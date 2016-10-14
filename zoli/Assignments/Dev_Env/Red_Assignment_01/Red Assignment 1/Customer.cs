@@ -35,9 +35,11 @@ namespace Red_Assignment_1
             this.DOB = DateOfBirth;
         }
 
-
+        //The bank account nested class. I did like this, because the task says, the bank 
+        //account should be restricted to the customer, and cannot be accessed anywhere else.
         class BankAccount
         {
+            //also needs to be a random number, but Guid is more unique
             public string AccountId { get; } = Guid.NewGuid().ToString();
             private decimal Balance;
             private string CustomerId; 
@@ -53,7 +55,7 @@ namespace Red_Assignment_1
             {
                 this.Balance = this.Balance + amount;
             }
-
+            //if we can't withdraw enough money, we just return with false and do nothing else
             public bool Withdraw (decimal amount)
             {
                 if (amount <= this.Balance)

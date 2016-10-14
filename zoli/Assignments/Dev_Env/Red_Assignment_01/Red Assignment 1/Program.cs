@@ -33,7 +33,7 @@ namespace Red_Assignment_1
             Jozsi.DepositToAccount(100, 0);
             Jozsi.DepositToAccount(200, 1);
             Jozsi.ListAccounts();
-            Console.WriteLine(Jozsi.WithdrawFromAccount(50, 0));
+            Console.WriteLine(Jozsi.WithdrawFromAccount(511000, 0));
             Console.WriteLine(Jozsi.WithdrawFromAccount(200, 1)); 
             Jozsi.ListAccounts();
 
