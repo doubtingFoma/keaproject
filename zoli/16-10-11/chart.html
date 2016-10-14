@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Charts</title>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    // Load the Visualization API and the piechart package.
+    //google.charts.load('current', {'packages':['corechart']});
+    google.charts.load('current', {'packages': ['line']});
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var jsonData = $.ajax({
+          url: "get-company-price.php",
+          dataType: "json",
+          async: false
+          }).responseText;
+
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      var options = {
+          chart: {
+              title: 'Company Data',
+              subtitle: 'in millions of dollars (USD)'
+          },
+          width: 1000,
+          height: 600,
+          hAxis: {
+              format: "yyyy. MMM. dd. HH:mm"
+          }
+
+      };
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+      chart.draw(data, google.charts.Line.convertOptions(options));
+
+
+    }
+
+    </script>
+
+    <style>
+      html, body{
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #FAFAFA;
+      }
+
+      #linechart_material{
+        display: flex;
+        padding: 2em;
+        background-color: white;
+        border-radius: 2px;
+        box-shadow: 5px, 5px, 5px, #000;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="linechart_material"></div>
+
+    <script type="text/javascript">
+
+    </script>
+
+  </body>
+</html>

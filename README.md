@@ -44,6 +44,7 @@ In case of collaboration please:
  - [C# Language Fundamentals](https://docs.google.com/presentation/d/1BGi6YZg3Li9IsuJa3Z7URg8JYRvA_yJ-ij0ydRuZzHY/edit#slide=id.g17023dfeb3_0_120)
  - [Official Google Drive Folder for Team I](https://drive.google.com/drive/folders/0B6jqucXqXPUVdG5NT1AzZVVQN0E)
  - [Official Google Drive Folder for Team J](https://drive.google.com/drive/folders/0B6jqucXqXPUVNnZzSERiV0s5Rnc)
+ - [Red Assignment 1 description](https://docs.google.com/presentation/d/1X7k-sMTH0jMGtVI5mvrmW2bZO0kIDXFKUJskjppH3WY/edit#slide=id.g178c241235_0_116)
 
 ### Databases
 
