@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		html, body{margin:0px;padding:0px; width: 100%; height: 100%; background-color: white;}
+
+	</style>
+</head>
+<body>
+	
+	<!-- Canvas -->
+	<canvas id="mycanvas" width="1000" height="800"></canvas>
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- Smoothie Js -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/smoothie/1.27.0/smoothie.js"></script>
+
+	<script>
+
+		// Create smoothie object
+		var smoothie = new SmoothieChart({
+		  grid: {
+		  	strokeStyle:'rgb(0, 0, 0)',
+		  	fillStyle:'rgb(0, 0, 0)',
+		    lineWidth: 1,
+		    millisPerLine: 250,
+		    verticalSections: 6
+		  },
+
+		  labels: { fillStyle:' rgb(0, 0, 0)' }
+		});
+		smoothie.streamTo(document.getElementById("mycanvas"), 1000 /*delay*/); 
+
+		// List of URLS
+		var aUrls = [
+			"http://mukkefabrikken.dk/numbers/service-get-number.php",
+			"http://keasofiek.com/stockChart/get-json.php",
+			"http://thao.dk/get-api.php"
+		];
+
+		// Create new lines
+		aUrls.forEach( function(sUrl, iIndex){
+			eval( 'dNumber'+iIndex+' = 0;' );
+			eval( 'line'+iIndex+' = new TimeSeries();');
+		} );
+	
+
+		aUrls.forEach( function(sUrl, iIndex){
+			// console.log(iIndex);
+			var oLine = eval('line'+iIndex);
+			smoothie.addTimeSeries(oLine, { strokeStyle: 'rgb(0, 255, 0)', fillStyle:'rgba(0, 255, 0, 0.4)', lineWidth:3 });
+		} );		
+
+
+		// Refresh graph every second
+		setInterval(function() {
+
+			// Ajax call
+			$.each( aUrls, function( iIndex, sUrl ){
+				$.ajax({
+					"url": sUrl,
+					"method":"get",
+					"dataType":"JSON",
+					"cache":false
+				}).done(function(jData){
+					var dCompanyPrice = jData.companyPrice;					
+					var sLineColor = jData.lineColor;		
+					// line1.append(new Date().getTime(), dNumberMichael);
+					console.log(jData);
+				});
+			});
+
+
+			// $.getJSON( sUrlMichael, function(jData) {
+			// 	dNumberMichael = jData.companyPrice;
+			// 	line1.append(new Date().getTime(), dNumberMichael);
+			//   // line2.append(new Date().getTime(), dNumberSofie);
+			//   // line3.append(new Date().getTime(), Math.random());					
+			// });
+
+			/*
+			$.getJSON( sUrlSofie, function(jData) {
+				dNumberSofie = jData.companyPrice;
+				console.log("dNumberSofie : " +dNumberSofie);
+				console.log("dNumberMichael ----- : " +dNumberMichael);
+			  line1.append(new Date().getTime(), dNumberMichael);
+			  line2.append(new Date().getTime(), dNumberSofie);
+			  line3.append(new Date().getTime(), Math.random());					
+			});
+			*/
+		}, 1000);
+	
+
+		
+	</script>
+
+
+</body>
+</html>
