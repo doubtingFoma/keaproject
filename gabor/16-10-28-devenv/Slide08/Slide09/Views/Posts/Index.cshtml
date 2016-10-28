@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<div>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/home/about">About</a></li>
+        <li><a href="/posts">Posts</a></li>
+    </ul>
+</div>
+<div>
+    <h2>Posts</h2>
+    <p>Here are your posts</p>
+    <ul>
+        @{int i = 0;}
+        @foreach (var post in (List<string>)ViewBag.myPosts)
+        {
+            <li><a href="/posts/@(ViewBag.myPosts.IndexOf(post)+1)">@post</a></li>
+        }
+        
+    </ul>
+</div>
