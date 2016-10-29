@@ -1,0 +1,5 @@
+[ 
+	{"name": "Microsoft", "icon": "fa-windows"}, 
+	{"name": "Google", "icon": "fa-google"}, 
+	{"name": "Apple", "icon": "fa-apple"} 
+]

@@ -1,0 +1,13 @@
+h1 {
+	font-size: 1.25rem;
+	text-transform: capitalize;
+}
+
+a, a:visited {
+	color: #1F95E7;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}

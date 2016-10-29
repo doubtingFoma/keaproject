@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>TITLE</title>
+    <meta name="description" content="DESCRIPTION">
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Font awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  </head>
+
+  <body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+      //I like this here. This turns on strict mode which doesn't let you
+      //use undeclared variables. It is actually helpful because it prevents typos.
+      "use strict"
+
+      //store key and value in local storage
+      //key will be "testKey", value will be "Test Value"
+      //no need to declare localStorage
+      localStorage.testKey = "Test Value";
+
+      // you cannot store an object or an array in the local storage!!!!
+      var jProduct = {
+        name : "Car",
+        Price : 20
+      };
+
+      //convert an object (or array) into a string
+      var sProduct = JSON.stringify(jProduct);
+      //write the string into the local storage, under the "car" key
+      localStorage.car = sProduct; //it will look like an object, but is a string!
+
+
+//----------------------------EXERCISE----------------------------------------//
+      /*
+      CREATE AN OBJECT THAT IS YOU, CONVERT THE OBJECT INTO TEXT,
+      AND SAVE THAT TEXT IN THE LOCAL STORAGE
+      */
+
+      var jMe = {
+        firstName : "Zoltán",
+        lastName : "Fraknói",
+        age : 22,
+        height : 185
+      }
+
+      var sMe = JSON.stringify(jMe);
+
+      localStorage.Me = sMe;
+
+//----------------------------------------------------------------------------//
+
+      //read from local storage
+
+      //read the object (string) from the local storage and log it
+      console.log(localStorage.Me);
+      //read a simple string from the local storage and log it
+      console.log(localStorage.testKey);
+
+      //convert the string into an object (if possible)
+      var jMeRead = JSON.parse(localStorage.Me);
+      //log the object
+      console.log(jMeRead);
+      //log the age value of the object
+      console.log(jMeRead.age);
+
+      console.log("-------------");
+
+      //read numbers back from the local storage
+      var iYear = 10;
+      localStorage.sYear = iYear;
+      console.log(localStorage.sYear);         //this will be a string
+      console.log(Number(localStorage.sYear)); //this will be a number
+
+      console.log("-------------");
+
+//----------------------------------------------------------------------------//
+
+      //Creating a timer that runs once
+      setTimeout(function{
+        console.log("This is a log"); //just log every 3 seconds
+      }, 3000); //3000ms = 3 seconds
+
+      //Also creating a timer, but this one runs continuously
+      setInterval(function{
+        console.log(Math.random()); //creating a random number between 0 and 1
+      }, 1000); //1000ms = 1seconds
+
+
+    </script>
+
+  </body>
+
+</html>

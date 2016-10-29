@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>
+    WALLSTREET
+  </title>
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <style type="text/css">
+
+    @import 'https://fonts.googleapis.com/css?family=Raleway';
+    @import 'https://fonts.googleapis.com/css?family=Open+Sans';
+
+    html,body{
+      width: 100%;
+      height: 100%;
+      padding: 0px;
+      margin: 0px;
+      box-sizing: border-box;
+      overflow: hidden;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 1.1em;
+    }
+
+    .app-navbar{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: fixed;
+      width: 100%;
+      height: 75px;
+      color: white;
+      font-size: 1.2em;
+      background-color: #222222;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    #wdw-main-window{
+      position: fixed;
+      display: flex;
+      top: 75px;
+      width: 100%;
+      height: calc( 100% - 75px);
+      background-color: rgba(0,0,0,0.1);
+    }
+
+    #wdw-main-window > div{
+      width: 100%;
+    }
+
+    #wdw-companies{
+      overflow-y: auto;
+      padding-left: 20px;
+      padding-bottom: 100px;
+      background-color: white;
+    }
+
+    #wdw-map{
+      background-color: rgba(0,0,0,0.8);
+    }
+
+    #map{
+      width: 100%;
+      height: 100%;
+    }
+
+    .company{
+      display: flex;
+      align-items: center;
+      width: 30%;
+      margin-top: 20px;
+    }
+
+    .company img{
+      width: 75px;
+      height: 75px;
+      margin-right: 20px;
+    }
+
+    .company-going-up{
+      color: green;
+    }
+    .company-going-down{
+      color: red;
+    }
+
+    .company-price-change{
+      margin-left: 1em;
+    }
+
+
+
+  </style>
+
+
+</head>
+<body>
+
+
+  <div class="app-navbar">
+    <div>WALLSTREET</div>
+    <div>COMPANIES GOING UP</div>
+    <div>COMPANIES GOING DOWN</div>
+    <div>MUST BUY</div>
+  </div>
+
+
+  <div id="wdw-main-window">
+
+    <div id="wdw-companies"></div>
+    <!-- END wdw-companies -->
+
+    <div id="wdw-map">
+      <div id="map"></div>
+    </div>
+    <!-- END wdw-map -->
+
+  </div>
+  <!-- END wdw-main-window -->
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANqp5FvSLbrumLyBpohjcl1RHOUQwLyzE&callback=initMap"
+  async defer></script>
+
+
+  <script>
+
+
+
+  var map;
+
+  var sCompanyTemplate = '<div id="company-id-{{company-id}}" class="company"> \
+                              <img src="{{company-icon}}">\
+                              <div>\
+                                <div class="company-name">{{company-name}}</div>\
+                                <div class="company-price">{{company-price}}</div>\
+                              </div>\
+                              <div class="company-price-change">{{company-price-change}}</div>\
+                            </div>';
+
+  var gaCompaniesIds = [];
+
+
+  /**********************************************************************/
+  /**********************************************************************/
+  /**********************************************************************/
+  function initMap() {
+
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 55.701058, lng: 12.537260},
+      zoom: 12
+    });
+    getDataFromGoogleSheet();
+  }
+
+  /**********************************************************************/
+  /**********************************************************************/
+  /**********************************************************************/
+  function getDataFromGoogleSheet(){
+
+    var sKey = "1rFcllNZj2nxRHwvqHeDLLma3-uC-2soFFClqbQkSv_A";
+    var sLink = "https://spreadsheets.google.com/feeds/list/"+sKey+"/1/public/full?alt=json";
+        // console.log(sLink);
+
+        $.ajax({
+          "url":sLink,
+          "method":"get",
+          "dataType":"JSON",
+          "cache":false
+        }).done( function( jData ){
+
+          gaCompaniesIds = []; // empty the array every iteration
+
+          jData.feed.entry.forEach( function( jCompany ){
+            // console.log(jCompany.gsx$latitude.$t + " " +  jCompany.gsx$longitude.$t);
+            var sCompanyId = jCompany.gsx$id.$t;
+            var sCompanyName = jCompany.gsx$name.$t;
+            var sCompanyPrice = jCompany.gsx$price.$t;
+            var fCompanyLatitude = jCompany.gsx$lat.$t;
+            var fCompanyLongitude = jCompany.gsx$lng.$t;
+            var sCompanyIcon = jCompany.gsx$icon.$t;
+            setMarker(fCompanyLatitude, fCompanyLongitude, sCompanyPrice);
+
+            // push to the array every id of every company
+            var sCompanyIdToArray = "company-id-"+sCompanyId;
+            gaCompaniesIds.push(sCompanyIdToArray); // company-id-1001  company-id-2002
+
+            // Check if a compnay exists, if not then created
+            if( $("#company-id-"+sCompanyId).length == 0){
+              // show company in the window for companies
+              var sTempCompany = sCompanyTemplate;
+              sTempCompany = sTempCompany.replace("{{company-id}}", sCompanyId);
+              sTempCompany = sTempCompany.replace("{{company-icon}}", sCompanyIcon);
+              sTempCompany = sTempCompany.replace("{{company-name}}", sCompanyName);
+              sTempCompany = sTempCompany.replace("{{company-price}}", sCompanyPrice);
+              sTempCompany = sTempCompany.replace("{{company-price-change}}", "");
+              $("#wdw-companies").append(sTempCompany);
+            }else{ // yes, the company exists
+              var sPriceInDom = $("#company-id-"+sCompanyId+" .company-price").text();
+              // console.log(sPriceInDom);
+
+
+              // this is not a good place to switch
+              // switch(true){
+              //
+              //   case sPriceInDom > sCompanyPrice:
+              //     $("#company-id-"+sCompanyId+" .company-name").css("color","red");
+              //     $("#company-id-"+sCompanyId+" .company-price").css("color","red");
+              //   break;
+              //
+              //   case sPriceInDom < sCompanyPrice:
+              //     $("#company-id-"+sCompanyId+" .company-name").css("color","green");
+              //     $("#company-id-"+sCompanyId+" .company-price").css("color","green");
+              //   break;
+              // }
+
+              //percentage calcuation formula:
+              //[ ((V2 - V1) / |V1|) * 100 ]
+
+              //we f****ing convert the strings to floats/integers/whatever to
+              //actually work with numbers. If we don't do that, it will result in
+              //occasional malfunctions...
+              fCompanyPrice = parseFloat(sCompanyPrice);
+              fPriceInDom = parseFloat(sPriceInDom);
+              var fDifference = (fCompanyPrice - fPriceInDom) / Math.abs(fPriceInDom) * 100;
+
+              if (fPriceInDom > fCompanyPrice) {
+                 $("#company-id-"+sCompanyId+" .company-name").css("color","red");
+                 $("#company-id-"+sCompanyId+" .company-price").css("color","red");
+                 $("#company-id-"+sCompanyId+" .company-price-change").text(fDifference + "%");
+                 $("#company-id-"+sCompanyId+" .company-price-change").removeClass().addClass("fa fa-arrow-down company-price-change");
+              } else if (fPriceInDom < fCompanyPrice) {
+                 $("#company-id-"+sCompanyId+" .company-name").css("color","green");
+                 $("#company-id-"+sCompanyId+" .company-price").css("color","green");
+                 $("#company-id-"+sCompanyId+" .company-price-change").text(fDifference + "%");
+                 $("#company-id-"+sCompanyId+" .company-price-change").removeClass().addClass("fa fa-arrow-up company-price-change");
+              }
+
+              $("#company-id-"+sCompanyId+" .company-price").text(fCompanyPrice);
+            }
+
+          })
+
+            // COMPANIES GONE
+            $.each( $(".company"), function(){
+              // console.log("x");
+              if( gaCompaniesIds.indexOf(  $(this).attr("id") ) == -1 ){
+                $(this).fadeOut(5000);
+              }
+            });
+
+          });
+
+      }
+
+
+      /**********************************************************************/
+      /**********************************************************************/
+      /**********************************************************************/
+      function setMarker(fLatitude, fLongitude, sPrice){
+
+        var image = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+        if(sPrice >= 500){
+          image = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+        }
+        if(sPrice <= 200){
+          image = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+        }
+
+
+        marker = new google.maps.Marker({
+          position:  new google.maps.LatLng(fLatitude, fLongitude),
+          map: map,
+          icon: image
+        });
+      }
+
+
+      setInterval(function(){ getDataFromGoogleSheet(); }, 10000);
+
+    </script>
+
+
+
+
+  </body>
+  </html>

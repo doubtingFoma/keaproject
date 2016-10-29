@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+      API
+    </title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <style>
+      *{
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      html, body{
+        width: 100%;
+        height: 100%;
+        background-color: #FAFAFA;
+        display: flex;
+        justify-content: center;
+      }
+      button{
+        width: 60vw;
+        max-width: 30em;
+        padding: 1em;
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+        color: #fff;
+        background-color: #1E88E5;
+        border: none;
+        cursor: pointer;
+        font-size: 1em;
+        box-shadow: 1px 1px 1px #666;
+      }
+      .wdw{
+        position: absolute;
+        padding-top: 70px;
+        width: 100%;
+        height: 100%;
+        background-color: #FAFAFA;
+      }
+      .wdw:not(#wdw-home){
+        display: none;
+      }
+      #wdw-user-data{
+        background-color: #F3E5F5;
+
+      }
+      #wdw-login{
+        background-color: #E1F5FE;
+        display: block;
+      }
+      #wdw-home{
+        padding-top: 1em;
+        background-color: #fff;
+        height: auto;
+        width: 65vw;
+        max-width: 50em;
+        box-shadow: 0px 2px 4px #666;
+        margin-top: 6em;
+        text-align: center;
+
+      }
+      nav{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        font-size: 1.3em;
+        width: 100%;
+        height: 70px;
+        background-color: #009688;
+        color: white;
+        z-index: 1;
+        cursor: pointer;
+        box-shadow: 0px 2px 4px #666;
+      }
+
+      #wdw-show-products {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;1
+      }
+      #wdw-show-products img{
+        height: 10em;
+
+      }
+
+      .lbl-product-box{
+        display: flex;
+        width: 15em;
+        min-width: 15em;
+        max-width: 25%;
+
+        height: 15em;
+        text-align: center;
+        margin: 1em;
+        padding: 1em;
+        background-color: #fff;
+        box-shadow: 0px 2px 4px #666;
+        font-size: 1em;
+
+      }
+      .lbl-product-box-content{
+        margin: auto;
+      }
+
+    </style>
+
+
+  </head>
+  <body>
+
+
+    <nav>
+      MENU
+    </nav>
+
+
+
+    <div id="wdw-home" class="wdw">
+      <h1>Welcome</h1>
+      <button id="btn-login">LOGIN</button>
+      <button id="btn-show-product">SHOW PRODUCT</button>
+    </div>
+
+
+
+    <div id="wdw-show-products" class="wdw">
+
+    </div>
+
+    <!-- <div id="wdw-show-product" class="wdw">
+
+      <div class="lbl-product-box">
+        <img src="{{Product-Logo}}"/>
+        <div id="lbl-show-product-name">"{{Product-Name}}"</div>\
+        <div id="lbl-show-product-price">"{{Product-Price}}"</div>\
+      </div>
+
+    </div> -->
+
+
+
+    <div id="wdw-user-data" class="wdw">
+      <div id="lbl-user-data-name">USER NAME</div>
+      <div id="lbl-user-data-last-name">USER LAST NAME</div>
+      <div id="lbl-user-data-email">USER EMAIL</div>
+    </div>
+
+
+    <div id="wdw-login" class="wdw">
+    </div>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript">
+      var aPartners = [ "http://mukkefabrikken.dk/wallstreet/",
+                        "http://gradel.dk/kea/buysell/",
+                        "http://roni.website/",
+                        "http://minportfolio.site/server/",
+                        "http://saralina.dk/schoolDump/9-27-2016/",
+                        "http://keasofiek.com/wallstreet/",
+                        "http://myfreedomain.altervista.org/27-sept-2016-web-dev/",
+                        "http://daniellupascu.com/school/API/",
+                        "http://zsofiatoth.net/27-TUE-SEP/",
+                        "http://znirazz.com/",
+                        "http://tulipjolie.com.linux45.unoeuro-server.com/",
+                        "http://nadiant.com/web_dev/stock/",
+                        "http://shawndesign.dk/web/api/",
+                        "http://happylearning.dk/27-TUE-SEP4/",
+                        "http://mbukhsh.com.linux39.unoeuro-server.com/",
+                        "http://itbuddy.me/27-TUE-SEP3/",
+                        "http://zygimantasbutas.com/test/API/",
+                        "http://skelegon.dk/stockAPI/",
+                        "http://changeover.nu/wallstreet/",
+                        "http://holaola.dk/KEA/20/",
+                        "http://logicportfolio.me/palle/"];
+
+
+
+      /**********************************************************************/
+      /**********************************************************************/
+      /**********************************************************************/
+      $(document).on("click", "#btn-login", function(){
+        var sLink = "service-login.php";
+
+        $.getJSON(sLink, function(ajData){
+          $("#lbl-user-data-name").text( ajData.name );
+          $("#lbl-user-data-last-name").text( ajData.lastName );
+          $("#lbl-user-data-email").text( ajData.email );
+          // hide all the windows, but show the specific one
+          $(".wdw").fadeOut( 500 );
+          $("#wdw-user-data").fadeIn( 500 );
+        });
+
+      });
+
+
+      $(document).on("click", "#btn-show-product", function(){
+        $("#wdw-show-products").text("");
+        var sProductHTML = "";
+
+        for (var i = 0; i < aPartners.length; i++) {
+
+          var sLink = aPartners[i];
+          sLink += "service-get-product.php";
+
+          $.getJSON(sLink, function(ajData){
+
+//            for (var i = 0; i < ajData.length; i++) {
+
+              sProductHTML = '<div class="lbl-product-box" data-company-id="{{Product-ID}}">\
+                                <div class="lbl-product-box-content">\
+                                  <img src="{{Product-Icon}}"/>\
+                                  <div id="lbl-show-product-name">{{Product-Name}}</div>\
+                                  <div id="lbl-show-product-price">{{Product-Price}}</div>\
+                                </div>\
+                               </div>'
+
+              //sProductHTML = sProductHTML.replace("{{Product-Icon}}",ajData.icon);
+              sProductHTML = sProductHTML.replace("{{Product-ID}}", ajData.id);
+              sProductHTML = sProductHTML.replace("{{Product-Name}}", ajData.name);
+              sProductHTML = sProductHTML.replace("{{Product-Price}}", ajData.price);
+
+              $("#wdw-show-products").append(sProductHTML);
+//            }
+
+          });
+        }
+
+
+        $(".wdw").fadeOut( 500 );
+        $("#wdw-show-products").fadeIn( 500 );
+        $("#wdw-show-products").css("display","flex");
+
+
+      });
+
+
+      $(document).on("click", "nav", function(){
+          $(".wdw").fadeOut( 500 );
+          $("#wdw-home").fadeIn( 500 );
+      });
+
+
+    </script>
+
+  </body>
+</html>

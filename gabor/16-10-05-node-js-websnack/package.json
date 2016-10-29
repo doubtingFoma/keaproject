@@ -1,0 +1,11 @@
+{
+	"name": "web-snack",
+	"description": "Learning something",
+	"author": "Gabor Pinter",
+	"license": "MIT",
+	"version": "1.0.0",
+	"dependencies": {
+		"express": "4.14.0",
+		"request":"2.75.0"
+	}
+}

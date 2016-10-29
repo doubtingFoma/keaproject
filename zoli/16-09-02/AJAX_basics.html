@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <meta name="description" content="DESCRIPTION">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Font awesome -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>
+     <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <h4>Generating a random number serverside</h4>
+    <span>NUMBER</span>
+    <span id="lblNumber">X</span>
+    <br><br>
+    <h4>Company sorting</h4>
+    <span id="lblCompanies"></span>
+    <br><br>
+    <h4>Reading company data from json files with ajax</h4>
+    <span id="lblCompanies2"></span>
+    <br><br>
+    <h4>Write to file with AJAX and PHP</h4>
+    <input id="txtName" type="text" value="" placeholder="Firstname">
+    <input id="txtLastName" type="text" value="" placeholder="Lastname">
+    <button id="btnSaveUser">SAVE USER</button>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+    <script>
+      //AJAX
+
+      //getting data from a php file (i.e: get-number.php)
+      //get() function asks for 2 paramters:
+      //1: link to the page that gives you the service
+      //2: The data that this page sends
+      $.get("get-number.php", function(sData){
+        //writing the data to the log
+        console.log(sData);
+      });
+
+      //getting data from the php file every second
+      setInterval(function(){
+        $.get("get-number.php", function(sData){
+          //writing the data to the DOM
+          $("#lblNumber").text(sData);
+        });
+      }, 1000)
+
+
+      //the client gets a string that is formatted to json
+      //jQuery converts text to JSON with the getJSON function
+      $.getJSON("get-json.php",function(jData){
+        //logging the name parameter of the JSON object
+        console.log(jData.name);
+        //logging the age parameter of the JSON object
+        console.log(jData.age);
+      });
+
+
+
+//------------------------------EXERCISE--------------------------------------//
+
+      //EXERCISE: Create an AJAX page that gets 2 companies from the server.
+      //Each company with a name and the price of the company changes every second
+
+
+      var aCompanies;
+      //getting data, sorting and outputting every second
+      setInterval(function(){
+        $.get("companies.php", function(sCompanies){
+          //console.log(sCompanies);
+          aCompanies = JSON.parse(sCompanies);
+          console.log(aCompanies);
+          var sCompaniesOutput = "";
+
+          //sort the array in ascending order by price
+          aCompanies.sort(function(b, a){return a.price - b.price});
+
+          //we used the $.each() function in class,
+          //but I don't like it, so I just used a for loop.
+          for (var i = 0; i < aCompanies.length; i++) {
+            //create the html output (companies are in a div)
+            sCompaniesOutput += "<div>"+ aCompanies[i].id + " " + aCompanies[i].name + " " + aCompanies[i].price + " <i class='" + aCompanies[i].icon + "'></i>" + "</div>";
+          }
+
+          //write the 3 companies to the DOM
+          $("#lblCompanies").html(sCompaniesOutput);
+        });
+
+      }, 1000); //the interval time in ms
+
+
+//------------------------------EXERCISE--------------------------------------//
+      //Get data from the file and pass it to the client.
+
+      $.get("companies_2.php", function(sCompanies){
+        //console.log(sCompanies);
+
+        //convert the string to an array
+        aCompanies = JSON.parse(sCompanies);
+        //console.log(aCompanies);
+
+        //this will be the output div
+        var sCompaniesOutput="";
+
+        //write every element into an html string
+        for (var i = 0; i < aCompanies.length; i++) {
+          sCompaniesOutput += "<div>"+ aCompanies[i].name + " <i class='" + aCompanies[i].icon + "'></i> " + aCompanies[i].price + "</div>";
+        }
+        //output the string to the DOM
+        $("#lblCompanies2").html(sCompaniesOutput);
+      });
+
+//----------------------------------------------------------------------------//
+      //Writing data from input box to a file using AJAX
+
+
+      $("#btnSaveUser").click(function(){
+
+        var sNameFromTextBox = $("#txtName").val();
+        var sLastNameFromTextBox = $("#txtLastName").val();
+        //this is the page's link we want to use to transfer data
+        var sLink = "save-user.php?";
+
+        //"opening" the link (e.g: "save-company.php?name=Jason&lastname=Bourne")
+        //with the input values in it, which runs the save-company php code, that
+        //reads the name and the lastname property and writes them into a file
+        $.get( sLink + "name="+ sNameFromTextBox + "&lastname="+ sLastNameFromTextBox, function(sData){
+          console.log(sData); // server doesnt return anything (unless you echo something in the php file)
+        });
+
+      });
+
+    </script>
+
+  </body>
+
+</html>

@@ -1,0 +1,20 @@
+/* Typography */
+.o-text--block {
+	display: block;
+}
+
+.o-text--bold {
+	font-weight: bold;
+}
+
+.o-text--last-paragraph {
+	margin-bottom: 0;
+}
+
+.o-text--error {
+	color: #F44336;
+}
+
+a.o-text--error {
+	color: #F44336;
+}

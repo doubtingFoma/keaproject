@@ -1,0 +1,19 @@
+/*Wrapper to wrap to content of the site*/
+.o-wrapper {
+	background-color: #F1F1F1;
+	width: 100%;
+	min-height: 100vh;
+	position: absolute;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+}
+
+.o-wrapper--navbar {
+	padding-top: 55px;
+}
+
+.o-wrapper__content {
+	width: 1000px;
+	padding: 1rem;
+}

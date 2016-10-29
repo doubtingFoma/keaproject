@@ -1,7 +1,11 @@
 # KEA Webdev 2016 / 1. semester
+
 Exercises and source code shared by students of **Web Development 1st semester - 2016 KEA**.
 
+We also created a [Wiki](https://github.com/gaboratorium/keaproject/wiki) page for everything we have learned in every language. You can access it via the [Wiki](https://github.com/gaboratorium/keaproject/wiki) panel.
+
 ## Cloning the repo
+
 If you would like to get in sync with repo, get the updates or contribute, you need the clone the repo.
 
   1. Download [Git Bash](https://git-scm.com/downloads).
@@ -9,8 +13,11 @@ If you would like to get in sync with repo, get the updates or contribute, you n
   3. Clone the repo by `git clone https://github.com/gaboratorium/keaproject.git`
   4. Get updates every day by `git pull`
 
+  It is recommended that you clone the repository in your `xampp/htdocs` folder, so you can easily run all the applications in your `localhost`.
+
 ## Contribution
-Contributions are welcome. Contact me on Slack or at `gaboratorium@gmail.com` to ask for contributor access (to be able to push to `master`). 
+
+Contributions are welcome. Contact me on Slack or at `gaboratorium@gmail.com` to ask for contributor access (to be able to push to `master`).
 In case of collaboration please:
 
 - **Create a folder with your name**, work in your own folder
@@ -18,14 +25,42 @@ In case of collaboration please:
 - **Use understandable commit messages** referring to the content inside e.g.: `Arrays and for loops`.
 - **Use comments in your code.** This is crucial. As the purpose of this repo is to share knowledge and work with others, please make it as easy-to-read as possible (and actually it is a good practice in general).
 
-## KEA Webdev class related links
+## KEA WebDev class related links
 
-### Docs
+### Semester Docs
+
+ - [Schedule for the 1st semester](https://docs.google.com/spreadsheets/d/17calSFIYJFmXsx4_O_10RNqLMmBvAVo4JTxCHQg09Vw/edit#gid=0)
+ - [Student Team List](https://docs.google.com/spreadsheets/d/1oXzW_VJzaGSPwl-xk4gjTpnE0JLmhTNCugGSDuV7a8M/pubhtml)
+
+### Web Development
 
  - [Module Document](https://docs.google.com/document/d/1e27PmGJw-Y4IZqmP-YWFgqb2P4tU5KU3qvJVnytV-MY/pub)
  - [Calendar for assignment and exam dates](https://docs.google.com/spreadsheets/d/1m3lTxiW8433h5L_g9lljzWvtmq4-WX2qlkkREfrFIsY/edit#gid=0)
  - [Hand-in requirements and options](https://docs.google.com/spreadsheets/d/1D8OHzxcbDc_Reom1hbl5pxeK6pxjodrXVPPaBf6U43c/edit)
  - [Exam project requirements](https://docs.google.com/document/d/11s2seqE7-sMjOlLTH6CrvpR1EgmdbYKgYRNr5ufKgEE/edit)
+ - [Exam handbook](https://docs.google.com/document/d/1nqPh-wW_y-a5riZjggVnUCiCJbkGkNgWXdi0iwHyaPk/edit)
+ - [1st Mandatory assignment requirements](https://docs.google.com/document/d/1juLrh62X-OzMA8Cu8ttIebpwneKRjIA6lsgCum0JT6A/pub)
+ - [2nd Mandatory assignment requirements](https://docs.google.com/document/d/1LjdQQF_ORM-ow6FWl2LEpwK3SMfPcW6udFSirH9SD-Y/pub)
+
+### Development Environments
+
+ - [Module Document](https://drive.google.com/open?id=0B3bphlthkijSZGFxazhQRG5lRTA)
+ - [Official Google Drive Folder for Team I](https://drive.google.com/drive/folders/0B6jqucXqXPUVdG5NT1AzZVVQN0E)
+ - [Official Google Drive Folder for Team J](https://drive.google.com/drive/folders/0B6jqucXqXPUVNnZzSERiV0s5Rnc)
+ - [Red Assignment 1 description](https://docs.google.com/presentation/d/1X7k-sMTH0jMGtVI5mvrmW2bZO0kIDXFKUJskjppH3WY/edit#slide=id.g178c241235_0_116)
+ - Slides
+   - [Slide01](https://docs.google.com/presentation/d/1BGi6YZg3Li9IsuJa3Z7URg8JYRvA_yJ-ij0ydRuZzHY/edit)
+   - [Slide02](https://docs.google.com/presentation/d/1ie0GTVItIF3u68RxebVtxljDwD7t2AxyK--sNG8Pol0/edit)
+   - [Slide03](https://docs.google.com/presentation/d/1XJns-Q-2m2tq9fZSog9oyXV1prJ11d9PbHkFGKz4gxY/edit)
+   - [Slide04](https://docs.google.com/presentation/d/1yee-lsL7aArwvlPsF87iswRX3uaps_9ealgWlG2FjHk/edit)
+   - [Slide05](https://docs.google.com/presentation/d/1WIF47sM1jb-ungkqSUJOvBIva_uY3wHANpi12w9yqt8/edit)
+   - [Slide06](https://docs.google.com/presentation/d/1QvCvjyz0DxEpbBt-u1f16jHo6QiqgpsJx3NTkYILtaw/edit)
+   - [Slide07](https://docs.google.com/presentation/d/1Pa6xYaJHoctOYFQVqW9GKpLDZDkEzVxLPCEsFrou0a4/edit)
+
+### Databases
+
+ - [Module Document](https://fronter.com/kea/links/files.phtml/1153049437$792389443$/Semester+1/Databases/Module+description+_prcent_28with+ongoing+study+plan_prcent_29)
+ - [Course introduction](https://fronter.com/kea/links/files.phtml/1153049437$792389443$/Semester+1/Databases/Course+Introduction.pdf)
 
 ### Social
 

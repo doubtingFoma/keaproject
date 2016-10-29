@@ -1,0 +1,12 @@
+[
+	{"name": "Google"},
+	{"name": "Twitter"},
+	{"name": "Amazon"},
+	{"name": "Facebook"},
+	{"name": "Microsoft"},
+	{"name": "Apple"},
+	{"name": "Slack"},
+	{"name": "Spotify"},
+	{"name": "Prezi"},
+	{"name": "Uber"}
+]

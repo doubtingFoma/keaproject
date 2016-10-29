@@ -1,0 +1,58 @@
+/* Flexbox grid system */
+/* Block */
+.o-grid {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+}
+
+/* Modifiers */
+.o-grid--vertical {
+	flex-flow: column nowrap;
+}
+
+.o-grid--wrap {
+	flex-wrap: wrap;
+}
+
+.o-grid--centered {
+	margin: auto;
+}
+
+.o-grid--align-center {
+	justify-content: center;
+}
+
+.o-grid--align-between {
+	justify-content: space-between;
+}
+
+.o-grid--align-right {
+	justify-content: flex-end;
+}
+
+.o-grid--valign-center {
+	align-items: center;
+}
+
+.o-grid--valign-bottom {
+	align-items: flex-end;
+}
+
+/* Elements */
+.o-grid__content {
+	padding: 1rem;
+}
+
+.o-grid__content--vertical {
+	padding: 1rem 0rem;
+}
+
+.o-grid__content--comf {
+	padding: 1.5rem;
+}
+
+.o-grid__content--comp {
+	padding: .5rem;
+}
+

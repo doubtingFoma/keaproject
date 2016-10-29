@@ -1,0 +1,24 @@
+table {
+	width: 100%;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 1rem;
+	margin-bottom: 2rem;
+	border-collapse: collapse;
+}
+
+tr {
+	border: 1px solid #E1E1E1;
+	border-bottom: 1px solid #E1E1E1;
+	/*border: 1px red solid;*/
+}
+
+tr:nth-child(odd) {
+	background-color: #F8F8F8;
+}
+
+td, th {
+	/*border-bottom: 1px solid #E1E1E1;*/
+	text-align: left;
+	padding: 1rem;
+}

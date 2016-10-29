@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Notification</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+	
+	<form action="" id="chat-form">
+		<input type="text" id="chat-form__text">
+		<button id="chat-form__button">Send</button>
+	</form>
+  <script type="text/javascript">
+  	
+  	// Submitting form
+	$("#chat-form").submit(function(e){
+	  	e.preventDefault();
+	  	
+	  	// Get message from DOM, run PHP script
+	  	var message = $("#chat-form__text").val();
+	  	$.get("messenger.php?action=send&message=" + message, function(sData){
+	  		console.log("Request sent...");
+	  		console.log(sData);
+	  	})
+	  })
+  </script>
+</body>
+</html>

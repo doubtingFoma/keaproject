@@ -1,0 +1,1 @@
+[{"name":"wdae","price":"wasdfg"},{"name":"Wade","price":"gocsi"},{"name":"MyCompany","price":"MyPrice"},{"name":"maki","price":"kaki"},{"name":"makika","price":"500"}]

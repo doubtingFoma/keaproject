@@ -1,0 +1,20 @@
+[
+  {
+    "companyId": "57f2a086abbb7",
+    "companyName": "Google",
+    "companySharePrice": "500",
+    "companyShares": "60"
+  },
+  {
+    "companyId": "57f2a1b8adf08",
+    "companyName": "Apple",
+    "companySharePrice": "750",
+    "companyShares": "525"
+  },
+  {
+    "companyId": "57f2aab3cfb14",
+    "companyName": "Tesla",
+    "companySharePrice": "650",
+    "companyShares": "550"
+  }
+]

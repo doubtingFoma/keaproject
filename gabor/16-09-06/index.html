@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Ajax</title>
+	<!-- Load jQuery with Google CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	
+	<style>
+		.task {
+			padding: 1rem;
+			border-bottom: 1px solid #E4E4E4;
+		}
+
+		img {
+			max-width: 10rem;
+			height: auto;
+		}
+	</style>
+
+</head>
+<body>
+	
+	<!-- Task 1 -->
+	<div class="task">
+		<p>Task 1: create AJAX call with $.ajax()</p>
+		<div id="task1Result"></div>
+	</div>
+
+	<!-- Task 2 -->
+	<div class="task">
+		<p>Task 2: display information fetched from ecuanota.com</p>
+		<div id="task2Result">See console</div>
+	</div>
+
+	<!-- Task 3 -->
+	<div class="task">
+		<p>Task 3: display information fetched from ecuanota.com when CORS is not enabled there</p>
+		<p>If you get a CORS error, that is because it is not allowed on the server side</p>
+		<div id="task3Result">See console</div>
+	</div>
+
+	<!-- Task 4 -->
+	<div class="task">
+		<p>Task 4: Fetch data from a server fetching data from various servers and display them</p>
+		<ul id="task4Result"></ul>
+	</div>
+
+
+	<script>
+
+		// Task 1
+		var name = "Gabor";
+
+		$.ajax({
+			"url": "server.php",
+			"method": "get",
+			"cache": false,
+			"dataType": "text",
+			"data": {
+				"task": 1,
+				"name": name
+			}
+		}).done(function(sData){
+			console.log("Task 1: ", sData);
+			displayNumber(sData);
+		}).fail(function(sError){
+			console.log("Task 1: ", sError);
+		})
+
+		function displayNumber(sText){
+			$("#task1Result").text(sText);
+		}
+
+		// Task 2
+		$.ajax({
+			"url": "http://ecuanota.com/2016-fall-web-dev/test-me.php",
+			"method": "get",
+			"cache": false,
+			"dataType": "JSON",
+		}).done(function(jData){
+			console.log("Task 2: ",jData);
+		});
+
+		// Task 3
+		$.ajax({
+			"url": "server.php",
+			"method": "get",
+			"cache": false,
+			"dataType": "text",
+			"data": {
+				"task": 3
+			}
+		}).done(function(sText){
+			jObject = JSON.parse(sText);
+			console.log("Task 2: ",jObject);
+
+		});
+
+		// Task 4
+		$.ajax({
+			"url": "server.php",
+			"method": "get",
+			"cache": false,
+			"dataType": "json",
+			"data": {
+				"task": 4
+			}
+		}).done(function(jCompanies){
+			// jObject = JSON.parse(jCompanies);
+			console.log("Task 4: ", jCompanies);
+			for (var i = 0; i < jCompanies.length; i++) {
+				if (jCompanies[i] !== null) {
+					var img = "<img src='" + jCompanies[i].stockIcon + "'>"
+					var row = "<li>" + img + jCompanies[i].stockName + "</li>";
+					$("#task4Result").prepend(row);
+				}
+			}
+
+		});
+
+	</script>
+</body>
+</html>

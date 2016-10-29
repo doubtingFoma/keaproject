@@ -1,0 +1,53 @@
+/* General padding */
+input[type=text], input[type=password], input[type=email], button {
+	padding: 16px 12px;
+	border-radius: 4px;
+}
+
+/* Text fields */
+input[type=text], input[type=password], input[type=email] {
+	border: none;
+	background-color: #EDEDED;
+}
+
+/* Buttons */
+button {
+	background-color: #E0E0E0;
+	border-radius: 2px;
+	border: none;
+	/*font-weight: bold;*/
+	font-size: .8rem;
+	text-transform: uppercase;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+label {
+	text-align: left;
+	margin-bottom: .5rem;
+	color: #A5A5A5;
+}
+
+.button--small {
+	/*padding: 4px 6px;*/
+}
+
+.button--primary {
+	background-color: #1F95E7;
+	color: #fff;
+}
+
+.button--primary:hover {
+	background-color: #1682CD;
+}
+
+.button--success {
+	background-color: #4CAF50;
+	color: #fff;
+}
+
+.button--success:hover {
+	background-color: #388E3C;
+}

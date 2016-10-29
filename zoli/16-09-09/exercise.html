@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Exercise</title>
+    <meta name="description" content="DESCRIPTION">
+  	<!-- Latest compiled and minified CSS -->
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  	<!-- fontawesome -->
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <style>
+
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
+
+      #map {
+        width: 50vw;
+        height: 100%;
+        margin-left: auto;
+
+      }
+      #lblCompanylist{
+        width: 50vw;
+        height: 100%;
+        float: left;
+        text-align: center;
+
+      }
+      .imgCompanyIcon{
+        width: 10em;
+      }
+
+      .thumbnail{
+        width: 30em;
+        margin: 1em;
+      }
+      .fa-arrow-down{
+        color: red;
+      }
+      .fa-arrow-up{
+        color: green;
+      }
+      .fa-minus{
+        color: blue;
+      }
+      </style>
+    <!--[if lt IE 9]>
+    <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+      <!-- JQuery -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+      <div id="lblCompanyList">
+
+<!--        <div class="thumbnail">
+          <img class="imgCompanyIcon" src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-128.png" alt="...">
+          <div class="caption">
+            <h3 class="lblCompanyName">Google</h3>
+            <p class="lblCompanyID">1</p>
+            <p class="lblCompanyPrice">500000</p>
+          </div>
+        </div> -->
+
+      </div>
+
+      <div id="map"></div>
+
+      <!-- this is my maps API integration. no async, no defer, no callback,
+       just simply call it before everyhing else-->
+      <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBOp_P5jml_50TSJrw5jq10M24I8_xxGKo">
+      </script>
+
+      <script>
+        //I like this...
+        "use strict"
+
+
+        //yes, there is a company_data.json, I used it for testing
+
+
+        //the markers on the map, put in variables
+        var blueMarker = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+        var redMarker = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+        var greenMarker = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+
+        //had to declare these to use them
+        //the company list
+        var aCompanies = [];
+        //the stringified version of aCompanies
+        var sLocalStorageCompanies;
+
+        var googlemapskey = "AIzaSyCdQR74L6oFvTtkUj6MceS36gWg77zLfCA";
+
+        //google spreadsheet
+        var sKey = "1rFcllNZj2nxRHwvqHeDLLma3-uC-2soFFClqbQkSv_A";
+        var sLink = "https://spreadsheets.google.com/feeds/list/"+sKey+"/1/public/full?alt=json";
+        var sProxyLink = "proxy.php?spreadsheet="+sLink;
+
+        //main initialization. it happens when the page loads
+        function mainInit(){
+        	$.ajax({
+        		"url":sProxyLink,
+        		"method":"get",
+        		"dataType":"JSON",
+        		"cache":false
+        	}).done( function( jData ){
+
+            for (var i = 0; i < jData.feed.entry.length; i++) {
+              var jCompany = {};
+              //get the individual values of the entries
+              //yes, these gsx and $ and t and feed entry are necessary!
+              //jData is an object, containing parameters which are also objects
+              //and the entry key is an array (the actual companies) that contains objects
+              jCompany.id = jData.feed.entry[i].gsx$id.$t;
+              jCompany.name = jData.feed.entry[i].gsx$name.$t;
+              jCompany.price = jData.feed.entry[i].gsx$price.$t;
+              jCompany.lat = jData.feed.entry[i].gsx$lat.$t;
+              jCompany.lng = jData.feed.entry[i].gsx$lng.$t;
+              jCompany.icon = jData.feed.entry[i].gsx$icon.$t;
+              //push the currently fetched company into the the array
+              aCompanies[i] = jCompany;
+
+            }
+            //convert the array to a local storage entry
+            sLocalStorageCompanies = JSON.stringify(aCompanies);
+            localStorage.Companies = sLocalStorageCompanies;
+
+            //we write the companies to the DOM
+            writeCompanies();
+            //setting up the map
+            initMap();
+
+        	});
+        }
+
+        function readCompanies(){
+          $.ajax({
+            "url":sProxyLink,
+            "method":"get",
+            "dataType":"JSON",
+            "cache":false
+          }).done( function( jData ){
+            for (var i = 0; i < jData.feed.entry.length; i++) {
+              var jCompany = {};
+              jCompany.id = jData.feed.entry[i].gsx$id.$t;
+              jCompany.name = jData.feed.entry[i].gsx$name.$t;
+              jCompany.price = jData.feed.entry[i].gsx$price.$t;
+              jCompany.lat = jData.feed.entry[i].gsx$lat.$t;
+              jCompany.lng = jData.feed.entry[i].gsx$lng.$t;
+              jCompany.icon = jData.feed.entry[i].gsx$icon.$t;
+              aCompanies[i] = jCompany;
+            }
+          });
+        }
+
+
+        function writeCompanies(){
+          $("#lblCompanyList").html("");
+          for (var i = 0; i < aCompanies.length; i++) {
+            //write the comapany in a string
+            var htmlWrite = '<div class="thumbnail" id="'+ aCompanies[i].id +'"><img class="imgCompanyIcon" src="'+ aCompanies[i].icon +'"><div class="caption"><h3 class="lblCompanyName">'+ aCompanies[i].name +'</h3><p class="lblCompanyID">ID: '+ aCompanies[i].id +'</p><p class="lblCompanyPrice">Price: '+aCompanies[i].price+'</p>';
+            //write the string in the DOM
+            $('#lblCompanyList').append(htmlWrite);
+          }
+        }
+
+        function updateTimer(){
+          $.get(sProxyLink, function(sCompanies){
+            //first, we read the new values from the google spreadsheet
+            readCompanies();
+            //get the local storage and convert it into an array
+            var aOldCompanies = JSON.parse(localStorage.Companies);
+
+            console.log(aOldCompanies);
+            console.log(aCompanies);
+            //tl;dr version: we check if the company price increased or decreased
+            for (var i = 0; i < aCompanies.length; i++) {
+              for (var j = 0; j < aCompanies.length; j++) {
+                if (aCompanies[i].id == aOldCompanies[j].id) {
+
+                  if (aCompanies[i].price > aOldCompanies[j].price) {
+                    //create a search term for the current ID
+                    var updateID = "#"+aCompanies[i].id;
+                    //look for the specific company by its ID and write the new price in the DOM (and a small arrow as well)
+                    $(updateID).children(".caption").children(".lblCompanyPrice").html("Price: " + aCompanies[i].price + ' <i class="fa fa-arrow-up" aria-hidden="true"></i>');
+                    console.log("új: " + aCompanies[i].price + " > " + "régi: " + aOldCompanies[j].price);
+                    //set the marker to the correct color according to the increase or decrease
+                    //I wonder if this marker overwrites the previous one, or just puts a new one on top of the old one...Who knows?
+                    setMarker(aCompanies[i].lat, aCompanies[i].lng, greenMarker);
+
+                  } else if (aCompanies[i].price < aOldCompanies[j].price) {
+                    //no I won't comment the same thing again, read the previous one and figure it out...
+                    var updateID = "#"+aCompanies[i].id;
+                    $(updateID).children(".caption").children(".lblCompanyPrice").html("Price: " + aCompanies[i].price + ' <i class="fa fa-arrow-down" aria-hidden="true"></i>');
+                    console.log("új: "+aCompanies[i].price + " < " + "régi: " + aOldCompanies[j].price);
+                    setMarker(aCompanies[i].lat, aCompanies[i].lng, redMarker);
+
+                  } else if (aCompanies[i].price == aOldCompanies[j].price) {
+                    //if you want to, you can set a minus marker if nothing changes
+                    //var updateID = "#"+aCompanies[i].id;
+                    //$(updateID).children(".caption").children(".lblCompanyPrice").html("Price: " + aCompanies[i].price + ' <i class="fa fa-minus" aria-hidden="true"></i>');
+
+                    //just some console log to figure out why the f*** it was doing weird stuff...
+                    //console.log("új: " + aCompanies[i].price + " == " + "régi: " + aOldCompanies[j].price);
+                  }
+
+                }
+              }
+            }
+            //convert the newly fetched data back and store it in the local storage
+            sLocalStorageCompanies = JSON.stringify(aCompanies);
+            //yes, this stores the data
+            localStorage.Companies = sLocalStorageCompanies;
+          });
+        }
+
+        //Google Maps API and Magic
+        var map;
+        function initMap() {
+          //create a new map
+          map = new google.maps.Map(document.getElementById('map'), {
+            //no, I won't change this, because f*** you
+            center: {lat: 55.701058, lng: 12.537260},
+            zoom: 13
+          });
+
+          //a marker is being placed
+          for (var i = 0; i < aCompanies.length; i++) {
+            //by default, we put blue markers
+            setMarker(aCompanies[i].lat, aCompanies[i].lng, blueMarker);
+          }
+        }
+
+        //setting up a new marker
+        function setMarker(lat, lng, clMarker){
+          var marker = new google.maps.Marker({
+            position:  new google.maps.LatLng(lat, lng),
+            map: map,
+            icon: clMarker, //the color of the marker
+            visible: true
+          });
+
+//          marker.setMap(map);
+        }
+
+        //this is the first call of the document
+        mainInit();
+        //launching our timer that checks the spreadsheet and do magic
+        var myTimer = setInterval(updateTimer, 10000);
+
+      </script>
+
+  </body>
+</html>

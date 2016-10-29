@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>
+        Stock Exchange
+    </title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css" integrity="sha384-2hfp1SzUoho7/TsGGGDaFdsuuDL0LX2hnUp6VkX3CUQ2K4K+xjboZdsXyp4oUHZj" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        img {
+          width: 300px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="page-contianer container-fluid">
+      <div class="row">
+        <div class="row">
+          <div class="col-md-6">
+            <div id="company-container">
+              <div class="col-sm-6">
+                <div class="card card-block">
+                  <h3 class="card-title">Special title treatment</h3>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card card-block">
+                  <h3 class="card-title">Special title treatment</h3>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+             </div>
+            </div>
+          </div>
+           <div class="col-md-6">
+             <div class="row" id="map-container">
+           </div>
+         </div>
+      </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script><!-- Tether for Bootstrap -->
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.min.js"></script><!-- Bootstrap -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+      /*
+      Update any company or user ( except the unique id )
+      */
+      var aCompanies = [];
+      if( localStorage.sCompanies ){
+                var sCompaniesFromLocalStorage = localStorage.sCompanies;
+                aCompanies = JSON.parse( sCompaniesFromLocalStorage );
+        console.log(aCompanies);
+            }
+      //This appends companies from the LOCALII storage. Change the markup to the card one you have in the html
+      for (var i = 0; i < aCompanies.length; i++) {
+        $("#companies").append("<tr><td>" + aCompanies[i].name + "</td><td>" + aCompanies[i].value + " </td><td><i data-iCompanyId='"+ aCompanies[i].id + "' class='fa fa-trash-o fa-fw deleteCompany'></i></td>");
+      }
+      stockChange();
+      function stockChange() {
+        //This changes the stock every one second
+          for (var i = 0; i < aCompanies.length; i++) {
+            var random = Math.floor(Math.random()* (0 + 10) - 4);
+            var newStockValue = aCompanies[i].value + random;
+            aCompanies[i].value = newStockValue
+            //This is the icon for delete, and the stock change. The random is the number with which the stock changed
+            $("#companies tr:nth-child(" + (i+1) + ") td:nth-child(3)").html(random + " <i data-iCompanyId='"+ aCompanies[i].id + "' class='fa fa-trash-o fa-fw deleteCompany'> ");
+            $("#companies tr:nth-child(" + (i+1) + ") td:nth-child(2)").text(newStockValue);
+            updateLocalStorage("company");
+          }
+          setTimeout('stockChange()', 1000)
+      }
+      function updateLocalStorage(type) {
+        if (type === "company") {
+          var sCompany = JSON.stringify(aCompanies);
+          localStorage.sCompanies = sCompany;
+        }
+      }
+        </script>
+  </body>
+</html>

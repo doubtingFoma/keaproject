@@ -1,0 +1,5 @@
+[
+  {"id": 1, "name":"Google", "price":500 , "lat":55.701058, "lng":12.53726 , "icon":"https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-128.png" },
+  {"id": 2, "name":"Apple", "price":400 , "lat":55.705151, "lng":12.523728 , "icon":"https://viscultureblog.files.wordpress.com/2014/12/apple-logo.jpg" },
+  {"id": 3, "name":"Micorosoft", "price":300 , "lat":55.718731, "lng":12.571894 , "icon":"http://www.freeiconspng.com/uploads/microsoft-new-logo-simple-0.png"}
+]

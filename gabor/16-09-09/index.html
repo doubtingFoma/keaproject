@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Map of companies</title>
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- Bootstrap JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<!-- Font awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+	<!-- Inline CSS -->
+	<style>
+		body {
+			height: 100vh;
+			width: 100%;
+			padding: 0;
+			margin: 0;
+		}
+
+		.google-map {
+			width: 100%;
+			height: 100%;
+		}
+
+		.style--full-height {
+			height: 100vh;
+		}
+
+		.col--no-padding {
+			padding: 0;
+		}
+
+		.col--padding-top-2{
+			padding-top: 2rem;
+		}
+
+		.thumbnail.increased h3 {
+			color: #37D500;
+		}
+
+		.thumbnail.decreased h3 {
+			color: red;
+		}
+
+		.navbar {
+			margin-bottom: 0;
+		}
+	</style>
+
+</head>
+<body>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-default c-navbar--nomargin">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a href="#" class="navbar-brand">Stock Exchange</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="">Home</a></li>
+				<li><a href="http://github.com/gaboratorium/keaproject" target="_blank">See project on GitHub</a></li>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Application -->
+	<div class="page-contianer container-fluid">
+		<!-- Row -->
+		<div class="row">
+			<!-- Column 1: company list -->
+  			<div class="col-md-6 col--padding-top-2 col--padding-1">
+    			<div id="company-container"></div>
+    		</div>
+    		<!-- Column 2: Google map -->
+	   		<div class="col-md-6 style--full-height col--no-padding">
+				<div id="map" class="google-map"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- JavaScript -->
+	<script>
+		/////////////////////////
+		// Global variables
+
+		var aCompanies = [];
+		var aMapKeys = [
+			"1iSSMAUBmc9NdfgoIgX97GIY8Wjat5HLTPFIVyaHBNDg"
+		]
+
+		/////////////////////////
+		// Init
+		// Google Maps Api fires initMap() by default
+		startIntervalProxyRequest();
+
+
+		/////////////////////////
+		//Functions
+				
+
+		// Callback when data is fetched
+		function displayCompanies() {
+			console.log("aCompanies: ", aCompanies);
+		}
+
+		// Google Maps API: initMap()
+		function initMap() {
+	        map = new google.maps.Map(document.getElementById('map'), {
+	          center: {lat: 55.696203, lng: 12.556982},
+	          zoom: 12
+	        });
+	        for (var i = 0; i < aMapKeys.length; i++) {
+	          getCompaniesFromProxy(aMapKeys[i]);
+	        }
+	      }
+
+	    // Getting company positions from a given spreadsheet
+	    function getCompaniesFromProxy(sKey){
+
+	    	console.log("Getting companies from proxy...");
+
+	    	// Target spreadsheet
+	    	var sLink = "https://spreadsheets.google.com/feeds/list/" + sKey + "/1/public/full?alt=json";
+
+	    	// Fetch data from spreadsheet
+	    	$.ajax({
+	    		"url": "proxy.php",
+	    		"method":"get",
+	          	"dataType":"JSON",
+	          	"cache":false,
+	          	"data": {
+	          		"url": sLink
+	          	}
+	    	}).done(function(jData){
+	    		processCompanies(jData);
+	    	}).fail(function(err){
+	    		console.log("Something went wront during the request: ", err);
+	    	})
+	    }
+
+	    // Process companies from a given Json object
+	    function processCompanies(jData){
+
+	    	console.log("Processing companies...");
+
+	    	// load companies from Localstorage
+	    	var jSavedCompanies = JSON.parse(localStorage.aCompanies)
+	    	console.log("Saved companies in json", jSavedCompanies);
+
+
+	    	console.log(jData);
+	    	aCompanies = [];
+	    		for (var i = 0; i < jData.feed.entry.length; i++) {
+	    			
+	    			// Add Company to Company array
+	    			var jCompany = {
+	    				"companyId": jData.feed.entry[i].gsx$companyid.$t,
+	    				"companyName": jData.feed.entry[i].gsx$companyname.$t,
+	    				"stockPrice": jData.feed.entry[i].gsx$stockprice.$t,
+	    				"xPos": jData.feed.entry[i].gsx$xpos.$t,
+	    				"yPos": jData.feed.entry[i].gsx$ypos.$t,
+	    				"lastUpatedStockPrice": jSavedCompanies[i].lastUpatedStockPrice
+	    			}
+
+	    			// Set default color
+	    			var color = "green";
+
+	    			// Change color based on data from localstorage
+	    			switch (jSavedCompanies[i].lastUpatedStockPrice) {
+	    				case "increased":
+	    					color = "green";
+	    					break;
+	    				case "decreased":
+	    					color = "red";
+	    					break;
+	    			}
+
+
+	    			// Compare to saved company
+	    			switch (true) {
+	    				case (jCompany.stockPrice > jSavedCompanies[i].stockPrice) :
+	    					console.log("New company price is higher with id: ", i);
+	    					jCompany.lastUpatedStockPrice = "increased";
+	    					color = "green";
+	    					break;
+	    				case (jCompany.stockPrice < jSavedCompanies[i].stockPrice) :
+	    					console.log("New company price is lower with id: ", i);
+	    					color = "red";
+	    					jCompany.lastUpatedStockPrice = "decreased";
+	    					break;
+	    			}
+
+	    			aCompanies.push(jCompany);
+	    			// Add marker on Google Map
+	    			setMarker(jCompany.xPos, jCompany.yPos, jCompany.stockPrice, color)
+	    		}
+
+	    	// Save companies to localstorage
+	    	saveCompaniesToLocalStorage(aCompanies);
+	    	drawListOfCompanies();
+    		console.log(aCompanies);
+	    }
+
+	    // Save companies to localstorage from a given array
+	    function saveCompaniesToLocalStorage(aCompanies){
+	    	sCompanies = JSON.stringify(aCompanies);
+	    	console.log("Saving to localstorage: ", sCompanies);
+	    	localStorage.aCompanies = sCompanies;
+	    }
+
+	    // Draw companies to the DOM from the global aCompanies array
+	    function drawListOfCompanies(){
+	    	console.log("Clear company container dom");
+			
+			$("#company-container").empty();
+	    	
+	    	for (var i = 0; i < aCompanies.length; i++) {
+
+	    		var sCard = '<div class="col-sm-6"> \
+					    <div class="thumbnail {{lastUpatedStockPrice}}" id="{{thumbnailId}}"> \
+					      <div class="caption"> \
+					        <h3>{{companyName}}</h3> \
+					        <p>{{companyPrice}} - id: {{companyId}}</p> \
+					        <p><a href="#" class="btn btn-primary" role="button">Buy</a> <a href="#" class="btn btn-default" role="button">Sell</a></p> \
+					      </div> \
+					    </div> \
+					  </div>';
+
+				sCard = sCard.replace("{{companyName}}", aCompanies[i].companyName);
+				sCard = sCard.replace("{{companyPrice}}", aCompanies[i].stockPrice);
+				sCard = sCard.replace("{{companyId}}", aCompanies[i].companyId);
+				sCard = sCard.replace("{{thumbnailId}}", "data-companyId" + aCompanies[i].companyId);
+				sCard = sCard.replace("{{lastUpatedStockPrice}}", aCompanies[i].lastUpatedStockPrice);
+
+				$("#company-container").append(sCard);
+	    	}
+	    }
+
+	    // Display Marker on Google Maps
+	    function setMarker(xPos, yPos, stockPrice, color){
+
+	        if (color == "red") {
+	          image = "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+	        } else if (color == "green") {
+	          image = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
+	        }
+
+	    	marker = new google.maps.Marker({
+            position:  new google.maps.LatLng(xPos, yPos),
+            map: map,
+            id: 5,
+            icon: image
+          });
+	    }
+
+	    // Setting an interval for sending proxy requests
+	    function startIntervalProxyRequest(){
+	    	setInterval(function(){
+	    		for (var i = 0; i < aMapKeys.length; i++) {
+		          getCompaniesFromProxy(aMapKeys[i]);
+		        }
+	    	}, 5000)
+	    }
+
+	</script>
+
+	<!-- Fire Google Maps Api -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFTLbCeyDKKTWI4pP_G7fqUzu-kGpnFoY&callback=initMap"
+    async defer></script>
+</body>
+</html>

@@ -92,6 +92,7 @@
       delete jTable.color;
       console.log(jTable);
 
+      console.log("--------------");
 
 //----------------------CHALLANGE---------------------------------------------//
       /*
@@ -117,7 +118,130 @@
 
       delete jMyself.lastname;
       console.log(jMyself);
+
+      console.log("--------------");
 //----------------------------------------------------------------------------//
+
+
+      //arrays in objects
+      var jPerson3 = {
+        name: "A",
+        phoneNumbers: ["1", "2", "3", "4"],
+      };
+      //log the 0. (actually the first) element of the phoneNumbers parameter of the jPerson3 object
+      console.log(jPerson3.phoneNumbers[0]);
+
+      //show all phone numbers
+      for (var i = 0; i < jPerson3.phoneNumbers.length; i++) {
+        console.log(jPerson3.phoneNumbers[i]);
+      }
+
+      console.log("--------------");
+
+//----------------------------------------------------------------------------//
+
+      //obects in arrays
+
+      var aPeople = [
+        //both of these are objects
+        {name: "a"},   //this is element 0 of the array
+        {name: "b"}    //this is element 1 of the array
+      ];
+      //writing out the name property of the first object in he array
+      console.log("The name is: " + aPeople[0].name);
+
+      /* UPDATE LETTER B TO X, HOW? */
+      aPeople[1].name = "X";
+      console.log("The new name is: " + aPeople[1].name);
+
+      /* DELETE THE JSON OBJECT CONTAINING NAME B FROM THE ARRAY */
+      aPeople.splice(1,1);    //I delete an array element (in this case, it's the same if it was an integer), so I use splice.
+      console.log(aPeople);
+
+      console.log("--------------");
+
+//----------------------------------------------------------------------------//
+      //push both objects into an array
+      var jPersonOne = {name:"A"};
+      var jPersonTwo = {name:"B"};
+      var aPeople2 = [];
+      aPeople2.push(jPersonOne);
+      aPeople2.push(jPersonTwo);
+      console.log(aPeople2);
+
+      console.log("--------------");
+
+//---------------------------OBJECTCEPTION------------------------------------//
+
+      //phone numbers in an array in an object, in an array, in an object, in an array...simple, right?
+      var aPeople3 = [
+        {name: "A"},
+        {name: "B", phoneNumbers:[
+                      {mobile:["1","2","3"]},
+                      {landline:["7"]}
+                    ]}
+      ];
+
+//------------------------------EXERCISE--------------------------------------//
+
+    /*
+      CREATE AN ARRAY WITH 2 PEOPLE IN IT
+      EACH OF THEM CAN HAVE MANY NAMES AND MANY LAST NAMES,
+      BUT ONLY 1 AGE
+    */
+    var aTwoPeople = [
+      {name:["Alma", "Barack"], lastName:["Narancs", "Kiwi"], age:10},
+      {name:["Körte", "Eper"], lastName:["Kuki", "Uborka"], age:12}
+    ];
+
+
+//------------------------------EXERCISE--------------------------------------//
+    /*
+      As a JSON object, show your name(s), your last name(s)
+      and show yor family structure in a way that I understand
+      who your father is, who your mother is, and who your siblings are.
+    */
+//very simple solution
+    var aMyFamily = [
+      {type: "father", names:["DAD", "Daddy"], lastnames["TheFamily"], age: 50},
+      {type: "mother", names:["MOM", "mommy"], lastnames["TheFamily"], age: 47},
+      {type: "brother", names:["BRO", "brothery"], lastnames["TheFamily"], age: 16},
+      {type: "sister", names:["SIS", "sistery"], lastnames["TheFamily"], age: 24},
+      {type: "me", names:["ME", "Zolika"], lastnames["TheFamily"], age: 22}
+    ]
+
+//Teacher solution
+/*
+    var family = {
+    	"parents" : [
+    		{ "type":"person", "gender":"male", "names":["A"]  },
+    		{ "type":"person", "gender":"female", "names":["B"]  }
+    	],
+    	"children":[
+    		{ "type":"person",
+    		 "gender":"male",
+    		 "names":["Anders"],
+    		 "pets":[]
+    		},
+    		{ "type":"person", "gender":"male", "names":["B"]  },
+    		{
+    			"type":"person",
+    			"gender":"female",
+    			"names":["Cris"],
+    			"children":[
+
+
+    			]
+
+    		},
+    		{ "type":"person", "gender":"male", "names":["D"]  }
+    	],
+    	"pets":[
+    		{ "type":"dog", "gender":"male", "names":["A"]  },
+    	]
+    }
+*/
+
     </script>
   </body>
 
