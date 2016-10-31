@@ -23,5 +23,10 @@ namespace Slide09.Controllers
             ViewBag.message = "Here you can find information about something.";
             return View("Index");
         }
+
+        public ActionResult TestRazor()
+        {
+            return View("TestRazor");
+        }
     }
 }

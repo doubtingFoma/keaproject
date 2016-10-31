@@ -1,0 +1,31 @@
+﻿
+@{
+
+    ViewBag.Title = "TestRazor";
+
+    // Set default counter to 0 by default
+    if (Session["counter"] == null)
+    {
+        Session["counter"] = 0;
+    }
+
+    int counter = Convert.ToInt32(Session["counter"]);
+
+    // If post request, increment session counter
+    if (IsPost)
+    {
+        counter++;
+        Session["counter"] = counter;
+    }
+
+}
+
+
+
+<h2>TestRazor</h2>
+<h3>@ViewBag.message</h3>
+<p>Number of times clicked: @counter</p>
+<form action="/home/testrazor" method="post">
+    <input type="submit" name="name" value="click" />
+</form>
+

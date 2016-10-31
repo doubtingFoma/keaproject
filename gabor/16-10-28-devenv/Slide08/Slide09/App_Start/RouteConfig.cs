@@ -15,7 +15,7 @@ namespace Slide09
 
             routes.MapRoute(
               name: "Post",
-              url: "posts/{index}",
+              url: "post/{id}",
               defaults: new { controller = "Posts", action = "Details", id = UrlParameter.Optional }
           );
 

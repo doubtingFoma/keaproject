@@ -1,6 +1,7 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    List<string> postsFromSession = new List<string>();
+    postsFromSession = (List<string>)Session["posts"];
 }
 <div>
     <ul>
@@ -9,15 +10,43 @@
         <li><a href="/posts">Posts</a></li>
     </ul>
 </div>
+
+<h1>@ViewBag.title</h1>
+
+@if (ViewBag.title == "HttpGet Create action") {
+    <div>
+        <h2>Here you can create a new post</h2>
+        <form action="" method="post">
+            <label for="posttitle">Post title</label>
+            <input type="text" name="posttitle" placeholder="Enter post title" value="" />
+            <input type="submit" name="submit" value="Create new post" />
+        </form>
+</div>
+}
+
+@if (ViewBag.title == "Index action")
+{
+    <div>
+        <p>Would you like to create a new post? <a href="/posts/create">Go here.</a></p>
+    </div>
+}
+
 <div>
     <h2>Posts</h2>
-    <p>Here are your posts</p>
+    <p>Here are your posts from the viewbag</p>
     <ul>
-        @{int i = 0;}
         @foreach (var post in (List<string>)ViewBag.myPosts)
         {
-            <li><a href="/posts/@(ViewBag.myPosts.IndexOf(post)+1)">@post</a></li>
+            <li><a href="/post/@(ViewBag.myPosts.IndexOf(post))">@post</a></li>
         }
         
+    </ul>
+    <p>Here are your posts from the session</p>
+    <ul>
+        @foreach (var post in postsFromSession)
+        {
+            <li><a href="/post/@(postsFromSession.IndexOf(post))">@post</a></li>
+        }
+
     </ul>
 </div>
