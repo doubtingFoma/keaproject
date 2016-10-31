@@ -41,6 +41,7 @@ In case of collaboration please:
  - [Exam handbook](https://docs.google.com/document/d/1nqPh-wW_y-a5riZjggVnUCiCJbkGkNgWXdi0iwHyaPk/edit)
  - [1st Mandatory assignment requirements](https://docs.google.com/document/d/1juLrh62X-OzMA8Cu8ttIebpwneKRjIA6lsgCum0JT6A/pub)
  - [2nd Mandatory assignment requirements](https://docs.google.com/document/d/1LjdQQF_ORM-ow6FWl2LEpwK3SMfPcW6udFSirH9SD-Y/pub)
+ - [Exam Project requirements](https://docs.google.com/document/d/11s2seqE7-sMjOlLTH6CrvpR1EgmdbYKgYRNr5ufKgEE/edit)
 
 ### Development Environments
 
@@ -56,6 +57,8 @@ In case of collaboration please:
    - [Slide05](https://docs.google.com/presentation/d/1WIF47sM1jb-ungkqSUJOvBIva_uY3wHANpi12w9yqt8/edit)
    - [Slide06](https://docs.google.com/presentation/d/1QvCvjyz0DxEpbBt-u1f16jHo6QiqgpsJx3NTkYILtaw/edit)
    - [Slide07](https://docs.google.com/presentation/d/1Pa6xYaJHoctOYFQVqW9GKpLDZDkEzVxLPCEsFrou0a4/edit)
+   - [Slide08](https://docs.google.com/presentation/d/12GZ9qW_UyztklnKhW2LpI9ng6QSKVWWUElNOquMwLQQ/edit)
+   - [Slide09](https://docs.google.com/presentation/d/1UMlDC7E2OURIb47J3R5nTPl-aJx8o6H-h4UV7GCKMvY/edit)
 
 ### Databases
 

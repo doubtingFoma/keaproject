@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = null;
+    int kukucs = Convert.ToInt32(Session["counter"]);
+    if (IsPost)
+    {
+        Session["counter"] = Convert.ToInt32(Session["counter"]) + 1;
+        kukucs = Convert.ToInt32(Session["counter"]);
+    }
+
+    Session["name"] = "kukucs";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TestRazor</title>
+</head>
+<body>
+    <div>
+        <form action="" method="post">
+            <button>
+                Kukucs
+            </button>
+        </form>
+    </div>
+</body>
+</html>
