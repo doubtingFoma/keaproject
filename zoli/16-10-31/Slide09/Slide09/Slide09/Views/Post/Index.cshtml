@@ -1,9 +1,10 @@
-﻿
+﻿@using Slide09.Models
+@model Slide09.Models.Post
 @{
     //Layout = null;
 
-    List<String> Posts = new List<string>();
-    Posts = (List<string>)Session["Posts"];
+    List<Post> Posts = new List<Post>();
+    Posts = (List<Post>)Session["Posts"];
 
 }
 
@@ -16,18 +17,18 @@
 </head>
 <body>
 
-    <div> 
-        @{ 
-            for (int i = 0; i < Posts.Count; i++)
-            {
-                <a href="/posts/@i">@Posts[i]</a>
+    <div>
+        <h3>Posts:</h3>
+        <ul>
+            @{
+                for (int i = 0; i < Posts.Count; i++)
+                {                    
+                    <li><a href="/posts/@i">@Posts[i].Title</a></li>
+                }
             }
-        }
+        </ul>
         <br /><br />
-        <a href="/post/create">Create new Post</a>
-        @*<a href="/post/0">1</a>
-        <a href="/post/1">2</a>
-        <a href="/post/2">3</a>*@
+        @Html.ActionLink("Create new post :)", "Create", "Post")
     </div>
 </body>
 </html>

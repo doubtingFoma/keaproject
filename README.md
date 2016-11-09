@@ -59,6 +59,8 @@ In case of collaboration please:
    - [Slide07](https://docs.google.com/presentation/d/1Pa6xYaJHoctOYFQVqW9GKpLDZDkEzVxLPCEsFrou0a4/edit)
    - [Slide08](https://docs.google.com/presentation/d/12GZ9qW_UyztklnKhW2LpI9ng6QSKVWWUElNOquMwLQQ/edit)
    - [Slide09](https://docs.google.com/presentation/d/1UMlDC7E2OURIb47J3R5nTPl-aJx8o6H-h4UV7GCKMvY/edit)
+   - [Slide10](https://docs.google.com/presentation/d/1xEsWSDC8AfJcqOSsyLKNXCJ8Rq6fqFnqYvhd2dJXbBk/edit)
+   - [Slide11](https://docs.google.com/presentation/d/1ILWlUcYvGlja4xr7aoC7emk6FC2oSfXPzxeLcmpr7H0/edit)
 
 ### Databases
 

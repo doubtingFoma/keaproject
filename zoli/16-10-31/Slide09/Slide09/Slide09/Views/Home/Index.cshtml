@@ -5,4 +5,8 @@
 
 <h2>Index</h2>
 <a href="#">content</a>
-
+<h2>With Html.Partial()</h2>
+@Html.Partial("MyPartialView")
+<br /><br />
+<h2>With Html.Action()</h2>
+@Html.Action("myPartialView", "Home")

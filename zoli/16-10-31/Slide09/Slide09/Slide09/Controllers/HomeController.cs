@@ -27,5 +27,16 @@ namespace Slide09.Controllers
         {
             return View();
         }
+
+        public ActionResult myPartialView()
+        {
+            return PartialView("MyPartialView");
+        }
+
+        public ActionResult CurrentDate()
+        {
+            //DateTime CurrentDate = new DateTime();
+            return Content(DateTime.Now.ToString());
+        }
     }
 }

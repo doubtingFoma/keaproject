@@ -1,8 +1,4 @@
-﻿@{ 
-    List<String> Posts = new List<string>();
-    Posts = (List<string>)Session["Posts"];
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -25,11 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @for (int i = 0; i < Posts.Count; i++)
-                    {
-                        <li><a href="/posts/@i">@Posts[i]</a></li>
-                    }
-                    <li>@Html.ActionLink("Testrazor here", "TestRazor", "Home", null, new { area = "" })</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, new { area = "" })</li>
+                    <li>@Html.ActionLink("Posts", "Index", "Post", null, new { area="" })</li>
+                    <li>@Html.ActionLink("Testrazor", "TestRazor", "Home", null, new { area = "" })</li>
                 </ul>
             </div>
         </div>
@@ -40,6 +34,7 @@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>@Html.Action("CurrentDate", "Home")</p>
         </footer>
     </div>
 
